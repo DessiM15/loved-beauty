@@ -30,8 +30,15 @@ export function Hero() {
       </div>
 
       <div className="container-lb relative pb-16 pt-[calc(var(--header-h)+6rem)] md:pb-24">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="eyebrow text-ink/80 animate-fade-up" style={{ animationDelay: "500ms" }}>
+        <div className="relative mx-auto max-w-4xl text-center">
+          {/* soft cream spotlight so the type stays legible over any photo */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -inset-x-24 -inset-y-16 md:-inset-x-48 md:-inset-y-28"
+            style={{ background: "radial-gradient(ellipse at center, rgba(251,247,245,0.96) 0%, rgba(251,247,245,0.85) 40%, rgba(251,247,245,0.4) 62%, rgba(251,247,245,0) 76%)" }}
+          />
+          <div className="relative">
+          <p className="eyebrow text-[0.72rem] text-ink animate-fade-up" style={{ animationDelay: "500ms" }}>
             {hero.eyebrow}
           </p>
           <h1 id="hero-heading" className="h-display mt-5 text-[3.4rem] text-ink animate-fade-up sm:text-7xl md:text-8xl" style={{ animationDelay: "650ms" }}>
@@ -47,6 +54,7 @@ export function Hero() {
             <Link href={hero.secondaryCta.href} className="link-underline text-[0.68rem] tracking-luxe uppercase text-ink">
               {hero.secondaryCta.label}
             </Link>
+          </div>
           </div>
         </div>
       </div>

@@ -85,13 +85,18 @@ export const nav = {
   },
 };
 
+/**
+ * Hero copy follows the launch pattern (status → product → one line → shop).
+ * Before launch: eyebrow "Launching October 2026". At launch: "Now available".
+ * When a new product drops, point the headline and CTA at that product.
+ */
 export const hero = {
-  eyebrow: "Clean · Vegan · Cruelty-free",
-  headlineLead: "Loved, from the first",
-  headlineItalic: "swipe.",
-  subhead: "Hydrating glosses, buttery liners and light-catching shimmer. Soft, luminous, and made to be worn every day.",
-  primaryCta: { label: "Shop Bestsellers", href: "/collections/bestsellers" },
-  secondaryCta: { label: "Explore lips", href: "/collections/lips" },
+  eyebrow: "Launching October 2026",
+  headlineLead: "The Lip",
+  headlineItalic: "Collection.",
+  subhead: "Lustre gloss, hyaluronic shine, buttery liners and a sugar scrub. Eight shades, one ritual. Clean, vegan and cruelty-free.",
+  primaryCta: { label: "Shop the collection", href: "/collections/lips" },
+  secondaryCta: { label: "Find your shade", href: "/shade-finder" },
   // Placeholder editorial photography (see public/editorial/CREDITS.md). Replace with the campaign shot.
   image: {
     src: "/editorial/hero.webp",
