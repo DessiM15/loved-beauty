@@ -29,6 +29,18 @@ export function Header() {
   const count = cart?.totalQuantity ?? 0;
   const overHero = TRANSPARENT_ROUTES.includes(pathname) || pathname.startsWith("/collections/");
   const transparent = overHero && !scrolled && !searchOpen;
+  const [heroTone, setHeroTone] = useState<"light" | "dark">("light");
+  useEffect(() => {
+    const read = () => setHeroTone(document.querySelector<HTMLElement>("main [data-hero-tone]")?.dataset.heroTone === "dark" ? "dark" : "light");
+    const t = setTimeout(read, 0);
+    const mo = new MutationObserver(read);
+    mo.observe(document.body, { childList: true, subtree: true, attributeFilter: ["data-hero-tone"] });
+    return () => {
+      clearTimeout(t);
+      mo.disconnect();
+    };
+  }, [pathname]);
+  const onDark = transparent && (heroTone === "dark" || theme === "noir");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -73,7 +85,8 @@ export function Header() {
     }
   }
 
-  const linkClass = "link-underline text-[0.68rem] tracking-luxe uppercase text-ink";
+  const linkClass = cn("link-underline text-[0.68rem] tracking-luxe uppercase transition-colors duration-500", onDark ? "text-[#f5ece6]" : "text-ink");
+  const iconClass = cn("transition-colors duration-500", onDark ? "text-[#f5ece6]" : "text-ink");
 
   return (
     <header
@@ -88,7 +101,7 @@ export function Header() {
         <div className="flex items-center gap-1 md:gap-8">
           <button
             type="button"
-            className="-ml-2 inline-flex h-10 w-10 items-center justify-center text-ink md:hidden"
+            className={cn("-ml-2 inline-flex h-10 w-10 items-center justify-center md:hidden", iconClass)}
             aria-label="Open menu"
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
@@ -112,7 +125,7 @@ export function Header() {
         {/* Center: full logo */}
         <Link href="/" onClick={goHome} className="flex items-center justify-center px-3" aria-label={`${site.name} home`}>
           <Image
-            src={transparent ? (theme === "noir" ? "/brand/logo-cream.png" : "/brand/logo-ink.png") : "/brand/logo-rose.png"}
+            src={transparent ? (onDark ? "/brand/logo-cream.png" : "/brand/logo-ink.png") : "/brand/logo-rose.png"}
             alt={site.name}
             width={1725}
             height={447}
@@ -137,7 +150,7 @@ export function Header() {
           </nav>
           <button
             type="button"
-            className="hidden h-10 w-10 items-center justify-center text-ink md:inline-flex"
+            className={cn("hidden h-10 w-10 items-center justify-center md:inline-flex", iconClass)}
             aria-label="Search"
             aria-expanded={searchOpen}
             onClick={() => setSearchOpen((v) => !v)}
@@ -147,7 +160,7 @@ export function Header() {
           <button
             type="button"
             onClick={openCart}
-            className="relative -mr-2 inline-flex h-10 w-10 items-center justify-center text-ink"
+            className={cn("relative -mr-2 inline-flex h-10 w-10 items-center justify-center", iconClass)}
             aria-label={`Open bag, ${count} ${count === 1 ? "item" : "items"}`}
           >
             <BagIcon width={20} height={20} />

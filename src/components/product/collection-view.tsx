@@ -6,7 +6,7 @@ import type { Collection, Product } from "@/lib/shopify/types";
 import { ProductGrid } from "./product-grid";
 import { SortSelect, type SortValue } from "./sort-select";
 import { cn } from "@/lib/utils";
-import { ThemedImage } from "@/components/theme/themed";
+import Image from "next/image";
 
 /**
  * Collection page: full-bleed editorial banner (header sits over it) with a
@@ -20,7 +20,6 @@ export function CollectionView({
   collections,
   activeHandle,
   banner,
-  bannerDark,
 }: {
   title: string;
   description?: string;
@@ -28,7 +27,6 @@ export function CollectionView({
   collections: Collection[];
   activeHandle?: string;
   banner?: { src: string; alt: string; position?: string } | null;
-  bannerDark?: { src: string; alt: string; position?: string } | null;
 }) {
   const [sort, setSort] = useState<SortValue>("featured");
 
@@ -54,19 +52,19 @@ export function CollectionView({
   return (
     <div>
       {/* Banner */}
-      <section className="relative flex min-h-[56vh] flex-col justify-center overflow-hidden bg-blush md:min-h-[64vh]">
+      <section className="relative flex min-h-[56vh] flex-col justify-center overflow-hidden md:min-h-[64vh]" style={{ background: "#120d0e" }} data-hero-tone="dark">
         {banner && (
           <>
-            <ThemedImage
-              light={banner}
-              dark={bannerDark ?? banner}
+            <Image
+              src={banner.src}
+              alt={banner.alt}
               fill
               priority
               sizes="100vw"
               className="object-cover"
-              style={{ animation: "ken-burns 2.4s cubic-bezier(0.16,1,0.3,1) both" }}
+              style={{ objectPosition: banner.position ?? "50% 50%", animation: "ken-burns 2.4s cubic-bezier(0.16,1,0.3,1) both" }}
             />
-            <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(var(--veil),0.5) 0%, rgba(var(--veil),0) 25%, rgba(var(--veil),0) 60%, rgba(var(--veil),0.9) 100%)" }} />
+            <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(18,13,14,0.55) 0%, rgba(18,13,14,0.1) 30%, rgba(18,13,14,0.25) 60%, rgba(18,13,14,0.92) 100%)" }} />
           </>
         )}
         <div className="container-lb relative flex flex-col items-center pt-[calc(var(--header-h)+3rem)] pb-12 text-center md:pb-16">
@@ -74,36 +72,36 @@ export function CollectionView({
             <div
               aria-hidden="true"
               className="pointer-events-none absolute -inset-x-24 -inset-y-14 md:-inset-x-48 md:-inset-y-24"
-              style={{ background: "radial-gradient(ellipse at center, rgba(var(--veil),0.96) 0%, rgba(var(--veil),0.85) 40%, rgba(var(--veil),0.4) 62%, rgba(var(--veil),0) 76%)" }}
+              style={{ background: "radial-gradient(ellipse at center, rgba(18,13,14,0.75) 0%, rgba(18,13,14,0.55) 40%, rgba(18,13,14,0.2) 62%, rgba(18,13,14,0) 76%)" }}
             />
-            <nav aria-label="Breadcrumb" className="relative mb-4 text-[0.62rem] tracking-luxe uppercase text-plum animate-fade-up">
+            <nav aria-label="Breadcrumb" className="relative mb-4 text-[0.62rem] tracking-luxe uppercase animate-fade-up" style={{ color: "#c9b6bb" }}>
               <ol className="flex items-center gap-3">
                 <li>
-                  <Link href="/" className="hover:text-ink">
+                  <Link href="/" className="hover:opacity-80">
                     Home
                   </Link>
                 </li>
                 <li aria-hidden="true">/</li>
                 <li>
-                  <Link href="/shop" className="hover:text-ink">
+                  <Link href="/shop" className="hover:opacity-80">
                     Shop
                   </Link>
                 </li>
                 {activeHandle && (
                   <>
                     <li aria-hidden="true">/</li>
-                    <li aria-current="page" className="text-ink">
+                    <li aria-current="page" style={{ color: "#f5ece6" }}>
                       {title}
                     </li>
                   </>
                 )}
               </ol>
             </nav>
-            <h1 className="h-display relative text-6xl md:text-8xl animate-fade-up" style={{ animationDelay: "120ms" }}>
+            <h1 className="h-display relative text-6xl md:text-8xl animate-fade-up" style={{ animationDelay: "120ms", color: "#f5ece6" }}>
               {title}
             </h1>
             {description && (
-              <p className="relative mt-4 max-w-md text-[0.98rem] text-plum animate-fade-up" style={{ animationDelay: "240ms" }}>
+              <p className="relative mt-4 max-w-md text-[0.98rem] animate-fade-up" style={{ animationDelay: "240ms", color: "#c9b6bb" }}>
                 {description}
               </p>
             )}

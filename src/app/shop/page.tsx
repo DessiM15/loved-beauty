@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getCollections, getProducts } from "@/lib/shopify";
 import { CollectionView } from "@/components/product/collection-view";
-import { collectionBanners, noir } from "@/content/site";
+import { noir } from "@/content/site";
 
 export const revalidate = 60;
 
@@ -22,8 +22,7 @@ export default async function ShopPage() {
       description="Everything, in one place. Clean, vegan and cruelty-free."
       products={products}
       collections={visibleCollections}
-      banner={collectionBanners.shop}
-      bannerDark={noir.banners.shop}
+      banner={noir.banners.shop}
     />
   );
 }
