@@ -18,7 +18,13 @@ export const CACHE_TAGS = {
   shop: "shop",
 } as const;
 
+/**
+ * True when the site should talk to Shopify. Set COMMERCE_SOURCE=mock to force
+ * the built-in placeholder catalog even when Shopify credentials are present
+ * (useful while the client's store is still empty). Remove the var to go live.
+ */
 export function isShopifyConfigured(): boolean {
+  if (process.env.COMMERCE_SOURCE === "mock") return false;
   return Boolean(process.env.SHOPIFY_STORE_DOMAIN && process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN);
 }
 
