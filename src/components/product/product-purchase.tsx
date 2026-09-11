@@ -52,7 +52,7 @@ export function ProductPurchase({ product, children }: { product: Product; child
         <ProductGallery images={product.images} title={product.title} handle={product.handle} activeIndex={galleryIndex} />
       </div>
 
-      <div className="px-5 py-10 sm:px-10 lg:sticky lg:top-[var(--header-h)] lg:self-start lg:px-14 lg:py-16">
+      <div className="flex flex-col items-center px-5 py-10 text-center sm:px-10 lg:sticky lg:top-[var(--header-h)] lg:self-start lg:px-14 lg:py-16">
         <p className="eyebrow">{product.productType}</p>
         <h1 className="h-display mt-3 text-5xl md:text-6xl">{product.title}</h1>
         <div className="mt-5 font-serif text-2xl">
@@ -63,12 +63,12 @@ export function ProductPurchase({ product, children }: { product: Product; child
 
         {showOptions &&
           product.options.map((option) => (
-            <fieldset key={option.id} className="mt-8">
+            <fieldset key={option.id} className="mt-8 flex flex-col items-center">
               <legend className="mb-3 flex items-baseline gap-3 text-[0.62rem] tracking-luxe uppercase">
                 {option.name}
                 <span className="font-serif text-base normal-case tracking-normal text-plum italic">{selected[option.name]}</span>
               </legend>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap justify-center gap-3">
                 {option.values.map((value) => {
                   const active = selected[option.name] === value;
                   const candidate = product.variants.find((v) =>
@@ -108,8 +108,8 @@ export function ProductPurchase({ product, children }: { product: Product; child
             </fieldset>
           ))}
 
-        <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-          <div className="inline-flex h-[3.1rem] items-center self-start border border-line bg-white">
+        <div className="mt-9 flex w-full max-w-md flex-col gap-3 sm:flex-row">
+          <div className="inline-flex h-[3.1rem] items-center self-center border border-line bg-white">
             <button type="button" className="inline-flex h-full w-11 items-center justify-center hover:bg-blush" aria-label="Decrease quantity" onClick={() => setQty((q) => Math.max(1, q - 1))}>
               <MinusIcon />
             </button>
@@ -143,13 +143,13 @@ export function ProductPurchase({ product, children }: { product: Product; child
           </p>
         )}
 
-        <ul className="mt-8 grid gap-2 border-y border-line py-4 text-[0.62rem] tracking-wide2 uppercase text-plum sm:grid-cols-3">
+        <ul className="mt-8 grid w-full gap-2 border-y border-line py-4 text-[0.62rem] tracking-wide2 uppercase text-plum sm:grid-cols-3">
           <li>Free U.S. shipping ${freeShippingThreshold}+</li>
           <li>Vegan &amp; cruelty-free</li>
           <li>Secure checkout</li>
         </ul>
 
-        {children && <div className="mt-8">{children}</div>}
+        {children && <div className="mt-8 w-full text-left">{children}</div>}
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { nav, site } from "@/content/site";
 import { useCart } from "@/components/cart/cart-context";
 import { BagIcon, CloseIcon, InstagramIcon, MenuIcon, SearchIcon } from "@/components/ui/icons";
@@ -32,6 +33,12 @@ export function Header() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(t);
   }, []);
 
   const [prevPath, setPrevPath] = useState(pathname);
@@ -70,7 +77,7 @@ export function Header() {
     <header
       className={cn(
         "sticky top-0 z-40 transition-[background-color,border-color] duration-500",
-        transparent ? "border-b border-transparent bg-transparent" : "border-b border-line bg-cream/95 backdrop-blur-sm",
+        transparent ? "border-b border-transparent bg-transparent" : "border-b border-line bg-cream",
         overHero && "-mb-[var(--header-h)]",
       )}
     >
@@ -174,7 +181,9 @@ export function Header() {
         </form>
       </div>
 
-      {/* Mobile menu: full-screen overlay */}
+      {/* Mobile menu: rendered on <body> via a portal so no header effect can clip it */}
+      {mounted &&
+        createPortal(
       <div
         id="mobile-menu"
         className={cn(
@@ -245,7 +254,9 @@ export function Header() {
             <InstagramIcon /> {site.social.instagramHandle}
           </a>
         </div>
-      </div>
+      </div>,
+          document.body,
+        )}
     </header>
   );
 }

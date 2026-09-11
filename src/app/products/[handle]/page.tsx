@@ -134,7 +134,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[hand
       <div className="hairline-t hairline-b">
         <ProductPurchase product={product}>
           {details.badges && (
-            <ul className="mb-6 flex flex-wrap gap-x-5 gap-y-2 text-[0.62rem] tracking-luxe uppercase text-plum">
+            <ul className="mb-6 flex flex-wrap justify-center gap-x-5 gap-y-2 text-[0.62rem] tracking-luxe uppercase text-plum">
               {details.badges.map((b) => (
                 <li key={b} className="flex items-center gap-2">
                   <span className="h-1 w-1 rounded-full bg-gold" aria-hidden="true" /> {b}
