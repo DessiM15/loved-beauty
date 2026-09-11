@@ -19,16 +19,21 @@ export default function AboutPage() {
       <section className="relative flex min-h-[80vh] flex-col justify-end overflow-hidden bg-blush">
         <Image src="/editorial/about.webp" alt="Model in a pink dress with a soft pink eye" fill priority sizes="100vw" className="object-cover object-[50%_20%]" style={{ animation: "ken-burns 2.4s cubic-bezier(0.16,1,0.3,1) both" }} />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(251,247,245,0.05)_0%,rgba(251,247,245,0)_40%,rgba(251,247,245,0.9)_100%)]" />
-        <div className="container-lb relative pt-[calc(var(--header-h)+6rem)] pb-12 md:pb-16">
-          <p className="eyebrow animate-fade-up">{about.eyebrow}</p>
-          <h1 className="h-display mt-4 max-w-4xl text-6xl md:text-8xl animate-fade-up" style={{ animationDelay: "120ms" }}>
-            Beauty that feels like being <em className="h-italic text-rose-deep">loved.</em>
-          </h1>
+        <div className="container-lb relative pt-[calc(var(--header-h)+6rem)] pb-12 text-center md:pb-16">
+          <div className="relative mx-auto flex max-w-4xl flex-col items-center">
+            <div aria-hidden="true" className="pointer-events-none absolute -inset-x-24 -inset-y-14 md:-inset-x-48 md:-inset-y-24" style={{ background: "radial-gradient(ellipse at center, rgba(251,247,245,0.96) 0%, rgba(251,247,245,0.85) 40%, rgba(251,247,245,0.4) 62%, rgba(251,247,245,0) 76%)" }} />
+            <div className="relative">
+              <p className="eyebrow animate-fade-up">{about.eyebrow}</p>
+              <h1 className="h-display mx-auto mt-4 max-w-4xl text-6xl md:text-8xl animate-fade-up" style={{ animationDelay: "120ms" }}>
+                Beauty that feels like being <em className="h-italic text-rose-deep">loved.</em>
+              </h1>
+            </div>
+          </div>
         </div>
       </section>
 
       <section className="hairline-t grid lg:grid-cols-2">
-        <div className="flex flex-col justify-center px-6 py-16 sm:px-10 lg:px-20 lg:py-28">
+        <div className="flex flex-col items-center justify-center px-6 py-16 text-center sm:px-10 lg:px-20 lg:py-28">
           <div className="space-y-5 text-[1.02rem] leading-relaxed text-plum">
             {about.paragraphs.map((p, i) => (
               <p key={p} data-reveal style={{ "--d": `${i * 100}ms` } as React.CSSProperties}>
@@ -39,7 +44,7 @@ export default function AboutPage() {
           <p className="h-italic mt-10 text-2xl text-ink" data-reveal style={{ "--d": "320ms" } as React.CSSProperties}>
             {about.founderNote}
           </p>
-          <Link href="/shop" className="btn btn-primary mt-10 self-start" data-reveal style={{ "--d": "400ms" } as React.CSSProperties}>
+          <Link href="/shop" className="btn btn-primary mt-10" data-reveal style={{ "--d": "400ms" } as React.CSSProperties}>
             Shop the collection <ArrowRightIcon width={14} height={14} />
           </Link>
         </div>
@@ -50,7 +55,7 @@ export default function AboutPage() {
 
       <section id="values" className="hairline-t scroll-mt-20" aria-labelledby="values-heading">
         <div className="container-lb py-16 md:py-24">
-          <div className="max-w-2xl">
+          <div className="mx-auto max-w-2xl text-center">
             <p className="eyebrow" data-reveal>
               What we stand for
             </p>

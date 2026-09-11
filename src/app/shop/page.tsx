@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getCollections, getProducts } from "@/lib/shopify";
 import { CollectionView } from "@/components/product/collection-view";
+import { collectionBanners } from "@/content/site";
 
 export const revalidate = 60;
 
@@ -21,7 +22,7 @@ export default async function ShopPage() {
       description="Everything, in one place. Clean, vegan and cruelty-free."
       products={products}
       collections={visibleCollections}
-      banner={{ src: "/editorial/lips-wide.webp", alt: "Peach lip oil applied to glossy lips" }}
+      banner={collectionBanners.shop}
     />
   );
 }

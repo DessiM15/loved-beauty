@@ -108,7 +108,7 @@ export const hero = {
 export const categoryPanels = [
   { handle: "lips", title: "Lips", text: "Glosses, oils, lacquers and liners.", image: "/editorial/cat-lips.webp", alt: "A pink lip gloss wand applied to soft pink lips" },
   { handle: "lip-care", title: "Lip Care", text: "Prep and treat for the softest lips.", image: "/editorial/cat-lip-care.webp", alt: "Natural glossy lips on glowing skin" },
-  { handle: "face-and-body-glow", title: "Face & Body Glow", text: "Light-catching sprays, lit from within.", image: "/editorial/cat-glow.webp", alt: "Luminous skin catching golden light" },
+  { handle: "face-and-body-glow", title: "Face & Body Glow", text: "Light-catching sprays, lit from within.", image: "/editorial/cat-glow.webp", alt: "Radiant highlighted skin and glossy red lips in golden light" },
   { handle: "sets", title: "Sets & Bundles", text: "Curated pairings that save a little.", image: "/editorial/cat-sets.webp", alt: "Lip liner and lipsticks arranged on blush pink" },
 ];
 
@@ -154,7 +154,7 @@ export const editorial = {
     { n: "03", title: "Glow", text: "Lustre Gloss or Ultra Light Lip Oil to finish.", href: "/products/lustre-lip-gloss", linkLabel: "Lustre Lip Gloss" },
   ],
   cta: { label: "Shop the ritual set", href: "/products/the-lip-ritual-set" },
-  image: { src: "/editorial/ritual.webp", alt: "Lip gloss applied to glossy lips" },
+  image: { src: "/editorial/ritual.webp", alt: "A woman applying lip gloss with a wand" },
 };
 
 export const instagram = {
@@ -164,11 +164,11 @@ export const instagram = {
   text: "Tag @lovedbeautyllc to be featured.",
   // Replace with real posts. Each image should be square-ish.
   posts: [
-    { src: "/editorial/cat-lips.webp", alt: "Pink lip gloss application" },
+    { src: "/editorial/ig-1.webp", alt: "Lips with lilac glitter" },
     { src: "/products/lustre-lip-gloss-1.webp", alt: "Lustre Lip Gloss in Nude" },
-    { src: "/editorial/lips-wide.webp", alt: "Peach lip oil on glossy lips" },
+    { src: "/editorial/ig-2.webp", alt: "Glowing skin with a rose eye look" },
     { src: "/products/shimmer-glow-oil-spray-1.webp", alt: "Shimmer Glow Oil Spray" },
-    { src: "/editorial/cat-glow.webp", alt: "Luminous skin catching golden light" },
+    { src: "/editorial/ig-3.webp", alt: "Glossy red lips" },
     { src: "/products/sugar-lip-scrub-2.webp", alt: "Sugar Lip Scrub beside its box" },
   ],
 };
@@ -245,4 +245,14 @@ export const shadeColors: Record<string, string> = {
   Nude: "#c47a66",
   "Sheer Nude": "#d8b3a4",
   "Clear with Gold Foil": "linear-gradient(135deg,#f6e7c8,#e9cf93 45%,#fff5dd)",
+};
+
+/** Full-bleed collection banners. `position` is the CSS object-position focal point. */
+export const collectionBanners: Record<string, { src: string; alt: string; position: string }> = {
+  shop: { src: "/editorial/banner-shop.webp", alt: "Glossy peach lips being painted with a lip brush", position: "50% 55%" },
+  lips: { src: "/editorial/banner-lips.webp", alt: "Peach lip oil applied to glossy lips", position: "50% 42%" },
+  "lip-care": { src: "/editorial/banner-lip-care.webp", alt: "Natural lips on deep, glowing skin", position: "50% 68%" },
+  "face-and-body-glow": { src: "/editorial/banner-glow.webp", alt: "Collarbone and shoulder dusted with shimmer", position: "50% 50%" },
+  sets: { src: "/editorial/banner-sets.webp", alt: "Lip liner, lipsticks and a dried sprig on blush pink", position: "50% 50%" },
+  bestsellers: { src: "/editorial/banner-bestsellers.webp", alt: "Magenta lips in soft light", position: "50% 62%" },
 };

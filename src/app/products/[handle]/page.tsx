@@ -9,7 +9,7 @@ import { Accordion } from "@/components/ui/accordion";
 import { JsonLd } from "@/components/ui/json-ld";
 import { site } from "@/content/site";
 import { truncate } from "@/lib/utils";
-import { ArrowRightIcon } from "@/components/ui/icons";
+import { SectionIntro } from "@/components/ui/section-intro";
 
 export const revalidate = 60;
 
@@ -152,19 +152,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[hand
 
       {related.length > 0 && (
         <section aria-labelledby="related-heading">
-          <div className="container-lb flex flex-col gap-4 py-14 md:flex-row md:items-end md:justify-between md:py-20">
-            <div>
-              <p className="eyebrow" data-reveal>
-                Complete the look
-              </p>
-              <h2 id="related-heading" className="h-display mt-3 text-5xl" data-reveal style={{ "--d": "100ms" } as React.CSSProperties}>
-                You may also like
-              </h2>
-            </div>
-            <Link href="/shop" className="link-underline inline-flex items-center gap-2 self-start text-[0.68rem] tracking-luxe uppercase text-ink md:self-auto" data-reveal>
-              Shop everything <ArrowRightIcon width={12} height={12} />
-            </Link>
-          </div>
+          <SectionIntro id="related-heading" eyebrow="Complete the look" title="You may also" italic="like." link={{ label: "Shop everything", href: "/shop" }} />
           <div className="hairline-t hairline-b">
             <ProductGrid products={related} priorityCount={0} />
           </div>

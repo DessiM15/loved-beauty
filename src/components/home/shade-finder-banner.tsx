@@ -10,9 +10,9 @@ export function ShadeFinderBanner() {
       <Parallax amount={6} className="absolute inset-0">
         <Image src="/editorial/swatches.webp" alt="Lip color swatches on an arm" fill sizes="100vw" className="object-cover object-[50%_40%]" />
       </Parallax>
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(251,247,245,0.92)_0%,rgba(251,247,245,0.75)_45%,rgba(251,247,245,0.15)_100%)]" />
-      <div className="container-lb relative grid min-h-[60vh] items-center py-20">
-        <div className="max-w-xl">
+      <div className="absolute inset-0 bg-cream/60" />
+      <div className="container-lb relative flex min-h-[60vh] items-center justify-center py-20">
+        <div className="flex max-w-2xl flex-col items-center text-center">
           <p className="eyebrow" data-reveal>
             New · Shade finder
           </p>

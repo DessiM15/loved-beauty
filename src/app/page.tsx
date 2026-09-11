@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { getCollectionProducts, getCollections } from "@/lib/shopify";
 import { Hero } from "@/components/home/hero";
 import { CategoryPanels } from "@/components/home/category-panels";
@@ -9,7 +8,7 @@ import { ShadeFinderBanner } from "@/components/home/shade-finder-banner";
 import { InstagramGrid } from "@/components/home/instagram-grid";
 import { NewsletterSection } from "@/components/marketing/newsletter-section";
 import { ProductGrid } from "@/components/product/product-grid";
-import { ArrowRightIcon } from "@/components/ui/icons";
+import { SectionIntro } from "@/components/ui/section-intro";
 
 export const revalidate = 60;
 
@@ -30,19 +29,7 @@ export default async function HomePage() {
       <CategoryPanels collections={collections} />
 
       <section aria-labelledby="bestsellers-heading">
-        <div className="container-lb flex flex-col gap-4 py-14 md:flex-row md:items-end md:justify-between md:py-20">
-          <div>
-            <p className="eyebrow" data-reveal>
-              Most loved
-            </p>
-            <h2 id="bestsellers-heading" className="h-display mt-3 text-5xl md:text-6xl" data-reveal style={{ "--d": "100ms" } as React.CSSProperties}>
-              Bestsellers
-            </h2>
-          </div>
-          <Link href="/shop" className="link-underline inline-flex items-center gap-2 self-start text-[0.68rem] tracking-luxe uppercase text-ink md:self-auto" data-reveal>
-            Shop everything <ArrowRightIcon width={12} height={12} />
-          </Link>
-        </div>
+        <SectionIntro id="bestsellers-heading" eyebrow="Most loved" title="Bestsellers" text="The glosses, oils and glow sprays our community keeps coming back for." link={{ label: "Shop everything", href: "/shop" }} />
         <div className="hairline-t hairline-b">
           <ProductGrid products={bestsellers.slice(0, 4)} />
         </div>

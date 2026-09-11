@@ -25,9 +25,12 @@ export default function ShadeFinderPage() {
   return (
     <div>
       <section className="relative flex min-h-[60vh] flex-col justify-end overflow-hidden bg-blush">
-        <Image src="/editorial/swatches.webp" alt="Lip color swatches on an arm" fill priority sizes="100vw" className="object-cover object-[50%_40%]" style={{ animation: "ken-burns 2.4s cubic-bezier(0.16,1,0.3,1) both" }} />
+        <Image src="/editorial/shade-page.webp" alt="Lip color swatches on the back of a hand" fill priority sizes="100vw" className="object-cover object-[50%_40%]" style={{ animation: "ken-burns 2.4s cubic-bezier(0.16,1,0.3,1) both" }} />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(251,247,245,0.1)_0%,rgba(251,247,245,0)_40%,rgba(251,247,245,0.9)_100%)]" />
         <div className="container-lb relative pt-[calc(var(--header-h)+5rem)] pb-12 text-center">
+          <div className="relative mx-auto flex max-w-4xl flex-col items-center">
+            <div aria-hidden="true" className="pointer-events-none absolute -inset-x-24 -inset-y-14 md:-inset-x-48 md:-inset-y-24" style={{ background: "radial-gradient(ellipse at center, rgba(251,247,245,0.96) 0%, rgba(251,247,245,0.85) 40%, rgba(251,247,245,0.4) 62%, rgba(251,247,245,0) 76%)" }} />
+            <div className="relative">
           <p className="eyebrow animate-fade-up">Shade finder</p>
           <h1 className="h-display mx-auto mt-4 max-w-3xl text-6xl md:text-8xl animate-fade-up" style={{ animationDelay: "120ms" }}>
             Find your shade in <em className="h-italic text-rose-deep">30 seconds.</em>
@@ -35,6 +38,8 @@ export default function ShadeFinderPage() {
           <p className="mx-auto mt-5 max-w-xl text-[0.98rem] leading-relaxed text-plum animate-fade-up" style={{ animationDelay: "240ms" }}>
             Snap a selfie or answer three quick questions and we&rsquo;ll match you to the liner and gloss that flatter your undertone.
           </p>
+            </div>
+          </div>
         </div>
       </section>
       <div className="container-lb hairline-t py-14 md:py-20">

@@ -11,7 +11,7 @@ export function Ritual() {
       <Parallax amount={6} className="relative aspect-[4/5] lg:aspect-auto lg:min-h-[100vh]">
         <Image src={editorial.image.src} alt={editorial.image.alt} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
       </Parallax>
-      <div className="flex flex-col justify-center px-6 py-16 sm:px-10 lg:px-20 lg:py-24">
+      <div className="flex flex-col items-center justify-center px-6 py-16 text-center sm:px-10 lg:px-20 lg:py-24">
         <p className="eyebrow" data-reveal>
           {editorial.eyebrow}
         </p>
@@ -21,7 +21,7 @@ export function Ritual() {
         <p className="mt-6 max-w-md text-[0.98rem] leading-relaxed text-plum" data-reveal style={{ "--d": "180ms" } as React.CSSProperties}>
           {editorial.text}
         </p>
-        <ol className="mt-12 divide-y divide-line border-y border-line">
+        <ol className="mt-12 w-full max-w-md divide-y divide-line border-y border-line text-left">
           {editorial.steps.map((s, i) => (
             <li key={s.n} className="grid grid-cols-[3.5rem_1fr] items-baseline gap-4 py-6" data-reveal style={{ "--d": `${240 + i * 90}ms` } as React.CSSProperties}>
               <span className="eyebrow-num">{s.n}</span>
@@ -35,7 +35,7 @@ export function Ritual() {
             </li>
           ))}
         </ol>
-        <Link href={editorial.cta.href} className="btn btn-primary mt-10 self-start" data-reveal style={{ "--d": "560ms" } as React.CSSProperties}>
+        <Link href={editorial.cta.href} className="btn btn-primary mt-10" data-reveal style={{ "--d": "560ms" } as React.CSSProperties}>
           {editorial.cta.label} <ArrowRightIcon width={14} height={14} />
         </Link>
       </div>

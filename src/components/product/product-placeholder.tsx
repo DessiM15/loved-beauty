@@ -4,7 +4,7 @@ import Image from "next/image";
 export function ProductPlaceholder({ title }: { title: string; handle?: string }) {
   return (
     <div className="absolute inset-0">
-      <Image src="/editorial/silk.webp" alt="" fill sizes="30vw" className="object-cover" />
+      <Image src="/editorial/silk-pale.webp" alt="" fill sizes="30vw" className="object-cover" />
       <div className="absolute inset-0 bg-cream/55" />
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center">
         <Image src="/brand/monogram-rose.png" alt="" width={120} height={112} className="h-12 w-auto opacity-70" />

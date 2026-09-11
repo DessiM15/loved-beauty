@@ -4,8 +4,8 @@ import { NewsletterForm } from "./newsletter-form";
 export function NewsletterSection() {
   return (
     <section className="hairline-t bg-blush" aria-labelledby="newsletter-heading">
-      <div className="container-lb grid gap-10 py-20 md:grid-cols-2 md:items-center md:py-28">
-        <div>
+      <div className="container-lb flex flex-col items-center py-20 text-center md:py-28">
+        <div className="flex flex-col items-center">
           <p className="eyebrow" data-reveal>
             {newsletter.eyebrow}
           </p>
@@ -16,7 +16,7 @@ export function NewsletterSection() {
             {newsletter.text}
           </p>
         </div>
-        <div data-reveal style={{ "--d": "260ms" } as React.CSSProperties}>
+        <div className="mt-10 w-full max-w-lg text-left" data-reveal style={{ "--d": "260ms" } as React.CSSProperties}>
           <NewsletterForm source="home" variant="line" />
         </div>
       </div>

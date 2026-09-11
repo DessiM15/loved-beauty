@@ -9,8 +9,8 @@ import { SortSelect, type SortValue } from "./sort-select";
 import { cn } from "@/lib/utils";
 
 /**
- * Collection page: full-bleed editorial banner (header sits over it),
- * hairline toolbar with category links and sort, hairline product grid.
+ * Collection page: full-bleed editorial banner (header sits over it) with a
+ * centered, spotlighted title; hairline toolbar; hairline product grid.
  * Sorting is client-side so the page stays static.
  */
 export function CollectionView({
@@ -26,7 +26,7 @@ export function CollectionView({
   products: Product[];
   collections: Collection[];
   activeHandle?: string;
-  banner?: { src: string; alt: string } | null;
+  banner?: { src: string; alt: string; position?: string } | null;
 }) {
   const [sort, setSort] = useState<SortValue>("featured");
 
@@ -52,45 +52,60 @@ export function CollectionView({
   return (
     <div>
       {/* Banner */}
-      <section className="relative flex min-h-[52vh] flex-col justify-end overflow-hidden bg-blush md:min-h-[62vh]">
+      <section className="relative flex min-h-[56vh] flex-col justify-center overflow-hidden bg-blush md:min-h-[64vh]">
         {banner && (
           <>
-            <Image src={banner.src} alt={banner.alt} fill priority sizes="100vw" className="object-cover object-[50%_35%]" style={{ animation: "ken-burns 2.4s cubic-bezier(0.16,1,0.3,1) both" }} />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(251,247,245,0.1)_0%,rgba(251,247,245,0)_40%,rgba(251,247,245,0.85)_100%)]" />
+            <Image
+              src={banner.src}
+              alt={banner.alt}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+              style={{ objectPosition: banner.position ?? "50% 50%", animation: "ken-burns 2.4s cubic-bezier(0.16,1,0.3,1) both" }}
+            />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(251,247,245,0.5)_0%,rgba(251,247,245,0)_25%,rgba(251,247,245,0)_60%,rgba(251,247,245,0.9)_100%)]" />
           </>
         )}
-        <div className="container-lb relative pt-[calc(var(--header-h)+5rem)] pb-10 md:pb-14">
-          <nav aria-label="Breadcrumb" className="mb-4 text-[0.62rem] tracking-luxe uppercase text-plum animate-fade-up">
-            <ol className="flex items-center gap-3">
-              <li>
-                <Link href="/" className="hover:text-ink">
-                  Home
-                </Link>
-              </li>
-              <li aria-hidden="true">/</li>
-              <li>
-                <Link href="/shop" className="hover:text-ink">
-                  Shop
-                </Link>
-              </li>
-              {activeHandle && (
-                <>
-                  <li aria-hidden="true">/</li>
-                  <li aria-current="page" className="text-ink">
-                    {title}
-                  </li>
-                </>
-              )}
-            </ol>
-          </nav>
-          <h1 className="h-display text-6xl md:text-8xl animate-fade-up" style={{ animationDelay: "120ms" }}>
-            {title}
-          </h1>
-          {description && (
-            <p className="mt-4 max-w-md text-[0.98rem] text-plum animate-fade-up" style={{ animationDelay: "240ms" }}>
-              {description}
-            </p>
-          )}
+        <div className="container-lb relative flex flex-col items-center pt-[calc(var(--header-h)+3rem)] pb-12 text-center md:pb-16">
+          <div className="relative flex flex-col items-center">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -inset-x-24 -inset-y-14 md:-inset-x-48 md:-inset-y-24"
+              style={{ background: "radial-gradient(ellipse at center, rgba(251,247,245,0.96) 0%, rgba(251,247,245,0.85) 40%, rgba(251,247,245,0.4) 62%, rgba(251,247,245,0) 76%)" }}
+            />
+            <nav aria-label="Breadcrumb" className="relative mb-4 text-[0.62rem] tracking-luxe uppercase text-plum animate-fade-up">
+              <ol className="flex items-center gap-3">
+                <li>
+                  <Link href="/" className="hover:text-ink">
+                    Home
+                  </Link>
+                </li>
+                <li aria-hidden="true">/</li>
+                <li>
+                  <Link href="/shop" className="hover:text-ink">
+                    Shop
+                  </Link>
+                </li>
+                {activeHandle && (
+                  <>
+                    <li aria-hidden="true">/</li>
+                    <li aria-current="page" className="text-ink">
+                      {title}
+                    </li>
+                  </>
+                )}
+              </ol>
+            </nav>
+            <h1 className="h-display relative text-6xl md:text-8xl animate-fade-up" style={{ animationDelay: "120ms" }}>
+              {title}
+            </h1>
+            {description && (
+              <p className="relative mt-4 max-w-md text-[0.98rem] text-plum animate-fade-up" style={{ animationDelay: "240ms" }}>
+                {description}
+              </p>
+            )}
+          </div>
         </div>
       </section>
 
