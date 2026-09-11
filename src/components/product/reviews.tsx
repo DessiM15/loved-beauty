@@ -22,7 +22,7 @@ export function Reviews({ productTitle }: { productTitle: string }) {
       </h2>
       <ul className="mt-6 grid gap-4 md:grid-cols-2">
         {sample.map((r) => (
-          <li key={r.name} className="rounded-2xl border border-petal bg-white p-5">
+          <li key={r.name} className="rounded-sm border border-line bg-white p-5">
             <div className="flex items-center gap-1 text-gold" aria-label={`${r.rating} out of 5 stars`}>
               {Array.from({ length: r.rating }).map((_, i) => (
                 <StarIcon key={i} />

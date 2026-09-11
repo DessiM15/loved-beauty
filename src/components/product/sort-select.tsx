@@ -14,13 +14,13 @@ const options: { value: SortValue; label: string }[] = [
 
 export function SortSelect({ value, onChange }: { value: SortValue; onChange: (v: SortValue) => void }) {
   return (
-    <label className="relative inline-flex items-center gap-2 text-xs text-plum">
-      <span>Sort by</span>
+    <label className="relative inline-flex items-center gap-2 text-[0.62rem] tracking-luxe uppercase text-plum">
+      <span className="hidden sm:inline">Sort</span>
       <span className="relative">
         <select
           value={value}
           onChange={(e) => onChange(e.target.value as SortValue)}
-          className="appearance-none rounded-full border border-petal bg-white py-1.5 pr-8 pl-3 text-xs text-ink"
+          className="appearance-none bg-transparent py-1 pr-6 pl-0 text-[0.62rem] tracking-luxe uppercase text-ink outline-none"
           aria-label="Sort products"
         >
           {options.map((o) => (
@@ -29,7 +29,7 @@ export function SortSelect({ value, onChange }: { value: SortValue; onChange: (v
             </option>
           ))}
         </select>
-        <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 text-plum" width={14} height={14} />
+        <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-0 -translate-y-1/2 text-plum" width={14} height={14} />
       </span>
     </label>
   );

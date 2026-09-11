@@ -35,7 +35,7 @@ export default function ContactPage() {
           </ul>
           <p className="mt-8 text-xs text-plum">{site.legalName} · {site.location}</p>
         </div>
-        <div className="rounded-3xl border border-petal bg-white p-6 md:p-8">
+        <div className="rounded-sm border border-line bg-white p-6 md:p-8">
           <ContactForm />
         </div>
       </div>

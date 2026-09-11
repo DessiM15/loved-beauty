@@ -15,7 +15,7 @@ export function Accordion({
   defaultOpen?: number | null;
 }) {
   return (
-    <div className={cn("divide-y divide-petal border-y border-petal", className)}>
+    <div className={cn("divide-y divide-line border-y border-line", className)}>
       {items.map((item, i) => (
         <details key={item.title} className="group" open={defaultOpen === i}>
           <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-left text-[0.95rem] font-medium text-ink marker:hidden [&::-webkit-details-marker]:hidden">

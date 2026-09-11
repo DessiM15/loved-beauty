@@ -1,38 +1,32 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRightIcon, SparkleIcon } from "@/components/ui/icons";
+import { Parallax } from "@/components/motion/parallax";
+import { ArrowRightIcon } from "@/components/ui/icons";
 
-/** Home page entry to the shade finder. Compact by design: one line, one button. */
+/** Full-bleed shade finder entry over the swatch photograph. */
 export function ShadeFinderBanner() {
   return (
-    <section className="container-lb py-6" aria-labelledby="shade-banner-heading">
-      <Link
-        href="/shade-finder"
-        className="group relative flex flex-col items-center gap-5 overflow-hidden rounded-3xl bg-ink px-6 py-8 text-white md:flex-row md:justify-between md:px-10"
-      >
-        <div className="flex items-center gap-4">
-          <span className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white/10 text-petal sm:inline-flex">
-            <SparkleIcon />
-          </span>
-          <div>
-            <p className="text-[0.62rem] tracking-luxe uppercase text-petal">New · Shade finder</p>
-            <h2 id="shade-banner-heading" className="mt-1 font-serif text-2xl leading-tight md:text-3xl">
-              Not sure which shade is yours? Find out in 30 seconds.
-            </h2>
-            <p className="mt-1 text-sm text-white/70">Use a selfie or answer three quick questions.</p>
-          </div>
+    <section className="relative overflow-hidden hairline-t" aria-labelledby="shade-banner-heading">
+      <Parallax amount={6} className="absolute inset-0">
+        <Image src="/editorial/swatches.webp" alt="Lip color swatches on an arm" fill sizes="100vw" className="object-cover object-[50%_40%]" />
+      </Parallax>
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(251,247,245,0.92)_0%,rgba(251,247,245,0.75)_45%,rgba(251,247,245,0.15)_100%)]" />
+      <div className="container-lb relative grid min-h-[60vh] items-center py-20">
+        <div className="max-w-xl">
+          <p className="eyebrow" data-reveal>
+            New · Shade finder
+          </p>
+          <h2 id="shade-banner-heading" className="h-display mt-4 text-5xl md:text-6xl" data-reveal style={{ "--d": "100ms" } as React.CSSProperties}>
+            Not sure which shade is <em className="h-italic text-rose-deep">yours?</em>
+          </h2>
+          <p className="mt-5 max-w-md text-[0.98rem] leading-relaxed text-plum" data-reveal style={{ "--d": "200ms" } as React.CSSProperties}>
+            Snap a selfie or answer three quick questions. We&rsquo;ll match you to the liner and gloss made for your undertone, in 30 seconds.
+          </p>
+          <Link href="/shade-finder" className="btn btn-primary mt-8" data-reveal style={{ "--d": "300ms" } as React.CSSProperties}>
+            Find my shade <ArrowRightIcon width={14} height={14} />
+          </Link>
         </div>
-        <span className="btn shrink-0 bg-white text-ink group-hover:bg-petal">
-          Find my shade <ArrowRightIcon width={14} height={14} />
-        </span>
-        <Image
-          src="/brand/monogram-blush.png"
-          alt=""
-          width={120}
-          height={112}
-          className="pointer-events-none absolute -right-6 -bottom-8 h-40 w-auto opacity-10"
-        />
-      </Link>
+      </div>
     </section>
   );
 }

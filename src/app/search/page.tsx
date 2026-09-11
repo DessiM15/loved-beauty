@@ -16,7 +16,7 @@ export default async function SearchPage({ searchParams }: PageProps<"/search">)
   return (
     <div className="container-lb py-10 md:py-14">
       <h1 className="h-display text-4xl md:text-5xl">{q ? `Results for “${q}”` : "Search"}</h1>
-      <form action="/search" className="mt-6 flex max-w-xl items-center gap-2 rounded-full border border-petal bg-white px-4">
+      <form action="/search" className="mt-6 flex max-w-xl items-center gap-2 rounded-sm border border-line bg-white px-4">
         <SearchIcon className="text-plum" width={18} height={18} />
         <input
           type="search"

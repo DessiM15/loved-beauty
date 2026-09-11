@@ -32,13 +32,13 @@ export function CartUpsell() {
   if (visible.length === 0) return null;
 
   return (
-    <div className="mt-6 border-t border-petal pt-5">
+    <div className="mt-6 border-t border-line pt-5">
       <p className="eyebrow">Add a little something</p>
       <ul className="mt-3 space-y-3">
         {visible.map((item) => (
           <li key={item.variantId} className="flex items-center gap-3">
             <div
-              className="relative h-14 w-12 shrink-0 overflow-hidden rounded-lg"
+              className="relative h-14 w-12 shrink-0 overflow-hidden"
               style={{ background: placeholderTint(item.handle) }}
             >
               {item.image && <Image src={item.image} alt={item.title} fill sizes="48px" className="object-cover" />}
@@ -51,7 +51,7 @@ export function CartUpsell() {
               type="button"
               disabled={isPending}
               onClick={() => addItem(item.variantId, 1)}
-              className="inline-flex h-9 items-center gap-1 rounded-full border border-ink px-3 text-[0.68rem] tracking-wide2 uppercase hover:bg-ink hover:text-white disabled:opacity-50"
+              className="inline-flex h-9 items-center gap-1 border border-ink px-3 text-[0.6rem] tracking-luxe uppercase hover:bg-ink hover:text-white disabled:opacity-50"
             >
               <PlusIcon /> Add
             </button>

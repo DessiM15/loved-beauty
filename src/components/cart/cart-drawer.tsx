@@ -48,7 +48,7 @@ export function CartDrawer() {
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex items-center justify-between border-b border-petal px-5 py-4">
+        <div className="flex items-center justify-between border-b border-line px-5 py-4">
           <h2 className="font-serif text-2xl">
             Your bag{" "}
             {cart && cart.totalQuantity > 0 && (
@@ -58,7 +58,7 @@ export function CartDrawer() {
           <button
             type="button"
             onClick={closeCart}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-full hover:bg-blush"
+            className="inline-flex h-10 w-10 items-center justify-center hover:bg-blush"
             aria-label="Close bag"
           >
             <CloseIcon />
@@ -66,7 +66,7 @@ export function CartDrawer() {
         </div>
 
         {/* Free shipping progress */}
-        <div className="border-b border-petal bg-blush/60 px-5 py-3">
+        <div className="border-b border-line bg-blush/60 px-5 py-3">
           <p className="text-xs text-plum">
             {remaining > 0 ? (
               <>
@@ -77,7 +77,7 @@ export function CartDrawer() {
               <strong className="text-ink">You&rsquo;ve unlocked free U.S. shipping.</strong>
             )}
           </p>
-          <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-petal" aria-hidden="true">
+          <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-line" aria-hidden="true">
             <div className="h-full rounded-full bg-gold transition-[width] duration-500" style={{ width: `${progress}%` }} />
           </div>
         </div>
@@ -92,7 +92,7 @@ export function CartDrawer() {
               </Link>
             </div>
           ) : (
-            <ul className="divide-y divide-petal">
+            <ul className="divide-y divide-line">
               {lines.map((line) => {
                 const optionLabel = line.merchandise.selectedOptions
                   .filter((o) => o.value !== "Default Title")
@@ -103,7 +103,7 @@ export function CartDrawer() {
                     <Link
                       href={`/products/${line.merchandise.product.handle}`}
                       onClick={closeCart}
-                      className="relative h-24 w-20 shrink-0 overflow-hidden rounded-xl"
+                      className="relative h-24 w-20 shrink-0 overflow-hidden"
                       style={{ background: placeholderTint(line.merchandise.product.handle) }}
                     >
                       {line.merchandise.image ? (
@@ -131,10 +131,10 @@ export function CartDrawer() {
                         <p className="text-sm">{formatMoney(line.cost.totalAmount)}</p>
                       </div>
                       <div className="mt-auto flex items-center justify-between pt-3">
-                        <div className="inline-flex items-center rounded-full border border-petal bg-white">
+                        <div className="inline-flex items-center border border-line bg-white">
                           <button
                             type="button"
-                            className="inline-flex h-8 w-8 items-center justify-center rounded-full hover:bg-blush"
+                            className="inline-flex h-8 w-8 items-center justify-center hover:bg-blush"
                             aria-label={`Decrease quantity of ${line.merchandise.product.title}`}
                             onClick={() => updateItem(line.id, line.merchandise.id, line.quantity - 1)}
                           >
@@ -145,7 +145,7 @@ export function CartDrawer() {
                           </span>
                           <button
                             type="button"
-                            className="inline-flex h-8 w-8 items-center justify-center rounded-full hover:bg-blush"
+                            className="inline-flex h-8 w-8 items-center justify-center hover:bg-blush"
                             aria-label={`Increase quantity of ${line.merchandise.product.title}`}
                             onClick={() => updateItem(line.id, line.merchandise.id, line.quantity + 1)}
                           >
@@ -169,14 +169,14 @@ export function CartDrawer() {
           )}
           {!isEmpty && <CartUpsell />}
           {error && (
-            <p role="alert" className="mt-4 rounded-xl bg-danger/10 px-4 py-3 text-sm text-danger">
+            <p role="alert" className="mt-4 bg-danger/10 px-4 py-3 text-sm text-danger">
               {error}
             </p>
           )}
         </div>
 
         {!isEmpty && (
-          <div className="border-t border-petal bg-white px-5 py-4">
+          <div className="border-t border-line bg-white px-5 py-4">
             <div className="flex items-center justify-between text-sm">
               <span className="text-plum">Subtotal</span>
               <span className="font-medium">{formatMoney(cart?.cost.subtotalAmount)}</span>
@@ -190,7 +190,7 @@ export function CartDrawer() {
             >
               <LockIcon width={16} height={16} /> Checkout
             </a>
-            <button type="button" onClick={closeCart} className="mt-3 w-full text-center text-xs tracking-wide2 uppercase text-plum hover:text-ink">
+            <button type="button" onClick={closeCart} className="link-underline mx-auto mt-4 block text-[0.62rem] tracking-luxe uppercase text-plum hover:text-ink">
               Continue shopping
             </button>
           </div>

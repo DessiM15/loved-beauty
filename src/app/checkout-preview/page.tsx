@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function CheckoutPreviewPage() {
   return (
     <div className="container-lb flex min-h-[60vh] flex-col items-center justify-center py-16 text-center">
-      <span className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-blush text-rose-deep">
+      <span className="inline-flex h-14 w-14 items-center justify-center rounded-sm bg-blush text-rose-deep">
         <LockIcon />
       </span>
       <h1 className="h-display mt-5 text-4xl">Secure checkout</h1>

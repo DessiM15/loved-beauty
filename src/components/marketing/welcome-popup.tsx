@@ -56,12 +56,12 @@ export function WelcomePopup() {
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center p-4 sm:items-center" role="dialog" aria-modal="true" aria-labelledby="welcome-heading">
       <button type="button" aria-label="Close" onClick={dismiss} className="absolute inset-0 bg-ink/40" />
-      <div className="relative w-full max-w-md rounded-3xl bg-cream p-7 text-center shadow-2xl animate-fade-up">
+      <div className="relative w-full max-w-md rounded-sm bg-cream p-7 text-center shadow-2xl animate-fade-up">
         <button
           type="button"
           onClick={dismiss}
           aria-label="Close"
-          className="absolute top-3 right-3 inline-flex h-9 w-9 items-center justify-center rounded-full hover:bg-blush"
+          className="absolute top-3 right-3 inline-flex h-9 w-9 items-center justify-center rounded-sm hover:bg-blush"
         >
           <CloseIcon width={18} height={18} />
         </button>

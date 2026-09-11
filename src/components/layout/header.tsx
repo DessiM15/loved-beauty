@@ -2,34 +2,38 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { nav, site } from "@/content/site";
 import { useCart } from "@/components/cart/cart-context";
 import { BagIcon, CloseIcon, InstagramIcon, MenuIcon, SearchIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 
+/** Pages whose first section is a full-bleed image the header should sit over. */
+const TRANSPARENT_ROUTES = ["/", "/shop", "/about", "/shade-finder"];
+
 /**
- * Header with the full logo centered, as the client requested.
- * Desktop: links left · logo center · search + bag right.
- * Mobile:  menu left  · logo center · bag right.
+ * Sticky header, logo centered. Transparent over full-bleed heroes, solid
+ * cream with a hairline once the page scrolls.
  */
 export function Header() {
   const pathname = usePathname();
+  const router = useRouter();
   const { cart, openCart } = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const count = cart?.totalQuantity ?? 0;
+  const overHero = TRANSPARENT_ROUTES.includes(pathname) || pathname.startsWith("/collections/");
+  const transparent = overHero && !scrolled && !searchOpen;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close overlays when the route changes (state adjustment during render, per React guidance).
   const [prevPath, setPrevPath] = useState(pathname);
   if (prevPath !== pathname) {
     setPrevPath(pathname);
@@ -48,35 +52,46 @@ export function Header() {
 
   const isActive = (href: string) => pathname === href || (href !== "/" && pathname.startsWith(href + "/"));
 
+  /** Logo always lands on the top of the home page, even when already there. */
+  function goHome(e: React.MouseEvent) {
+    setMenuOpen(false);
+    if (pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      e.preventDefault();
+      router.push("/");
+    }
+  }
+
+  const linkClass = "link-underline text-[0.68rem] tracking-luxe uppercase text-ink";
+
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 border-b bg-cream transition-shadow",
-        scrolled ? "border-petal shadow-[0_8px_30px_-18px_rgba(43,34,36,0.25)]" : "border-transparent",
+        "sticky top-0 z-40 transition-[background-color,border-color] duration-500",
+        transparent ? "border-b border-transparent bg-transparent" : "border-b border-line bg-cream/95 backdrop-blur-sm",
+        overHero && "-mb-[var(--header-h)]",
       )}
     >
-      <div className="container-lb grid h-16 grid-cols-[1fr_auto_1fr] items-center md:h-20">
+      <div className="container-lb grid h-[var(--header-h)] grid-cols-[1fr_auto_1fr] items-center">
         {/* Left */}
-        <div className="flex items-center gap-1 md:gap-7">
+        <div className="flex items-center gap-1 md:gap-8">
           <button
             type="button"
-            className="-ml-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-ink hover:bg-blush md:hidden"
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            className="-ml-2 inline-flex h-10 w-10 items-center justify-center text-ink md:hidden"
+            aria-label="Open menu"
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
-            onClick={() => setMenuOpen((v) => !v)}
+            onClick={() => setMenuOpen(true)}
           >
-            {menuOpen ? <CloseIcon /> : <MenuIcon />}
+            <MenuIcon />
           </button>
           <nav aria-label="Primary" className="hidden md:block">
-            <ul className="flex items-center gap-7">
+            <ul className="flex items-center gap-8">
               {nav.primary.map((item) => (
                 <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    aria-current={isActive(item.href) ? "page" : undefined}
-                    className="link-underline text-[0.74rem] tracking-[0.14em] uppercase text-ink"
-                  >
+                  <Link href={item.href} aria-current={isActive(item.href) ? "page" : undefined} className={linkClass}>
                     {item.label}
                   </Link>
                 </li>
@@ -86,7 +101,7 @@ export function Header() {
         </div>
 
         {/* Center: full logo */}
-        <Link href="/" className="flex items-center justify-center px-2" aria-label={`${site.name} home`}>
+        <Link href="/" onClick={goHome} className="flex items-center justify-center px-3" aria-label={`${site.name} home`}>
           <Image
             src="/brand/logo-rose.png"
             alt={site.name}
@@ -100,15 +115,11 @@ export function Header() {
 
         {/* Right */}
         <div className="flex items-center justify-end gap-1 md:gap-2">
-          <nav aria-label="Secondary" className="mr-4 hidden lg:block">
-            <ul className="flex items-center gap-7">
+          <nav aria-label="Secondary" className="mr-5 hidden lg:block">
+            <ul className="flex items-center gap-8">
               {nav.secondary.map((item) => (
                 <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    aria-current={isActive(item.href) ? "page" : undefined}
-                    className="link-underline text-[0.74rem] tracking-[0.14em] uppercase text-ink"
-                  >
+                  <Link href={item.href} aria-current={isActive(item.href) ? "page" : undefined} className={linkClass}>
                     {item.label}
                   </Link>
                 </li>
@@ -117,22 +128,22 @@ export function Header() {
           </nav>
           <button
             type="button"
-            className="hidden h-10 w-10 items-center justify-center rounded-full text-ink hover:bg-blush md:inline-flex"
+            className="hidden h-10 w-10 items-center justify-center text-ink md:inline-flex"
             aria-label="Search"
             aria-expanded={searchOpen}
             onClick={() => setSearchOpen((v) => !v)}
           >
-            <SearchIcon />
+            <SearchIcon width={20} height={20} />
           </button>
           <button
             type="button"
             onClick={openCart}
-            className="relative -mr-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-ink hover:bg-blush"
+            className="relative -mr-2 inline-flex h-10 w-10 items-center justify-center text-ink"
             aria-label={`Open bag, ${count} ${count === 1 ? "item" : "items"}`}
           >
-            <BagIcon />
+            <BagIcon width={20} height={20} />
             {count > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 flex h-[1.15rem] min-w-[1.15rem] items-center justify-center rounded-full bg-rose px-1 text-[0.62rem] font-medium text-white">
+              <span className="absolute top-0.5 right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-ink px-1 text-[0.58rem] text-white">
                 {count}
               </span>
             )}
@@ -143,31 +154,31 @@ export function Header() {
       {/* Desktop search reveal */}
       <div
         className={cn(
-          "hidden overflow-hidden border-t border-petal bg-cream transition-[max-height] duration-300 md:block",
-          searchOpen ? "max-h-24" : "max-h-0 border-t-0",
+          "hidden overflow-hidden bg-cream transition-[max-height,opacity] duration-500 md:block",
+          searchOpen ? "max-h-24 border-t border-line opacity-100" : "max-h-0 opacity-0",
         )}
       >
-        <form action="/search" className="container-lb flex items-center gap-3 py-3">
-          <SearchIcon className="text-plum" />
+        <form action="/search" className="container-lb flex items-center gap-4 py-4">
+          <SearchIcon className="text-plum" width={18} height={18} />
           <input
             type="search"
             name="q"
             placeholder="Search lip gloss, shimmer spray…"
-            className="flex-1 bg-transparent py-2 text-base outline-none placeholder:text-plum/60"
+            className="input-line flex-1 py-2"
             aria-label="Search products"
             autoFocus={searchOpen}
           />
-          <button type="submit" className="btn btn-primary min-h-0 px-5 py-2">
+          <button type="submit" className="btn btn-primary min-h-0 px-5 py-2.5">
             Search
           </button>
         </form>
       </div>
 
-      {/* Mobile menu: full-screen overlay, independent of the sticky header */}
+      {/* Mobile menu: full-screen overlay */}
       <div
         id="mobile-menu"
         className={cn(
-          "fixed inset-0 z-50 flex flex-col bg-cream transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden",
+          "fixed inset-0 z-50 flex flex-col bg-cream transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] md:hidden",
           menuOpen ? "translate-x-0" : "-translate-x-full",
         )}
         aria-hidden={!menuOpen}
@@ -175,16 +186,11 @@ export function Header() {
         aria-modal="true"
         aria-label="Menu"
       >
-        <div className="container-lb grid h-16 shrink-0 grid-cols-[1fr_auto_1fr] items-center border-b border-petal">
-          <button
-            type="button"
-            className="-ml-2 inline-flex h-10 w-10 items-center justify-center rounded-full text-ink hover:bg-blush"
-            aria-label="Close menu"
-            onClick={() => setMenuOpen(false)}
-          >
+        <div className="container-lb grid h-[var(--header-h)] shrink-0 grid-cols-[1fr_auto_1fr] items-center border-b border-line">
+          <button type="button" className="-ml-2 inline-flex h-10 w-10 items-center justify-center text-ink" aria-label="Close menu" onClick={() => setMenuOpen(false)}>
             <CloseIcon />
           </button>
-          <Link href="/" onClick={() => setMenuOpen(false)} aria-label={`${site.name} home`}>
+          <Link href="/" onClick={goHome} aria-label={`${site.name} home`}>
             <Image src="/brand/logo-rose.png" alt={site.name} width={1725} height={447} className="h-8 w-auto" sizes="130px" />
           </Link>
           <button
@@ -193,37 +199,32 @@ export function Header() {
               setMenuOpen(false);
               openCart();
             }}
-            className="-mr-2 justify-self-end inline-flex h-10 w-10 items-center justify-center rounded-full text-ink hover:bg-blush"
+            className="-mr-2 inline-flex h-10 w-10 items-center justify-center justify-self-end text-ink"
             aria-label="Open bag"
           >
-            <BagIcon />
+            <BagIcon width={20} height={20} />
           </button>
         </div>
-        <div className="flex-1 overflow-y-auto px-5 pt-5 pb-10">
-          <form action="/search" className="mb-6 flex items-center gap-2 rounded-full border border-petal bg-white px-4">
+        <div className="container-lb flex-1 overflow-y-auto pt-6 pb-10">
+          <form action="/search" className="mb-8 flex items-center gap-3 border-b border-ink">
             <SearchIcon className="text-plum" width={18} height={18} />
-            <input
-              type="search"
-              name="q"
-              placeholder="Search"
-              className="w-full bg-transparent py-3 text-base outline-none"
-              aria-label="Search products"
-            />
+            <input type="search" name="q" placeholder="Search" className="w-full bg-transparent py-3 text-base outline-none" aria-label="Search products" />
           </form>
-          <ul className="space-y-1">
-            {[...nav.primary, ...nav.secondary].map((item) => (
+          <ul>
+            {[...nav.primary, ...nav.secondary].map((item, i) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   onClick={() => setMenuOpen(false)}
-                  className="flex items-center justify-between border-b border-petal py-4 font-serif text-2xl text-ink"
+                  className="flex items-baseline justify-between border-b border-line py-4 font-serif text-3xl text-ink"
                 >
                   {item.label}
+                  <span className="eyebrow-num">0{i + 1}</span>
                 </Link>
               </li>
             ))}
           </ul>
-          <ul className="mt-6 space-y-3 text-sm text-plum">
+          <ul className="mt-8 space-y-3 text-[0.7rem] tracking-luxe uppercase text-plum">
             <li>
               <Link href="/faq" onClick={() => setMenuOpen(false)}>
                 FAQ
@@ -240,12 +241,7 @@ export function Header() {
               </Link>
             </li>
           </ul>
-          <a
-            href={site.social.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-8 inline-flex items-center gap-2 text-sm text-rose-deep"
-          >
+          <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" className="mt-10 inline-flex items-center gap-2 text-sm text-rose-deep">
             <InstagramIcon /> {site.social.instagramHandle}
           </a>
         </div>

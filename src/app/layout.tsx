@@ -10,11 +10,14 @@ import { Footer } from "@/components/layout/footer";
 import { WelcomePopup } from "@/components/marketing/welcome-popup";
 import { Analytics } from "@/components/layout/analytics";
 import { JsonLd } from "@/components/ui/json-ld";
+import { Loader } from "@/components/motion/loader";
+import { RevealObserver } from "@/components/motion/reveal-observer";
+import { ScrollManager } from "@/components/motion/scroll-manager";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["300", "400", "500"],
   style: ["normal", "italic"],
   display: "swap",
 });
@@ -75,7 +78,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#fbe9ec",
+  themeColor: "#fbf7f5",
   width: "device-width",
   initialScale: 1,
   colorScheme: "light",
@@ -111,7 +114,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-white"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-ink focus:px-4 focus:py-2 focus:text-white"
         >
           Skip to content
         </a>
@@ -125,6 +128,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <CartDrawer />
           <WelcomePopup />
         </CartProvider>
+        <Loader />
+        <RevealObserver />
+        <ScrollManager />
         <JsonLd data={[organizationLd, websiteLd]} />
         <Analytics />
       </body>

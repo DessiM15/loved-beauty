@@ -7,10 +7,9 @@ import { ProductGrid } from "@/components/product/product-grid";
 import { Reviews } from "@/components/product/reviews";
 import { Accordion } from "@/components/ui/accordion";
 import { JsonLd } from "@/components/ui/json-ld";
-import { SectionHeading } from "@/components/ui/section-heading";
 import { site } from "@/content/site";
 import { truncate } from "@/lib/utils";
-import { BunnyIcon, DropIcon, LeafIcon, ShieldIcon } from "@/components/ui/icons";
+import { ArrowRightIcon } from "@/components/ui/icons";
 
 export const revalidate = 60;
 
@@ -38,13 +37,6 @@ export async function generateMetadata({ params }: PageProps<"/products/[handle]
   };
 }
 
-const badgeIcons = {
-  Vegan: LeafIcon,
-  "Cruelty-free": BunnyIcon,
-  Clean: DropIcon,
-  "Paraben-free": ShieldIcon,
-} as const;
-
 export default async function ProductPage({ params }: PageProps<"/products/[handle]">) {
   const { handle } = await params;
   const product = await getProduct(handle);
@@ -69,18 +61,14 @@ export default async function ProductPage({ params }: PageProps<"/products/[hand
     details.howToUse ? { title: "How to use", content: <p>{details.howToUse}</p> } : null,
     {
       title: "Ingredients",
-      content: details.ingredients ? (
-        <p>{details.ingredients}</p>
-      ) : (
-        <p>Full ingredient list is printed on the box. Vegan, cruelty-free, paraben-free and sulfate-free.</p>
-      ),
+      content: details.ingredients ? <p>{details.ingredients}</p> : <p>Full ingredient list is printed on the box. Vegan, cruelty-free, paraben-free and sulfate-free.</p>,
     },
     {
       title: "Shipping & returns",
       content: (
         <p>
-          Ships from Texas in 1 to 3 business days. Free U.S. shipping on orders over $200. Opened cosmetics can&rsquo;t be returned, but
-          if anything arrives damaged we&rsquo;ll replace it.{" "}
+          Ships from Texas in 1 to 3 business days. Free U.S. shipping on orders over $200. Opened cosmetics can&rsquo;t be returned, but if anything arrives damaged
+          we&rsquo;ll replace it.{" "}
           <Link href="/policies/shipping-returns" className="underline underline-offset-4">
             Read our policy
           </Link>
@@ -122,9 +110,9 @@ export default async function ProductPage({ params }: PageProps<"/products/[hand
   };
 
   return (
-    <div className="container-lb py-8 md:py-12">
-      <nav aria-label="Breadcrumb" className="mb-6 text-xs text-plum">
-        <ol className="flex items-center gap-2">
+    <div>
+      <nav aria-label="Breadcrumb" className="container-lb py-4 text-[0.62rem] tracking-luxe uppercase text-plum">
+        <ol className="flex items-center gap-3">
           <li>
             <Link href="/" className="hover:text-ink">
               Home
@@ -143,28 +131,43 @@ export default async function ProductPage({ params }: PageProps<"/products/[hand
         </ol>
       </nav>
 
-      <ProductPurchase product={product}>
-        {details.badges && (
-          <ul className="mb-6 flex flex-wrap gap-2">
-            {details.badges.map((b) => {
-              const Icon = badgeIcons[b as keyof typeof badgeIcons] ?? LeafIcon;
-              return (
-                <li key={b} className="inline-flex items-center gap-1.5 rounded-full border border-petal bg-white px-3 py-1.5 text-xs">
-                  <Icon width={16} height={16} className="text-rose" /> {b}
+      <div className="hairline-t hairline-b">
+        <ProductPurchase product={product}>
+          {details.badges && (
+            <ul className="mb-6 flex flex-wrap gap-x-5 gap-y-2 text-[0.62rem] tracking-luxe uppercase text-plum">
+              {details.badges.map((b) => (
+                <li key={b} className="flex items-center gap-2">
+                  <span className="h-1 w-1 rounded-full bg-gold" aria-hidden="true" /> {b}
                 </li>
-              );
-            })}
-          </ul>
-        )}
-        <Accordion items={accordion} defaultOpen={0} />
-      </ProductPurchase>
+              ))}
+            </ul>
+          )}
+          <Accordion items={accordion} defaultOpen={0} />
+        </ProductPurchase>
+      </div>
 
-      <Reviews productTitle={product.title} />
+      <div className="container-lb">
+        <Reviews productTitle={product.title} />
+      </div>
 
       {related.length > 0 && (
-        <section className="mt-20" aria-labelledby="related-heading">
-          <SectionHeading eyebrow="Complete the look" title="You may also like" align="left" link={{ label: "Shop all", href: "/shop" }} />
-          <ProductGrid products={related} priorityCount={0} />
+        <section aria-labelledby="related-heading">
+          <div className="container-lb flex flex-col gap-4 py-14 md:flex-row md:items-end md:justify-between md:py-20">
+            <div>
+              <p className="eyebrow" data-reveal>
+                Complete the look
+              </p>
+              <h2 id="related-heading" className="h-display mt-3 text-5xl" data-reveal style={{ "--d": "100ms" } as React.CSSProperties}>
+                You may also like
+              </h2>
+            </div>
+            <Link href="/shop" className="link-underline inline-flex items-center gap-2 self-start text-[0.68rem] tracking-luxe uppercase text-ink md:self-auto" data-reveal>
+              Shop everything <ArrowRightIcon width={12} height={12} />
+            </Link>
+          </div>
+          <div className="hairline-t hairline-b">
+            <ProductGrid products={related} priorityCount={0} />
+          </div>
         </section>
       )}
 

@@ -86,21 +86,34 @@ export const nav = {
 };
 
 export const hero = {
-  eyebrow: "New · Clean lip & glow essentials",
-  headline: "Loved, from the first swipe.",
-  subhead:
-    "Hydrating glosses, buttery liners and light-catching shimmer, made vegan and cruelty-free. Soft, luminous, and made to be worn every day.",
+  eyebrow: "Clean · Vegan · Cruelty-free",
+  headlineLead: "Loved, from the first",
+  headlineItalic: "swipe.",
+  subhead: "Hydrating glosses, buttery liners and light-catching shimmer. Soft, luminous, and made to be worn every day.",
   primaryCta: { label: "Shop Bestsellers", href: "/collections/bestsellers" },
-  secondaryCta: { label: "Shop Lips", href: "/collections/lips" },
-  // Swap these for the photoshoot images when they arrive.
+  secondaryCta: { label: "Explore lips", href: "/collections/lips" },
+  // Placeholder editorial photography (see public/editorial/CREDITS.md). Replace with the campaign shot.
   image: {
-    src: "/products/shimmer-glow-oil-spray-1.webp",
-    alt: "Loved Beauty Shimmer Glow Oil Spray in a gold glass bottle",
+    src: "/editorial/hero.webp",
+    alt: "Glossy peach lips being painted with a lip brush",
   },
-  imageSecondary: {
-    src: "/products/ultra-light-lip-oil-2.webp",
-    alt: "Loved Beauty Ultra Light Lip Oil in a pink square bottle beside its box",
-  },
+};
+
+/** Home page category panels. Images are editorial placeholders until the photoshoot. */
+export const categoryPanels = [
+  { handle: "lips", title: "Lips", text: "Glosses, oils, lacquers and liners.", image: "/editorial/cat-lips.webp", alt: "A pink lip gloss wand applied to soft pink lips" },
+  { handle: "lip-care", title: "Lip Care", text: "Prep and treat for the softest lips.", image: "/editorial/cat-lip-care.webp", alt: "Natural glossy lips on glowing skin" },
+  { handle: "face-and-body-glow", title: "Face & Body Glow", text: "Light-catching sprays, lit from within.", image: "/editorial/cat-glow.webp", alt: "Luminous skin catching golden light" },
+  { handle: "sets", title: "Sets & Bundles", text: "Curated pairings that save a little.", image: "/editorial/cat-sets.webp", alt: "Lip liner and lipsticks arranged on blush pink" },
+];
+
+export const statement = {
+  eyebrow: "Our promise",
+  lineOne: "Vegan. Cruelty-free.",
+  lineTwo: "Loved.",
+  text: "Every formula is chosen to be gentle enough for every day and beautiful enough to feel like a little luxury. Nothing tested on animals, nothing you have to think twice about.",
+  cta: { label: "Read our story", href: "/about" },
+  image: { src: "/editorial/silk.webp", alt: "Soft blush silk folds" },
 };
 
 export const values = [
@@ -130,11 +143,13 @@ export const editorial = {
   eyebrow: "The Loved ritual",
   headline: "Prep. Define. Glow.",
   text: "Three quiet steps to a lip that looks cared for. Polish with sugar, line with a buttery pencil, then finish with a glossy veil of hydration.",
-  cta: { label: "Shop the ritual", href: "/collections/sets" },
-  image: {
-    src: "/products/sugar-lip-scrub-2.webp",
-    alt: "Loved Beauty Sugar Lip Scrub jar beside its pink box",
-  },
+  steps: [
+    { n: "01", title: "Prep", text: "Sugar Lip Scrub, thirty seconds, twice a week.", href: "/products/sugar-lip-scrub", linkLabel: "Sugar Lip Scrub" },
+    { n: "02", title: "Define", text: "Lip Liner Pencil to outline, then fill for a long-wear base.", href: "/products/lip-liner-pencil", linkLabel: "Lip Liner Pencil" },
+    { n: "03", title: "Glow", text: "Lustre Gloss or Ultra Light Lip Oil to finish.", href: "/products/lustre-lip-gloss", linkLabel: "Lustre Lip Gloss" },
+  ],
+  cta: { label: "Shop the ritual set", href: "/products/the-lip-ritual-set" },
+  image: { src: "/editorial/ritual.webp", alt: "Lip gloss applied to glossy lips" },
 };
 
 export const instagram = {
@@ -144,18 +159,20 @@ export const instagram = {
   text: "Tag @lovedbeautyllc to be featured.",
   // Replace with real posts. Each image should be square-ish.
   posts: [
-    { src: "/products/lustre-lip-gloss-1.webp", alt: "Lustre Lip Gloss in a nude shade" },
-    { src: "/products/shimmer-glow-setting-spray-1.webp", alt: "Shimmer Glow Setting Spray bottle" },
-    { src: "/products/peptide-lip-lacquer-2.webp", alt: "Peptide Lip Lacquer in Berry" },
-    { src: "/products/hyaluronic-lip-gloss-2.webp", alt: "Hyaluronic Acid Lip Gloss holographic tube" },
-    { src: "/products/sugar-lip-scrub-1.webp", alt: "Sugar Lip Scrub jar" },
-    { src: "/products/ultra-light-lip-oil-1.webp", alt: "Ultra Light Lip Oil in Cherry" },
+    { src: "/editorial/cat-lips.webp", alt: "Pink lip gloss application" },
+    { src: "/products/lustre-lip-gloss-1.webp", alt: "Lustre Lip Gloss in Nude" },
+    { src: "/editorial/lips-wide.webp", alt: "Peach lip oil on glossy lips" },
+    { src: "/products/shimmer-glow-oil-spray-1.webp", alt: "Shimmer Glow Oil Spray" },
+    { src: "/editorial/cat-glow.webp", alt: "Luminous skin catching golden light" },
+    { src: "/products/sugar-lip-scrub-2.webp", alt: "Sugar Lip Scrub beside its box" },
   ],
 };
 
 export const newsletter = {
   eyebrow: "Join the list",
   headline: "Get 10% off your first order.",
+  headlineLead: "Get 10% off your",
+  headlineItalic: "first order.",
   text: "New shades, restocks and members-only offers. No noise, just the good stuff.",
   placeholder: "Your email address",
   cta: "Sign me up",
@@ -208,4 +225,19 @@ export const about = {
   ],
   founderNote:
     "Thank you for being here. Every order is packed with care and a lot of heart. — Loved Beauty",
+};
+
+/** Swatch colours for shade selectors. Keys must match Shopify variant option values. PLACEHOLDER until shades are confirmed. */
+export const shadeColors: Record<string, string> = {
+  Bare: "#d9a996",
+  Petal: "#e6a6b0",
+  "Nude Rose": "#c9847f",
+  Mauve: "#a76b7e",
+  Cocoa: "#7a4a3a",
+  Spice: "#b45a3f",
+  Berry: "#7d2f4a",
+  Cherry: "#c8102e",
+  Nude: "#c47a66",
+  "Sheer Nude": "#d8b3a4",
+  "Clear with Gold Foil": "linear-gradient(135deg,#f6e7c8,#e9cf93 45%,#fff5dd)",
 };

@@ -1,22 +1,21 @@
+import Link from "next/link";
 import { getCollectionProducts, getCollections } from "@/lib/shopify";
 import { Hero } from "@/components/home/hero";
-import { CategoryTiles } from "@/components/home/category-tiles";
-import { ValueStrip } from "@/components/home/value-strip";
-import { EditorialSplit } from "@/components/home/editorial-split";
-import { InstagramGrid } from "@/components/home/instagram-grid";
-import { TrustBar } from "@/components/home/trust-bar";
+import { CategoryPanels } from "@/components/home/category-panels";
+import { Statement } from "@/components/home/statement";
+import { Ritual } from "@/components/home/ritual";
+import { SetsFeature } from "@/components/home/sets-feature";
 import { ShadeFinderBanner } from "@/components/home/shade-finder-banner";
+import { InstagramGrid } from "@/components/home/instagram-grid";
 import { NewsletterSection } from "@/components/marketing/newsletter-section";
 import { ProductGrid } from "@/components/product/product-grid";
-import { SectionHeading } from "@/components/ui/section-heading";
+import { ArrowRightIcon } from "@/components/ui/icons";
 
 export const revalidate = 60;
 
-const CATEGORY_ORDER = ["lips", "lip-care", "face-and-body-glow", "sets"];
-
 /**
- * Home page flow (hero → category → bestsellers → proof → sets → email):
- * every section is a step toward a product page or the cart.
+ * Home flow: hero → categories → bestsellers → promise → ritual → sets →
+ * shade finder → Instagram → email. Every section leads to a product.
  */
 export default async function HomePage() {
   const [collections, bestsellers, sets] = await Promise.all([
@@ -25,52 +24,34 @@ export default async function HomePage() {
     getCollectionProducts("sets"),
   ]);
 
-  const categories = CATEGORY_ORDER.map((h) => collections.find((c) => c.handle === h)).filter(
-    (c): c is NonNullable<typeof c> => Boolean(c),
-  );
-
   return (
     <>
       <Hero />
-      <CategoryTiles collections={categories} />
+      <CategoryPanels collections={collections} />
 
-      <section className="container-lb py-6 md:py-10" aria-labelledby="bestsellers-heading">
-        <SectionHeading
-          eyebrow="Most loved"
-          title="Bestsellers"
-          text="The glosses, oils and glow sprays our community keeps coming back for."
-          link={{ label: "Shop all", href: "/shop" }}
-          align="left"
-        />
-        <ProductGrid products={bestsellers.slice(0, 8)} />
+      <section aria-labelledby="bestsellers-heading">
+        <div className="container-lb flex flex-col gap-4 py-14 md:flex-row md:items-end md:justify-between md:py-20">
+          <div>
+            <p className="eyebrow" data-reveal>
+              Most loved
+            </p>
+            <h2 id="bestsellers-heading" className="h-display mt-3 text-5xl md:text-6xl" data-reveal style={{ "--d": "100ms" } as React.CSSProperties}>
+              Bestsellers
+            </h2>
+          </div>
+          <Link href="/shop" className="link-underline inline-flex items-center gap-2 self-start text-[0.68rem] tracking-luxe uppercase text-ink md:self-auto" data-reveal>
+            Shop everything <ArrowRightIcon width={12} height={12} />
+          </Link>
+        </div>
+        <div className="hairline-t hairline-b">
+          <ProductGrid products={bestsellers.slice(0, 4)} />
+        </div>
       </section>
 
-      <div className="mt-8">
-        <ShadeFinderBanner />
-      </div>
-
-      <div className="mt-8">
-        <ValueStrip />
-      </div>
-
-      <EditorialSplit />
-
-      {sets.length > 0 && (
-        <section className="bg-white py-16 md:py-20" aria-labelledby="sets-heading">
-          <div className="container-lb">
-            <SectionHeading
-              eyebrow="Sets & bundles"
-              title="Better together."
-              text="Curated pairings that save you a little and give a lot. Perfect for gifting, or for you."
-              link={{ label: "Shop sets", href: "/collections/sets" }}
-              align="left"
-            />
-            <ProductGrid products={sets} columns={3} priorityCount={0} />
-          </div>
-        </section>
-      )}
-
-      <TrustBar />
+      <Statement />
+      <Ritual />
+      <SetsFeature sets={sets} />
+      <ShadeFinderBanner />
       <InstagramGrid />
       <NewsletterSection />
     </>

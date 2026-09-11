@@ -28,7 +28,7 @@ function assert(cond, msg) {
 
     // 2. Quick add from the shop grid opens the drawer with the item.
     await page.goto(BASE + "/shop", { waitUntil: "networkidle0" });
-    const addButtons = await page.$$("button::-p-text(Add to bag)");
+    const addButtons = await page.$$('button[aria-label^="Add "][aria-label$=" to bag"]');
     assert(addButtons.length > 0, "shop grid has quick-add buttons");
     await addButtons[0].click();
     await page.waitForSelector('[aria-label="Your bag"] li', { timeout: 8000 });

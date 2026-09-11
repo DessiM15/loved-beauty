@@ -21,6 +21,7 @@ export default async function ShopPage() {
       description="Everything, in one place. Clean, vegan and cruelty-free."
       products={products}
       collections={visibleCollections}
+      banner={{ src: "/editorial/lips-wide.webp", alt: "Peach lip oil applied to glossy lips" }}
     />
   );
 }

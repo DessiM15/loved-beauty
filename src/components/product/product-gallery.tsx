@@ -6,6 +6,7 @@ import type { Image as ProductImage } from "@/lib/shopify/types";
 import { ProductPlaceholder } from "./product-placeholder";
 import { cn } from "@/lib/utils";
 
+/** Square-cornered gallery that bleeds to the page edge; thumbnails below. */
 export function ProductGallery({
   images,
   title,
@@ -15,7 +16,6 @@ export function ProductGallery({
   images: ProductImage[];
   title: string;
   handle: string;
-  /** Optional index driven by variant selection. */
   activeIndex?: number;
 }) {
   const [manual, setManual] = useState<number | null>(null);
@@ -23,37 +23,27 @@ export function ProductGallery({
   const current = images[index] ?? images[0];
 
   return (
-    <div className="lg:sticky lg:top-28">
-      <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-blush">
+    <div>
+      <div className="relative aspect-[4/5] overflow-hidden bg-blush">
         {current ? (
-          <Image
-            key={current.url}
-            src={current.url}
-            alt={current.altText ?? title}
-            fill
-            priority
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            className="object-cover animate-fade-up"
-          />
+          <Image key={current.url} src={current.url} alt={current.altText ?? title} fill priority sizes="(min-width: 1024px) 55vw, 100vw" className="object-cover animate-fade-up" />
         ) : (
           <ProductPlaceholder title={title} handle={handle} />
         )}
       </div>
       {images.length > 1 && (
-        <ul className="mt-3 flex gap-2 overflow-x-auto scrollbar-none" aria-label="Product images">
+        <ul className="flex gap-px border-t border-line bg-line" aria-label="Product images">
           {images.map((img, i) => (
-            <li key={img.url}>
+            <li key={img.url} className="bg-cream">
               <button
                 type="button"
                 onClick={() => setManual(i)}
                 aria-label={`View image ${i + 1} of ${images.length}`}
                 aria-current={i === index}
-                className={cn(
-                  "relative h-20 w-16 overflow-hidden rounded-xl border-2 bg-blush transition-colors",
-                  i === index ? "border-rose" : "border-transparent hover:border-petal",
-                )}
+                className={cn("relative block h-24 w-20 overflow-hidden transition-opacity duration-300", i === index ? "opacity-100" : "opacity-50 hover:opacity-100")}
               >
-                <Image src={img.url} alt="" fill sizes="64px" className="object-cover" />
+                <Image src={img.url} alt="" fill sizes="80px" className="object-cover" />
+                {i === index && <span className="absolute inset-x-0 bottom-0 h-px bg-ink" />}
               </button>
             </li>
           ))}

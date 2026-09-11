@@ -110,7 +110,7 @@ export function ShadeFinder({ selfieEnabled }: { selfieEnabled: boolean }) {
   return (
     <div>
       {/* Mode switch */}
-      <div className="mx-auto flex max-w-sm rounded-full border border-petal bg-white p-1" role="tablist" aria-label="How to find your shade">
+      <div className="mx-auto flex max-w-sm border border-line bg-white p-1" role="tablist" aria-label="How to find your shade">
         {(
           [
             ["selfie", "Use a selfie"],
@@ -124,7 +124,7 @@ export function ShadeFinder({ selfieEnabled }: { selfieEnabled: boolean }) {
             aria-selected={mode === m}
             onClick={() => setMode(m)}
             className={cn(
-              "flex-1 rounded-full px-4 py-2.5 text-[0.7rem] tracking-wide2 uppercase transition-colors",
+              "flex-1 px-4 py-2.5 text-[0.62rem] tracking-luxe uppercase transition-colors",
               mode === m ? "bg-ink text-white" : "text-ink hover:bg-blush",
             )}
           >
@@ -133,7 +133,7 @@ export function ShadeFinder({ selfieEnabled }: { selfieEnabled: boolean }) {
         ))}
       </div>
 
-      <div className="mx-auto mt-8 max-w-2xl rounded-3xl border border-petal bg-white p-6 md:p-8">
+      <div className="mx-auto mt-8 max-w-2xl border border-line bg-white p-6 md:p-8">
         {/* Vibe: shared by both modes */}
         <fieldset>
           <legend className="mb-3 text-xs tracking-wide2 uppercase">What&rsquo;s the vibe?</legend>
@@ -147,7 +147,7 @@ export function ShadeFinder({ selfieEnabled }: { selfieEnabled: boolean }) {
         {mode === "selfie" ? (
           <div className="mt-7">
             {!selfieEnabled && (
-              <p className="mb-4 rounded-xl bg-blush px-4 py-3 text-xs text-plum">
+              <p className="mb-4 rounded-sm bg-blush px-4 py-3 text-xs text-plum">
                 Selfie matching is switching on soon. The three questions work right now.
               </p>
             )}
@@ -157,7 +157,7 @@ export function ShadeFinder({ selfieEnabled }: { selfieEnabled: boolean }) {
               type="button"
               onClick={() => fileRef.current?.click()}
               className={cn(
-                "relative flex w-full flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-petal bg-cream text-center transition-colors hover:border-rose",
+                "relative flex w-full flex-col items-center justify-center overflow-hidden rounded-sm border-2 border-dashed border-line bg-cream text-center transition-colors hover:border-rose",
                 preview ? "aspect-[4/5] max-h-96" : "min-h-44 p-6",
               )}
               aria-label={preview ? "Change photo" : "Add a selfie"}
@@ -214,8 +214,8 @@ export function ShadeFinder({ selfieEnabled }: { selfieEnabled: boolean }) {
                     aria-pressed={depth === d.value}
                     onClick={() => setDepth(d.value)}
                     className={cn(
-                      "rounded-full border px-4 py-2 text-sm transition-colors",
-                      depth === d.value ? "border-ink bg-ink text-white" : "border-petal bg-white hover:border-ink",
+                      "rounded-sm border px-4 py-2 text-sm transition-colors",
+                      depth === d.value ? "border-ink bg-ink text-white" : "border-line bg-white hover:border-ink",
                     )}
                   >
                     {d.label}
@@ -235,7 +235,7 @@ export function ShadeFinder({ selfieEnabled }: { selfieEnabled: boolean }) {
         )}
 
         {status === "error" && (
-          <p role="alert" className="mt-4 rounded-xl bg-danger/10 px-4 py-3 text-sm text-danger">
+          <p role="alert" className="mt-4 rounded-sm bg-danger/10 px-4 py-3 text-sm text-danger">
             {message}
           </p>
         )}
@@ -253,8 +253,8 @@ function OptionButton({ active, onClick, label, text }: { active: boolean; onCli
       aria-pressed={active}
       onClick={onClick}
       className={cn(
-        "rounded-2xl border px-4 py-3 text-left transition-colors",
-        active ? "border-ink bg-ink text-white" : "border-petal bg-white hover:border-ink",
+        "rounded-sm border px-4 py-3 text-left transition-colors",
+        active ? "border-ink bg-ink text-white" : "border-line bg-white hover:border-ink",
       )}
     >
       <span className="block text-sm font-medium">{label}</span>
@@ -291,14 +291,14 @@ function Results({ result }: { result: Result }) {
 
       <ul className="mt-8 grid gap-4 md:grid-cols-3">
         {result.picks.map((p) => (
-          <li key={p.variantId} className="flex flex-col rounded-2xl border border-petal bg-white p-4">
-            <Link href={`/products/${p.handle}`} className="relative block aspect-[4/5] overflow-hidden rounded-xl" style={{ background: placeholderTint(p.handle) }}>
+          <li key={p.variantId} className="flex flex-col rounded-sm border border-line bg-white p-4">
+            <Link href={`/products/${p.handle}`} className="relative block aspect-[4/5] overflow-hidden rounded-sm" style={{ background: placeholderTint(p.handle) }}>
               {p.image ? (
                 <Image src={p.image.url} alt={p.image.altText ?? p.title} fill sizes="(min-width: 768px) 30vw, 90vw" className="object-cover" />
               ) : (
                 <span className="absolute inset-0 flex items-center justify-center font-serif text-lg text-ink/70">{p.title}</span>
               )}
-              <span className="absolute top-3 left-3 rounded-full bg-white/90 px-2.5 py-1 text-[0.6rem] tracking-[0.14em] uppercase ring-1 ring-gold">{p.role}</span>
+              <span className="absolute top-3 left-3 rounded-sm bg-white/90 px-2.5 py-1 text-[0.6rem] tracking-[0.14em] uppercase ring-1 ring-gold">{p.role}</span>
             </Link>
             <div className="mt-3 flex items-start justify-between gap-2">
               <div>

@@ -10,13 +10,13 @@ const icons: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> 
 
 export function ValueStrip() {
   return (
-    <section className="border-y border-petal bg-white" aria-label="Our values">
+    <section className="border-y border-line bg-cream" aria-label="Our values">
       <div className="container-lb grid grid-cols-2 gap-6 py-8 md:grid-cols-4 md:py-10">
         {values.map((v) => {
           const Icon = icons[v.key] ?? LeafIcon;
           return (
             <div key={v.key} className="flex items-start gap-3 md:flex-col md:items-center md:text-center">
-              <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blush text-rose-deep">
+              <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-sm bg-blush text-rose-deep">
                 <Icon />
               </span>
               <div>

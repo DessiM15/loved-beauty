@@ -6,13 +6,14 @@ import { useCart } from "@/components/cart/cart-context";
 import { Price } from "./price";
 import { ProductGallery } from "./product-gallery";
 import { hasRealOptions, cn } from "@/lib/utils";
-import { BagIcon, CheckIcon, MinusIcon, PlusIcon, TruckIcon, ShieldIcon, LockIcon } from "@/components/ui/icons";
-import { freeShippingThreshold } from "@/content/site";
+import { BagIcon, CheckIcon, MinusIcon, PlusIcon } from "@/components/ui/icons";
+import { freeShippingThreshold, shadeColors } from "@/content/site";
 import { ShadeFinderLink } from "./shade-finder-link";
 
 /**
- * Left: gallery. Right: title, price, shade selector, quantity, add to bag.
- * Kept as one client component so shade selection can drive the gallery.
+ * Product page top: gallery bleeding to the left edge, purchase panel right.
+ * Shade options render as real colour swatches. One client component so
+ * shade selection can drive the gallery.
  */
 export function ProductPurchase({ product, children }: { product: Product; children?: React.ReactNode }) {
   const { addItem, isPending } = useCart();
@@ -46,81 +47,80 @@ export function ProductPurchase({ product, children }: { product: Product; child
   }
 
   return (
-    <div className="grid gap-8 lg:grid-cols-2 lg:gap-14">
-      <ProductGallery images={product.images} title={product.title} handle={product.handle} activeIndex={galleryIndex} />
+    <div className="grid lg:grid-cols-[1.1fr_1fr]">
+      <div className="lg:border-r lg:border-line">
+        <ProductGallery images={product.images} title={product.title} handle={product.handle} activeIndex={galleryIndex} />
+      </div>
 
-      <div className="lg:pt-4">
+      <div className="px-5 py-10 sm:px-10 lg:sticky lg:top-[var(--header-h)] lg:self-start lg:px-14 lg:py-16">
         <p className="eyebrow">{product.productType}</p>
-        <h1 className="h-display mt-2 text-4xl md:text-5xl">{product.title}</h1>
-        <div className="mt-4 text-lg">
+        <h1 className="h-display mt-3 text-5xl md:text-6xl">{product.title}</h1>
+        <div className="mt-5 font-serif text-2xl">
           {variant ? <Price price={variant.price} compareAt={variant.compareAtPrice} /> : <Price price={product.priceRange.minVariantPrice} />}
         </div>
 
-        <p className="mt-5 max-w-prose text-[0.95rem] leading-relaxed text-plum">{product.description}</p>
+        <p className="mt-6 max-w-prose text-[0.97rem] leading-relaxed text-plum">{product.description}</p>
 
         {showOptions &&
           product.options.map((option) => (
-            <fieldset key={option.id} className="mt-7">
-              <legend className="mb-3 flex items-baseline gap-2 text-xs tracking-wide2 uppercase">
+            <fieldset key={option.id} className="mt-8">
+              <legend className="mb-3 flex items-baseline gap-3 text-[0.62rem] tracking-luxe uppercase">
                 {option.name}
-                <span className="normal-case tracking-normal text-plum">— {selected[option.name]}</span>
+                <span className="font-serif text-base normal-case tracking-normal text-plum italic">{selected[option.name]}</span>
               </legend>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 {option.values.map((value) => {
                   const active = selected[option.name] === value;
                   const candidate = product.variants.find((v) =>
                     v.selectedOptions.every((o) => (o.name === option.name ? o.value === value : selected[o.name] === o.value)),
                   );
                   const available = candidate?.availableForSale ?? false;
+                  const swatch = shadeColors[value];
                   return (
                     <button
                       key={value}
                       type="button"
                       onClick={() => setSelected((s) => ({ ...s, [option.name]: value }))}
                       aria-pressed={active}
+                      aria-label={value}
+                      title={value}
                       className={cn(
-                        "rounded-full border px-4 py-2 text-sm transition-colors",
-                        active ? "border-ink bg-ink text-white" : "border-petal bg-white text-ink hover:border-ink",
-                        !available && "line-through opacity-50",
+                        "relative inline-flex items-center justify-center transition-transform duration-300",
+                        swatch ? "h-9 w-9 rounded-full" : "border px-4 py-2 text-sm",
+                        swatch
+                          ? active
+                            ? "ring-1 ring-ink ring-offset-4 ring-offset-cream"
+                            : "ring-1 ring-line ring-offset-4 ring-offset-cream hover:ring-ink"
+                          : active
+                            ? "border-ink bg-ink text-white"
+                            : "border-line bg-white text-ink hover:border-ink",
+                        !available && "opacity-40",
                       )}
+                      style={swatch ? { background: swatch } : undefined}
                     >
-                      {value}
+                      {!swatch && value}
+                      {!available && <span className="absolute inset-0 m-auto h-px w-full rotate-45 bg-ink" aria-hidden="true" />}
                     </button>
                   );
                 })}
               </div>
+              {product.variants.length > 1 && <ShadeFinderLink />}
             </fieldset>
           ))}
-        {showOptions && product.variants.length > 1 && <ShadeFinderLink />}
 
-        <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-          <div className="inline-flex h-12 items-center self-start rounded-full border border-petal bg-white">
-            <button
-              type="button"
-              className="inline-flex h-12 w-11 items-center justify-center rounded-full hover:bg-blush"
-              aria-label="Decrease quantity"
-              onClick={() => setQty((q) => Math.max(1, q - 1))}
-            >
+        <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <div className="inline-flex h-[3.1rem] items-center self-start border border-line bg-white">
+            <button type="button" className="inline-flex h-full w-11 items-center justify-center hover:bg-blush" aria-label="Decrease quantity" onClick={() => setQty((q) => Math.max(1, q - 1))}>
               <MinusIcon />
             </button>
             <span className="w-8 text-center text-sm tabular-nums" aria-live="polite">
               {qty}
             </span>
-            <button
-              type="button"
-              className="inline-flex h-12 w-11 items-center justify-center rounded-full hover:bg-blush"
-              aria-label="Increase quantity"
-              onClick={() => setQty((q) => Math.min(10, q + 1))}
-            >
+            <button type="button" className="inline-flex h-full w-11 items-center justify-center hover:bg-blush" aria-label="Increase quantity" onClick={() => setQty((q) => Math.min(10, q + 1))}>
               <PlusIcon />
             </button>
           </div>
-          <button
-            type="button"
-            onClick={onAdd}
-            disabled={!variant || !variant.availableForSale || isPending}
-            className={cn("btn flex-1", justAdded ? "btn-rose" : "btn-primary")}
-          >
+          <button type="button" onClick={onAdd} disabled={!variant || !variant.availableForSale || isPending} className={cn("btn flex-1", justAdded ? "btn-rose" : "btn-primary")}>
             {!variant || !variant.availableForSale ? (
               "Sold out"
             ) : justAdded ? (
@@ -143,16 +143,10 @@ export function ProductPurchase({ product, children }: { product: Product; child
           </p>
         )}
 
-        <ul className="mt-6 grid gap-2.5 text-xs text-plum sm:grid-cols-3">
-          <li className="flex items-center gap-2">
-            <TruckIcon width={18} height={18} className="text-rose" /> Free U.S. shipping ${freeShippingThreshold}+
-          </li>
-          <li className="flex items-center gap-2">
-            <ShieldIcon width={18} height={18} className="text-rose" /> Vegan &amp; cruelty-free
-          </li>
-          <li className="flex items-center gap-2">
-            <LockIcon width={18} height={18} className="text-rose" /> Secure checkout
-          </li>
+        <ul className="mt-8 grid gap-2 border-y border-line py-4 text-[0.62rem] tracking-wide2 uppercase text-plum sm:grid-cols-3">
+          <li>Free U.S. shipping ${freeShippingThreshold}+</li>
+          <li>Vegan &amp; cruelty-free</li>
+          <li>Secure checkout</li>
         </ul>
 
         {children && <div className="mt-8">{children}</div>}

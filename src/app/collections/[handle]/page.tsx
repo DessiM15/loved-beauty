@@ -5,6 +5,10 @@ import { CollectionView } from "@/components/product/collection-view";
 import { JsonLd } from "@/components/ui/json-ld";
 import { site } from "@/content/site";
 import { truncate } from "@/lib/utils";
+import { categoryPanels } from "@/content/site";
+
+const BANNERS: Record<string, { src: string; alt: string }> = Object.fromEntries(categoryPanels.map((p) => [p.handle, { src: p.image, alt: p.alt }]));
+BANNERS.bestsellers = { src: "/editorial/lips-wide.webp", alt: "Peach lip oil applied to glossy lips" };
 
 export const revalidate = 60;
 
@@ -61,6 +65,7 @@ export default async function CollectionPage({ params }: PageProps<"/collections
         products={products}
         collections={visibleCollections}
         activeHandle={handle}
+        banner={BANNERS[handle] ?? (collection.image ? { src: collection.image.url, alt: collection.image.altText ?? collection.title } : null)}
       />
       <JsonLd data={ld} />
     </>
