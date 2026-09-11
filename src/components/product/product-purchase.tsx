@@ -37,6 +37,11 @@ export function ProductPurchase({ product, children }: { product: Product; child
 
   const lowStock = variant?.quantityAvailable != null && variant.quantityAvailable > 0 && variant.quantityAvailable <= 5;
 
+  // Lip colour products get a shade finder link even when they come in one shade:
+  // the finder still tells the shopper whether this product suits her undertone.
+  const isLipColour = /gloss|lacquer|liner|lip oil/i.test(product.productType);
+  const linkInOptions = showOptions && product.variants.length > 1;
+
   async function onAdd() {
     if (!variant) return;
     const ok = await addItem(variant.id, qty);
@@ -104,9 +109,11 @@ export function ProductPurchase({ product, children }: { product: Product; child
                   );
                 })}
               </div>
-              {product.variants.length > 1 && <ShadeFinderLink />}
+              {linkInOptions && <ShadeFinderLink />}
             </fieldset>
           ))}
+
+        {isLipColour && !linkInOptions && <ShadeFinderLink />}
 
         <div className="mt-9 flex w-full max-w-md flex-col gap-3 sm:flex-row">
           <div className="inline-flex h-[3.1rem] items-center self-center border border-line bg-white">

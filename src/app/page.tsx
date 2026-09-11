@@ -13,8 +13,10 @@ import { SectionIntro } from "@/components/ui/section-intro";
 export const revalidate = 60;
 
 /**
- * Home flow: hero → categories → bestsellers → promise → ritual → sets →
- * shade finder → Instagram → email. Every section leads to a product.
+ * Home flow: hero → categories → bestsellers → shade finder → promise →
+ * ritual → sets → Instagram → email. Every section leads to a product.
+ * The shade finder sits right after the grid to catch shoppers who
+ * browsed but hesitated on shade.
  */
 export default async function HomePage() {
   const [collections, bestsellers, sets] = await Promise.all([
@@ -35,10 +37,10 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <ShadeFinderBanner />
       <Statement />
       <Ritual />
       <SetsFeature sets={sets} />
-      <ShadeFinderBanner />
       <InstagramGrid />
       <NewsletterSection />
     </>
