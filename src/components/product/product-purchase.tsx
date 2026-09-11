@@ -8,6 +8,7 @@ import { ProductGallery } from "./product-gallery";
 import { hasRealOptions, cn } from "@/lib/utils";
 import { BagIcon, CheckIcon, MinusIcon, PlusIcon, TruckIcon, ShieldIcon, LockIcon } from "@/components/ui/icons";
 import { freeShippingThreshold } from "@/content/site";
+import { ShadeFinderLink } from "./shade-finder-link";
 
 /**
  * Left: gallery. Right: title, price, shade selector, quantity, add to bag.
@@ -90,6 +91,7 @@ export function ProductPurchase({ product, children }: { product: Product; child
               </div>
             </fieldset>
           ))}
+        {showOptions && product.variants.length > 1 && <ShadeFinderLink />}
 
         <div className="mt-7 flex flex-col gap-3 sm:flex-row">
           <div className="inline-flex h-12 items-center self-start rounded-full border border-petal bg-white">

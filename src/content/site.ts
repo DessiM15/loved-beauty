@@ -29,6 +29,7 @@ export const announcements = [
   { text: "Free U.S. shipping on orders $200+", href: "/shop" },
   { text: "10% off your first order with code LOVED10", href: "/shop" },
   { text: "Vegan · Cruelty-free · Paraben-free", href: "/about" },
+  { text: "New: find your shade in 30 seconds", href: "/shade-finder" },
 ];
 
 export const freeShippingThreshold = 200; // USD. Keep in sync with Shopify shipping profile.
@@ -42,6 +43,7 @@ export const nav = {
     { label: "Face & Body Glow", href: "/collections/face-and-body-glow" },
   ],
   secondary: [
+    { label: "Shade Finder", href: "/shade-finder" },
     { label: "Sets", href: "/collections/sets" },
     { label: "Bestsellers", href: "/collections/bestsellers" },
     { label: "Our Story", href: "/about" },
@@ -56,6 +58,7 @@ export const nav = {
       { label: "Bestsellers", href: "/collections/bestsellers" },
     ],
     help: [
+      { label: "Find Your Shade", href: "/shade-finder" },
       { label: "FAQ", href: "/faq" },
       { label: "Contact Us", href: "/contact" },
       { label: "Shipping & Returns", href: "/policies/shipping-returns" },

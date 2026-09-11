@@ -27,6 +27,14 @@ Without Shopify credentials the site serves the mock catalog in `src/lib/mock/ca
 8. **Checkout**: the cart's Checkout button goes to Shopify's hosted checkout automatically (Shop Pay, Apple Pay, Google Pay). Turn on **abandoned checkout recovery** in Shopify → Settings → Checkout.
 9. **Email**: newsletter signups create Shopify customers with marketing consent; use Shopify Email (free tier) or connect Klaviyo.
 
+## Shade finder (AI)
+
+`/shade-finder` recommends a liner, gloss and prep product from the shopper's undertone, skin depth and desired vibe.
+
+- **Quiz path** (3 questions) runs with no API key, using the rules in `src/lib/shade/recommend.ts`.
+- **Selfie path** sends a browser-downscaled photo to Claude (`claude-opus-5`, vision) which returns undertone, depth and lip tone as structured JSON. Set `ANTHROPIC_API_KEY` in Vercel to switch it on. Photos are analyzed in memory and never stored. Cost is about one cent per match.
+- Update the shade names in `recommend.ts` when the client confirms the real liner shades; they must match the Shopify variant option values.
+
 ## Other services
 
 | Feature | Env var | Notes |

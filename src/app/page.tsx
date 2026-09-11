@@ -5,6 +5,7 @@ import { ValueStrip } from "@/components/home/value-strip";
 import { EditorialSplit } from "@/components/home/editorial-split";
 import { InstagramGrid } from "@/components/home/instagram-grid";
 import { TrustBar } from "@/components/home/trust-bar";
+import { ShadeFinderBanner } from "@/components/home/shade-finder-banner";
 import { NewsletterSection } from "@/components/marketing/newsletter-section";
 import { ProductGrid } from "@/components/product/product-grid";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -44,7 +45,11 @@ export default async function HomePage() {
         <ProductGrid products={bestsellers.slice(0, 8)} />
       </section>
 
-      <div className="mt-12">
+      <div className="mt-8">
+        <ShadeFinderBanner />
+      </div>
+
+      <div className="mt-8">
         <ValueStrip />
       </div>
 
