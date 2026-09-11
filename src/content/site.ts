@@ -97,6 +97,7 @@ export const hero = {
   subhead: "Lustre gloss, hyaluronic shine, buttery liners and a sugar scrub. Eight shades, one ritual. Clean, vegan and cruelty-free.",
   primaryCta: { label: "Shop the collection", href: "/collections/lips" },
   secondaryCta: { label: "Find your shade", href: "/shade-finder" },
+  scrollLabel: "Scroll",
   // Placeholder editorial photography (see public/editorial/CREDITS.md). Replace with the campaign shot.
   image: {
     src: "/editorial/hero.webp",
