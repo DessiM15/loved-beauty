@@ -21,26 +21,26 @@ export function Hero() {
             priority
             fetchPriority="high"
             sizes="100vw"
-            className="object-cover object-[50%_35%] md:object-[50%_74%]"
+            className="object-cover object-[50%_30%] md:object-[50%_38%]"
             style={{ animation: "ken-burns 2.4s cubic-bezier(0.16,1,0.3,1) both" }}
           />
         </picture>
         {/* soft legibility veil, light theme: cream from the bottom left */}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(251,247,245,0.1)_0%,rgba(251,247,245,0)_30%,rgba(251,247,245,0.62)_62%,rgba(251,247,245,0.95)_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(251,247,245,0.55)_0%,rgba(251,247,245,0)_22%,rgba(251,247,245,0)_45%,rgba(251,247,245,0.7)_70%,rgba(251,247,245,0.96)_100%)]" />
       </div>
 
-      <div className="container-lb relative pb-14 pt-[calc(var(--header-h)+6rem)] md:pb-20">
-        <div className="max-w-3xl">
-          <p className="eyebrow animate-fade-up" style={{ animationDelay: "500ms" }}>
+      <div className="container-lb relative pb-16 pt-[calc(var(--header-h)+6rem)] md:pb-24">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="eyebrow text-ink/80 animate-fade-up" style={{ animationDelay: "500ms" }}>
             {hero.eyebrow}
           </p>
           <h1 id="hero-heading" className="h-display mt-5 text-[3.4rem] text-ink animate-fade-up sm:text-7xl md:text-8xl" style={{ animationDelay: "650ms" }}>
             {hero.headlineLead} <em className="h-italic text-rose-deep">{hero.headlineItalic}</em>
           </h1>
-          <p className="mt-6 max-w-md text-[0.98rem] leading-relaxed text-plum animate-fade-up" style={{ animationDelay: "800ms" }}>
+          <p className="mx-auto mt-6 max-w-md text-[0.98rem] leading-relaxed text-plum animate-fade-up" style={{ animationDelay: "800ms" }}>
             {hero.subhead}
           </p>
-          <div className="mt-8 flex flex-wrap items-center gap-4 animate-fade-up" style={{ animationDelay: "950ms" }}>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-5 animate-fade-up" style={{ animationDelay: "950ms" }}>
             <Link href={hero.primaryCta.href} className="btn btn-primary">
               {hero.primaryCta.label} <ArrowRightIcon width={14} height={14} />
             </Link>

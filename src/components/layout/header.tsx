@@ -103,12 +103,12 @@ export function Header() {
         {/* Center: full logo */}
         <Link href="/" onClick={goHome} className="flex items-center justify-center px-3" aria-label={`${site.name} home`}>
           <Image
-            src="/brand/logo-rose.png"
+            src={transparent ? "/brand/logo-ink.png" : "/brand/logo-rose.png"}
             alt={site.name}
             width={1725}
             height={447}
             priority
-            className="h-8 w-auto md:h-10"
+            className="h-8 w-auto transition-opacity duration-500 md:h-10"
             sizes="(min-width: 768px) 160px, 130px"
           />
         </Link>

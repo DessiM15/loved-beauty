@@ -95,7 +95,7 @@ export const hero = {
   // Placeholder editorial photography (see public/editorial/CREDITS.md). Replace with the campaign shot.
   image: {
     src: "/editorial/hero.webp",
-    alt: "Glossy peach lips being painted with a lip brush",
+    alt: "Lip gloss applied to glossy lips with a wand",
   },
 };
 

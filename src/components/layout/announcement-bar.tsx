@@ -16,12 +16,12 @@ export function AnnouncementBar() {
 
   return (
     <div className="relative z-40 border-b border-line bg-cream">
-      <div className="container-lb relative h-[var(--announce-h)] overflow-hidden text-[0.62rem] tracking-luxe uppercase text-plum" aria-live="polite">
+      <div className="container-lb relative h-[var(--announce-h)] overflow-hidden text-[0.72rem] font-normal tracking-[0.16em] uppercase text-ink" aria-live="polite">
         {announcements.map((a, i) => (
           <Link
             key={a.text}
             href={a.href}
-            className={`absolute inset-0 flex items-center justify-center text-center transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-ink ${
+            className={`absolute inset-0 flex items-center justify-center text-center transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-rose-deep ${
               i === index ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0"
             }`}
             aria-hidden={i !== index}

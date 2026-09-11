@@ -10,7 +10,7 @@ fs.mkdirSync(out, { recursive: true });
 fs.mkdirSync(D, { recursive: true });
 
 const set = [
-  { id: "7290085", name: "hero", w: 2600, ratio: null, alt: "Glossy peach lips being painted with a lip brush" },
+  { id: "28112154", name: "hero", w: 2600, ratio: null, alt: "Lip gloss applied to glossy lips with a wand" },
   { id: "14438174", name: "cat-lips", w: 1400, ratio: 3 / 4, alt: "A pink lip gloss wand applied to soft pink lips" },
   { id: "6659420", name: "cat-lip-care", w: 1400, ratio: 3 / 4, alt: "Natural glossy lips on glowing skin" },
   { id: "34299108", name: "cat-glow", w: 1400, ratio: 3 / 4, alt: "Luminous skin catching golden light" },

@@ -3,7 +3,7 @@
 Source: Pexels (https://www.pexels.com/license/). Free for commercial use, no attribution required.
 Replace each file with the client's own photoshoot image of the same name and orientation.
 
-- hero.webp — https://www.pexels.com/photo/7290085/ — alt: "Glossy peach lips being painted with a lip brush"
+- hero.webp — https://www.pexels.com/photo/28112154/ — alt: "Lip gloss applied to glossy lips with a wand"
 - cat-lips.webp — https://www.pexels.com/photo/14438174/ — alt: "A pink lip gloss wand applied to soft pink lips"
 - cat-lip-care.webp — https://www.pexels.com/photo/6659420/ — alt: "Natural glossy lips on glowing skin"
 - cat-glow.webp — https://www.pexels.com/photo/34299108/ — alt: "Luminous skin catching golden light"
