@@ -1,4 +1,5 @@
 import type { Money, Product } from "@/lib/shopify/types";
+import { site } from "@/content/site";
 
 export function cn(...classes: Array<string | false | null | undefined>): string {
   return classes.filter(Boolean).join(" ");
@@ -33,7 +34,7 @@ export function truncate(text: string, max = 155): string {
 }
 
 export function absoluteUrl(path: string): string {
-  const base = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://lovedbeautyshop.net").replace(/\/$/, "");
+  const base = site.url;
   return `${base}${path.startsWith("/") ? path : `/${path}`}`;
 }
 

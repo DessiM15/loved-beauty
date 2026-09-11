@@ -4,13 +4,25 @@
  * never require touching components. Product data comes from Shopify.
  */
 
+/**
+ * Public site URL. Order: NEXT_PUBLIC_SITE_URL → Vercel's production/preview URL → the real domain.
+ * Empty strings are treated as unset (Vercel passes "" when a variable is created blank).
+ */
+function resolveSiteUrl(): string {
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (explicit) return explicit.replace(/\/$/, "");
+  const vercel = (process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL || "").trim();
+  if (vercel) return `https://${vercel.replace(/^https?:\/\//, "")}`;
+  return "https://lovedbeautyshop.net";
+}
+
 export const site = {
   name: "Loved Beauty",
   legalName: "Loved Beauty LLC",
   tagline: "Clean, cruelty-free lip and glow essentials.",
   description:
     "Loved Beauty is a clean, vegan, cruelty-free beauty brand. Shop hydrating lip gloss, lip oil, lip liner, sugar lip scrub and luminous shimmer sprays for face and body.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://lovedbeautyshop.net",
+  url: resolveSiteUrl(),
   supportEmail: "lovedbeautyshop@gmail.com",
   location: "Cypress, Texas",
   founded: "2025",
