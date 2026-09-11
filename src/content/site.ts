@@ -256,3 +256,30 @@ export const collectionBanners: Record<string, { src: string; alt: string; posit
   sets: { src: "/editorial/banner-sets.webp", alt: "Lip liner, lipsticks and a dried sprig on blush pink", position: "50% 50%" },
   bestsellers: { src: "/editorial/banner-bestsellers.webp", alt: "Magenta lips in soft light", position: "50% 62%" },
 };
+
+/** V2 "after dark" imagery. Same slots as the light set, different photographs (see public/noir/CREDITS.md). */
+export const noir = {
+  hero: { model: "/noir/hero-model.webp", portrait: "/noir/hero-portrait.webp", alt: "Model in profile, hand at her collarbone, against black" },
+  panels: {
+    lips: { src: "/noir/cat-lips.webp", alt: "Gloss applied to lips in low light" },
+    "lip-care": { src: "/noir/cat-lip-care.webp", alt: "Red lips behind a rain-streaked window" },
+    "face-and-body-glow": { src: "/noir/cat-glow.webp", alt: "Gold-dusted hands framing a face in shadow" },
+    sets: { src: "/noir/cat-sets.webp", alt: "Red lip products on dark marble" },
+  } as Record<string, { src: string; alt: string }>,
+  statement: { src: "/noir/satin.webp", alt: "Black satin folds" },
+  ritual: { src: "/noir/ritual.webp", alt: "A woman applying red gloss in shadow" },
+  setsBackground: { src: "/noir/satin-2.webp", alt: "Dark charcoal satin" },
+  placeholder: { src: "/noir/satin-3.webp", alt: "Black silk" },
+  swatches: { src: "/noir/swatches.webp", alt: "Gold glitter freckles on skin", position: "50% 40%" },
+  shadePage: { src: "/noir/shade-page.webp", alt: "Gold glitter", position: "50% 50%" },
+  about: { src: "/noir/about.webp", alt: "Model in a coral dress against black", position: "50% 20%" },
+  instagram: ["/noir/ig-1.webp", "/noir/ig-2.webp", "/noir/ig-3.webp"],
+  banners: {
+    shop: { src: "/noir/banner-shop.webp", alt: "Dark hair blowing across red lips", position: "50% 45%" },
+    lips: { src: "/noir/banner-lips.webp", alt: "Applying red lip liner in low light", position: "50% 40%" },
+    "lip-care": { src: "/noir/banner-lip-care.webp", alt: "Coral lips framed by dark curls", position: "50% 50%" },
+    "face-and-body-glow": { src: "/noir/banner-glow.webp", alt: "A back dusted in gold shimmer", position: "50% 50%" },
+    sets: { src: "/noir/banner-sets.webp", alt: "Makeup flat lay on black", position: "50% 50%" },
+    bestsellers: { src: "/noir/banner-bestsellers.webp", alt: "Red lips, eyes closed, red coat", position: "50% 45%" },
+  } as Record<string, { src: string; alt: string; position: string }>,
+};

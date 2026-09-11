@@ -1,10 +1,12 @@
 import Image from "next/image";
+import { noir } from "@/content/site";
+import { ThemedImage } from "@/components/theme/themed";
 
 /** Tile for products without photography yet: silk ground, monogram, name. */
 export function ProductPlaceholder({ title }: { title: string; handle?: string }) {
   return (
     <div className="absolute inset-0">
-      <Image src="/editorial/silk-pale.webp" alt="" fill sizes="30vw" className="object-cover" />
+      <ThemedImage light={{ src: "/editorial/silk-pale.webp", alt: "" }} dark={{ src: noir.placeholder.src, alt: "" }} fill sizes="30vw" className="object-cover" />
       <div className="absolute inset-0 bg-cream/55" />
       <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center">
         <Image src="/brand/monogram-rose.png" alt="" width={120} height={112} className="h-12 w-auto opacity-70" />

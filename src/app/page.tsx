@@ -28,7 +28,7 @@ export default async function HomePage() {
       <Hero />
       <CategoryPanels collections={collections} />
 
-      <section aria-labelledby="bestsellers-heading">
+      <section aria-labelledby="bestsellers-heading" className="theme-light bg-cream text-ink">
         <SectionIntro id="bestsellers-heading" eyebrow="Most loved" title="Bestsellers" text="The glosses, oils and glow sprays our community keeps coming back for." link={{ label: "Shop everything", href: "/shop" }} />
         <div className="hairline-t hairline-b">
           <ProductGrid products={bestsellers.slice(0, 4)} />

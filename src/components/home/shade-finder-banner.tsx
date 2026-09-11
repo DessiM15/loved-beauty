@@ -1,6 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Parallax } from "@/components/motion/parallax";
+import { noir } from "@/content/site";
+import { ThemedImage } from "@/components/theme/themed";
 import { ArrowRightIcon } from "@/components/ui/icons";
 
 /** Full-bleed shade finder entry over the swatch photograph. */
@@ -8,7 +9,7 @@ export function ShadeFinderBanner() {
   return (
     <section className="relative overflow-hidden hairline-t" aria-labelledby="shade-banner-heading">
       <Parallax amount={6} className="absolute inset-0">
-        <Image src="/editorial/swatches.webp" alt="Lip color swatches on an arm" fill sizes="100vw" className="object-cover object-[50%_40%]" />
+        <ThemedImage light={{ src: "/editorial/swatches.webp", alt: "Lip color swatches on an arm", position: "50% 40%" }} dark={noir.swatches} fill sizes="100vw" className="object-cover" />
       </Parallax>
       <div className="absolute inset-0 bg-cream/60" />
       <div className="container-lb relative flex min-h-[60vh] items-center justify-center py-20">

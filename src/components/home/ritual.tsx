@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
-import { editorial } from "@/content/site";
+import { editorial, noir } from "@/content/site";
+import { ThemedImage } from "@/components/theme/themed";
 import { Parallax } from "@/components/motion/parallax";
 import { ArrowRightIcon } from "@/components/ui/icons";
 
@@ -9,7 +9,7 @@ export function Ritual() {
   return (
     <section className="hairline-t grid lg:grid-cols-2" aria-labelledby="ritual-heading">
       <Parallax amount={6} className="relative aspect-[4/5] lg:aspect-auto lg:min-h-[100vh]">
-        <Image src={editorial.image.src} alt={editorial.image.alt} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+        <ThemedImage light={editorial.image} dark={noir.ritual} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
       </Parallax>
       <div className="flex flex-col items-center justify-center px-6 py-16 text-center sm:px-10 lg:px-20 lg:py-24">
         <p className="eyebrow" data-reveal>

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getCollections, getProducts } from "@/lib/shopify";
 import { CollectionView } from "@/components/product/collection-view";
-import { collectionBanners } from "@/content/site";
+import { collectionBanners, noir } from "@/content/site";
 
 export const revalidate = 60;
 
@@ -23,6 +23,7 @@ export default async function ShopPage() {
       products={products}
       collections={visibleCollections}
       banner={collectionBanners.shop}
+      bannerDark={noir.banners.shop}
     />
   );
 }

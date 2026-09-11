@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { about, site, values } from "@/content/site";
+import { about, site, values, noir } from "@/content/site";
+import { ThemedImage } from "@/components/theme/themed";
 import { Parallax } from "@/components/motion/parallax";
 import { ArrowRightIcon } from "@/components/ui/icons";
 
@@ -17,11 +18,11 @@ export default function AboutPage() {
     <>
       {/* Full-bleed opener, header sits over it */}
       <section className="relative flex min-h-[80vh] flex-col justify-end overflow-hidden bg-blush">
-        <Image src="/editorial/about.webp" alt="Model in a pink dress with a soft pink eye" fill priority sizes="100vw" className="object-cover object-[50%_20%]" style={{ animation: "ken-burns 2.4s cubic-bezier(0.16,1,0.3,1) both" }} />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(251,247,245,0.05)_0%,rgba(251,247,245,0)_40%,rgba(251,247,245,0.9)_100%)]" />
+        <ThemedImage light={{ src: "/editorial/about.webp", alt: "Model in a pink dress with a soft pink eye", position: "50% 20%" }} dark={noir.about} fill priority sizes="100vw" className="object-cover" style={{ animation: "ken-burns 2.4s cubic-bezier(0.16,1,0.3,1) both" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(var(--veil),0.05) 0%, rgba(var(--veil),0) 40%, rgba(var(--veil),0.9) 100%)" }} />
         <div className="container-lb relative pt-[calc(var(--header-h)+6rem)] pb-12 text-center md:pb-16">
           <div className="relative mx-auto flex max-w-4xl flex-col items-center">
-            <div aria-hidden="true" className="pointer-events-none absolute -inset-x-24 -inset-y-14 md:-inset-x-48 md:-inset-y-24" style={{ background: "radial-gradient(ellipse at center, rgba(251,247,245,0.96) 0%, rgba(251,247,245,0.85) 40%, rgba(251,247,245,0.4) 62%, rgba(251,247,245,0) 76%)" }} />
+            <div aria-hidden="true" className="pointer-events-none absolute -inset-x-24 -inset-y-14 md:-inset-x-48 md:-inset-y-24" style={{ background: "radial-gradient(ellipse at center, rgba(var(--veil),0.96) 0%, rgba(var(--veil),0.85) 40%, rgba(var(--veil),0.4) 62%, rgba(var(--veil),0) 76%)" }} />
             <div className="relative">
               <p className="eyebrow animate-fade-up">{about.eyebrow}</p>
               <h1 className="h-display mx-auto mt-4 max-w-4xl text-6xl md:text-8xl animate-fade-up" style={{ animationDelay: "120ms" }}>

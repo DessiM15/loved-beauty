@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Product } from "@/lib/shopify/types";
 import { Price } from "@/components/product/price";
+import { noir } from "@/content/site";
+import { ThemedImage } from "@/components/theme/themed";
 import { SectionIntro } from "@/components/ui/section-intro";
 
 const CUTOUTS: Record<string, string[]> = {
@@ -25,7 +27,7 @@ export function SetsFeature({ sets }: { sets: Product[] }) {
             <li key={set.id} className="group relative border-b border-line md:border-b-0 md:[&:first-child]:border-r" data-reveal style={{ "--d": `${i * 120}ms` } as React.CSSProperties}>
               <Link href={`/products/${set.handle}`} className="block">
                 <div className="relative aspect-[4/5] overflow-hidden md:aspect-[5/4]">
-                  <Image src="/editorial/silk-pink.webp" alt="" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105" />
+                  <ThemedImage light={{ src: "/editorial/silk-pink.webp", alt: "" }} dark={{ src: noir.setsBackground.src, alt: "" }} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover transition-transform duration-[1600ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105" />
                   <div className="absolute inset-0 bg-cream/35" />
                   {cutouts.length > 0 ? (
                     <div className="absolute inset-0 flex items-end justify-center gap-6 pb-[12%]">

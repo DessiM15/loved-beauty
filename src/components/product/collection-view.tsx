@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { Collection, Product } from "@/lib/shopify/types";
 import { ProductGrid } from "./product-grid";
 import { SortSelect, type SortValue } from "./sort-select";
 import { cn } from "@/lib/utils";
+import { ThemedImage } from "@/components/theme/themed";
 
 /**
  * Collection page: full-bleed editorial banner (header sits over it) with a
@@ -20,6 +20,7 @@ export function CollectionView({
   collections,
   activeHandle,
   banner,
+  bannerDark,
 }: {
   title: string;
   description?: string;
@@ -27,6 +28,7 @@ export function CollectionView({
   collections: Collection[];
   activeHandle?: string;
   banner?: { src: string; alt: string; position?: string } | null;
+  bannerDark?: { src: string; alt: string; position?: string } | null;
 }) {
   const [sort, setSort] = useState<SortValue>("featured");
 
@@ -55,16 +57,16 @@ export function CollectionView({
       <section className="relative flex min-h-[56vh] flex-col justify-center overflow-hidden bg-blush md:min-h-[64vh]">
         {banner && (
           <>
-            <Image
-              src={banner.src}
-              alt={banner.alt}
+            <ThemedImage
+              light={banner}
+              dark={bannerDark ?? banner}
               fill
               priority
               sizes="100vw"
               className="object-cover"
-              style={{ objectPosition: banner.position ?? "50% 50%", animation: "ken-burns 2.4s cubic-bezier(0.16,1,0.3,1) both" }}
+              style={{ animation: "ken-burns 2.4s cubic-bezier(0.16,1,0.3,1) both" }}
             />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(251,247,245,0.5)_0%,rgba(251,247,245,0)_25%,rgba(251,247,245,0)_60%,rgba(251,247,245,0.9)_100%)]" />
+            <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(var(--veil),0.5) 0%, rgba(var(--veil),0) 25%, rgba(var(--veil),0) 60%, rgba(var(--veil),0.9) 100%)" }} />
           </>
         )}
         <div className="container-lb relative flex flex-col items-center pt-[calc(var(--header-h)+3rem)] pb-12 text-center md:pb-16">
@@ -72,7 +74,7 @@ export function CollectionView({
             <div
               aria-hidden="true"
               className="pointer-events-none absolute -inset-x-24 -inset-y-14 md:-inset-x-48 md:-inset-y-24"
-              style={{ background: "radial-gradient(ellipse at center, rgba(251,247,245,0.96) 0%, rgba(251,247,245,0.85) 40%, rgba(251,247,245,0.4) 62%, rgba(251,247,245,0) 76%)" }}
+              style={{ background: "radial-gradient(ellipse at center, rgba(var(--veil),0.96) 0%, rgba(var(--veil),0.85) 40%, rgba(var(--veil),0.4) 62%, rgba(var(--veil),0) 76%)" }}
             />
             <nav aria-label="Breadcrumb" className="relative mb-4 text-[0.62rem] tracking-luxe uppercase text-plum animate-fade-up">
               <ol className="flex items-center gap-3">

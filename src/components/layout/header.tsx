@@ -9,6 +9,7 @@ import { nav, site } from "@/content/site";
 import { useCart } from "@/components/cart/cart-context";
 import { BagIcon, CloseIcon, InstagramIcon, MenuIcon, SearchIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
+import { useTheme } from "@/lib/theme";
 
 /** Pages whose first section is a full-bleed image the header should sit over. */
 const TRANSPARENT_ROUTES = ["/", "/shop", "/about", "/shade-finder"];
@@ -21,6 +22,7 @@ export function Header() {
   const pathname = usePathname();
   const router = useRouter();
   const { cart, openCart } = useCart();
+  const theme = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -110,7 +112,7 @@ export function Header() {
         {/* Center: full logo */}
         <Link href="/" onClick={goHome} className="flex items-center justify-center px-3" aria-label={`${site.name} home`}>
           <Image
-            src={transparent ? "/brand/logo-ink.png" : "/brand/logo-rose.png"}
+            src={transparent ? (theme === "noir" ? "/brand/logo-cream.png" : "/brand/logo-ink.png") : "/brand/logo-rose.png"}
             alt={site.name}
             width={1725}
             height={447}

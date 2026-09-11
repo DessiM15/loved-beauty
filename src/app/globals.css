@@ -18,6 +18,45 @@
   --lb-danger: #b23a48;
   --header-h: 5rem;
   --announce-h: 2.5rem;
+  /* rgb triplet used by image veils and text spotlights; matches the page ground */
+  --veil: 251, 247, 245;
+  --logo-transparent: url("/brand/logo-ink.png");
+}
+
+/* ---------- V2 "after dark": same tokens, different values ---------- */
+:root[data-theme="noir"],
+.theme-noir {
+  --lb-white: #17110f; /* fills that were white: inputs, button text on ivory */
+  --lb-cream: #120d0e; /* page ground: espresso-plum */
+  --lb-blush: #1c1416; /* raised surfaces */
+  --lb-petal: #2c1f23;
+  --lb-line: #3b2c30; /* hairlines */
+  --lb-rose: #d08a9b;
+  --lb-rose-deep: #e3a5b4; /* accent reads brighter on dark */
+  --lb-plum: #b8a3a8; /* muted text */
+  --lb-ink: #f5ece6; /* headlines, body, primary buttons */
+  --lb-gold: #d4ad5c;
+  --lb-gold-soft: #8a7038;
+  --veil: 18, 13, 14;
+  --logo-transparent: url("/brand/logo-cream.png");
+  color-scheme: dark;
+}
+
+/* Sections that stay light inside the dark theme (e.g. the bestseller grid). */
+.theme-light {
+  --lb-white: #ffffff;
+  --lb-cream: #fbf7f5;
+  --lb-blush: #f7e6e9;
+  --lb-petal: #efd3d9;
+  --lb-line: #e7d3d7;
+  --lb-rose: #c47d8d;
+  --lb-rose-deep: #a35f6f;
+  --lb-plum: #6b4f56;
+  --lb-ink: #241c1e;
+  --lb-gold: #c9a24f;
+  --lb-gold-soft: #e9d7ae;
+  --veil: 251, 247, 245;
+  color-scheme: light;
 }
 
 @theme inline {
@@ -101,7 +140,7 @@
 }
 
 html {
-  color-scheme: light only;
+  color-scheme: light;
 }
 
 body {

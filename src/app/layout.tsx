@@ -13,6 +13,7 @@ import { JsonLd } from "@/components/ui/json-ld";
 import { Loader } from "@/components/motion/loader";
 import { RevealObserver } from "@/components/motion/reveal-observer";
 import { ScrollManager } from "@/components/motion/scroll-manager";
+import { themeInitScript } from "@/lib/theme";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -110,7 +111,10 @@ const websiteLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${jost.variable} h-full antialiased`}>
+    <html lang="en" className={`${cormorant.variable} ${jost.variable} h-full antialiased`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="flex min-h-full flex-col">
         <a
           href="#main"
