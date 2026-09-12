@@ -34,7 +34,7 @@ export function Footer() {
         </ul>
       </section>
 
-      <div className="hairline-t">
+      <div className="footer-main hairline-t">
         <div className="container-lb grid gap-12 py-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <span className="logo-smoke inline-block">

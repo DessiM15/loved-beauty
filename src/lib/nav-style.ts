@@ -3,8 +3,9 @@
 import { useSyncExternalStore } from "react";
 
 /**
- * Review-only header variant. V1: cream bar, logo over a soft haze.
- * V2: solid ink bar, logo as-is. Driven by `data-nav` on <html>.
+ * Review-only header/footer variant. V1: cream bar, logo over a soft haze.
+ * V2 ("dark" internally): hot pink bars behind the logo in the header and
+ * footer, logo as-is. Driven by `data-nav` on <html>.
  * The switch renders only when NEXT_PUBLIC_NAV_TOGGLE=true; at launch set
  * NEXT_PUBLIC_NAV_STYLE to the winner and drop the toggle.
  */

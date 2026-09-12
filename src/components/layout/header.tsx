@@ -14,8 +14,8 @@ import { useNavStyle } from "@/lib/nav-style";
 /**
  * Sticky header: the logo centered, the four links, Shop Now and the bag
  * on the right. V1 (light): transparent over the home hero, solid cream
- * once the page scrolls, logo over a soft haze. V2 (dark): solid ink bar,
- * logo as supplied, no haze.
+ * once the page scrolls, logo over a soft haze. V2 ("dark"): solid hot pink
+ * bar, white links, logo as supplied, no haze.
  */
 export function Header() {
   const pathname = usePathname();
@@ -66,14 +66,14 @@ export function Header() {
     else router.push("/");
   }
 
-  const fg = dark ? "text-cream" : "text-ink";
+  const fg = dark ? "text-white" : "text-ink";
   const linkClass = cn("link-underline text-[0.7rem] font-medium tracking-luxe uppercase", fg);
 
   return (
     <header
       className={cn(
         "sticky top-0 z-40 transition-[background-color,border-color] duration-500",
-        dark ? "border-b border-white/10 bg-ink" : transparent ? "border-b border-transparent bg-transparent" : "border-b border-line bg-cream",
+        dark ? "border-b border-white/15 bg-hot" : transparent ? "border-b border-transparent bg-transparent" : "border-b border-line bg-cream",
         overHero && "-mb-[var(--header-h)]",
       )}
     >

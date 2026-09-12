@@ -20,7 +20,7 @@ export function AnnouncementBar() {
   const dark = nav === "dark";
 
   return (
-    <div className={cn("relative z-40 border-b", dark ? "border-white/10 bg-ink text-cream" : "border-line bg-cream text-ink")}>
+    <div className={cn("relative z-40 border-b", dark ? "border-white/15 bg-hot text-white" : "border-line bg-cream text-ink")}>
       {navToggleEnabled && (
         <div className="absolute top-1/2 right-3 z-10 -translate-y-1/2 md:right-6" role="group" aria-label="Header version (review only)">
           {(["light", "dark"] as const).map((t, i) => (
@@ -31,8 +31,8 @@ export function AnnouncementBar() {
               aria-pressed={nav === t}
               className={cn(
                 "border px-2 py-0.5 text-[0.55rem] tracking-[0.16em] uppercase transition-colors",
-                dark ? "border-white/20" : "border-line",
-                nav === t ? (dark ? "bg-cream text-ink" : "bg-ink text-white") : "opacity-60 hover:opacity-100",
+                dark ? "border-white/40" : "border-line",
+                nav === t ? (dark ? "bg-white text-hot" : "bg-ink text-white") : "opacity-60 hover:opacity-100",
               )}
             >
               V{i + 1}
@@ -45,7 +45,7 @@ export function AnnouncementBar() {
           <Link
             key={a.text}
             href={a.href}
-            className={`absolute inset-y-0 left-0 flex items-center justify-center text-center transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-rose-deep ${navToggleEnabled ? "right-16 md:right-0" : "right-0"} ${
+            className={`absolute inset-y-0 left-0 flex items-center justify-center text-center transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${dark ? "hover:text-pink" : "hover:text-rose-deep"} ${navToggleEnabled ? "right-16 md:right-0" : "right-0"} ${
               i === index ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0"
             }`}
             aria-hidden={i !== index}

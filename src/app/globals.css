@@ -8,14 +8,15 @@
   --lb-blush: #fcdee1; /* soft surfaces = brand pink */
   --lb-petal: #f6c9cf; /* chips, hover on pink */
   --lb-line: #f0d9dd; /* hairlines */
-  --lb-rose: #e39aa8; /* large accents, swatches */
-  --lb-rose-deep: #d27d8d; /* pink text, links, hover. Same hue as the logo, deep enough to read */
+  --lb-rose: #f08cb0; /* large accents, swatches */
+  --lb-rose-deep: #e7457f; /* hot pink: the second headline line, labels, links, hover */
   --lb-plum: #6f585d; /* muted body text */
   --lb-ink: #241c1e; /* headlines, body, buttons */
   --lb-gold: #c9a24f; /* thin accents only */
   --lb-gold-soft: #e9d7ae;
   --lb-coral: #f0744c; /* the heart in the logo */
-  --lb-smoke: 122 78 88; /* rgb: dusty haze behind the pale logo so it reads on light grounds */
+  --lb-smoke: 122 78 88;
+  --lb-hot: #e7457f; /* hot pink bars behind the logo (header, footer) in V2 */ /* rgb: dusty haze behind the pale logo so it reads on light grounds */
   --lb-success: #3e7a5a;
   --lb-danger: #b23a48;
   --header-h: 5.5rem;
@@ -38,6 +39,7 @@
   --color-gold-soft: var(--lb-gold-soft);
   --color-coral: var(--lb-coral);
   --color-pink: var(--lb-pink);
+  --color-hot: var(--lb-hot);
   --color-success: var(--lb-success);
   --color-danger: var(--lb-danger);
 
@@ -406,4 +408,37 @@ strong {
 ::selection {
   background: var(--lb-petal);
   color: var(--lb-ink);
+}
+
+/* ---------- Header/footer V2 (review only): hot pink bands behind the logo ---------- */
+:root[data-nav="dark"] .footer-main {
+  background: var(--lb-hot);
+  color: #fff;
+}
+:root[data-nav="dark"] .footer-main .logo-smoke::before {
+  display: none;
+}
+:root[data-nav="dark"] .footer-main .eyebrow {
+  color: var(--lb-pink);
+}
+:root[data-nav="dark"] .footer-main a,
+:root[data-nav="dark"] .footer-main .text-ink {
+  color: #fff;
+}
+:root[data-nav="dark"] .footer-main .text-plum {
+  color: rgb(255 255 255 / 0.82);
+}
+:root[data-nav="dark"] .footer-main .border-line {
+  border-color: rgb(255 255 255 / 0.35);
+}
+:root[data-nav="dark"] .footer-main .input-line {
+  border-bottom-color: #fff;
+  color: #fff;
+  &::placeholder {
+    color: rgb(255 255 255 / 0.7);
+  }
+}
+:root[data-nav="dark"] .footer-main .btn,
+:root[data-nav="dark"] .footer-main button {
+  color: #fff;
 }
