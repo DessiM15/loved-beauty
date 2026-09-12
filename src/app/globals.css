@@ -18,7 +18,7 @@
   --lb-smoke: 122 78 88; /* rgb: dusty haze behind the pale logo so it reads on light grounds */
   --lb-success: #3e7a5a;
   --lb-danger: #b23a48;
-  --header-h: 5rem;
+  --header-h: 5.5rem;
   --announce-h: 2.5rem;
   /* rgb triplet used by image veils and text spotlights; matches the page ground */
   --veil: 251, 247, 245;
@@ -87,14 +87,6 @@
   100% {
     transform: scaleY(0);
     transform-origin: bottom;
-  }
-}
-@keyframes float {
-  from {
-    transform: translateY(0) rotate(var(--r, 0deg));
-  }
-  to {
-    transform: translateY(-14px) rotate(var(--r, 0deg));
   }
 }
 
@@ -204,11 +196,11 @@ strong {
   &::before {
     content: "";
     position: absolute;
-    inset: -90% -22%;
+    inset: -38% -18%;
     z-index: -1;
     border-radius: 50%;
-    background: radial-gradient(ellipse at center, rgb(var(--lb-smoke) / 0.58) 0%, rgb(var(--lb-smoke) / 0.36) 32%, rgb(var(--lb-smoke) / 0.1) 62%, rgb(var(--lb-smoke) / 0) 80%);
-    filter: blur(10px);
+    background: radial-gradient(ellipse at center, rgb(var(--lb-smoke) / 0.6) 0%, rgb(var(--lb-smoke) / 0.38) 34%, rgb(var(--lb-smoke) / 0.1) 64%, rgb(var(--lb-smoke) / 0) 78%);
+    filter: blur(9px);
     pointer-events: none;
   }
 }

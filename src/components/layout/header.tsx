@@ -101,11 +101,14 @@ export function Header() {
 
         {/* Center: the logo, exactly as supplied, over a soft haze so the pale pink reads */}
         <Link href="/" onClick={goHome} className="logo-smoke flex items-center justify-center px-3" aria-label={`${site.name} home`}>
-          <Image src="/brand/logo.png" alt={site.name} width={2100} height={600} priority className="h-9 w-auto md:h-11" sizes="(min-width: 768px) 160px, 130px" />
+          <Image src="/brand/logo.png" alt={site.name} width={2100} height={600} priority className="h-14 w-auto md:h-[4.5rem]" sizes="(min-width: 768px) 260px, 200px" />
         </Link>
 
-        {/* Right: bag */}
-        <div className="flex items-center justify-end">
+        {/* Right: shop now + bag */}
+        <div className="flex items-center justify-end gap-3 md:gap-5">
+          <Link href="/shop" className="btn btn-primary hidden min-h-0 px-5 py-2.5 sm:inline-flex">
+            Shop Now
+          </Link>
           <button
             type="button"
             onClick={openCart}
@@ -139,7 +142,7 @@ export function Header() {
                 <CloseIcon />
               </button>
               <Link href="/" onClick={goHome} aria-label={`${site.name} home`} className="logo-smoke px-3">
-                <Image src="/brand/logo.png" alt={site.name} width={2100} height={600} className="h-9 w-auto" sizes="130px" />
+                <Image src="/brand/logo.png" alt={site.name} width={2100} height={600} className="h-14 w-auto" sizes="200px" />
               </Link>
               <button
                 type="button"
