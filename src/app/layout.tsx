@@ -12,6 +12,7 @@ import { Analytics } from "@/components/layout/analytics";
 import { JsonLd } from "@/components/ui/json-ld";
 import { RevealObserver } from "@/components/motion/reveal-observer";
 import { ScrollManager } from "@/components/motion/scroll-manager";
+import { navInitScript } from "@/lib/nav-style";
 
 /** One family site-wide: regular for body, semibold/bold for headers. */
 const jost = Jost({
@@ -102,7 +103,10 @@ const websiteLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${jost.variable} h-full antialiased`}>
+    <html lang="en" className={`${jost.variable} h-full antialiased`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: navInitScript }} />
+      </head>
       <body className="flex min-h-full flex-col">
         <a
           href="#main"

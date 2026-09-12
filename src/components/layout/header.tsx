@@ -9,11 +9,13 @@ import { nav, site } from "@/content/site";
 import { useCart } from "@/components/cart/cart-context";
 import { BagIcon, CloseIcon, InstagramIcon, MenuIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
+import { useNavStyle } from "@/lib/nav-style";
 
 /**
  * Sticky header: the logo centered, the four links, Shop Now and the bag
- * on the right. Transparent over the home hero, solid cream with a hairline
- * everywhere else and once the page scrolls.
+ * on the right. V1 (light): transparent over the home hero, solid cream
+ * once the page scrolls, logo over a soft haze. V2 (dark): solid ink bar,
+ * logo as supplied, no haze.
  */
 export function Header() {
   const pathname = usePathname();
@@ -22,7 +24,8 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const count = cart?.totalQuantity ?? 0;
-  const overHero = pathname === "/";
+  const dark = useNavStyle() === "dark";
+  const overHero = pathname === "/" && !dark;
   const transparent = overHero && !scrolled;
 
   useEffect(() => {
@@ -63,13 +66,14 @@ export function Header() {
     else router.push("/");
   }
 
-  const linkClass = "link-underline text-[0.7rem] font-medium tracking-luxe uppercase text-ink";
+  const fg = dark ? "text-cream" : "text-ink";
+  const linkClass = cn("link-underline text-[0.7rem] font-medium tracking-luxe uppercase", fg);
 
   return (
     <header
       className={cn(
         "sticky top-0 z-40 transition-[background-color,border-color] duration-500",
-        transparent ? "border-b border-transparent bg-transparent" : "border-b border-line bg-cream",
+        dark ? "border-b border-white/10 bg-ink" : transparent ? "border-b border-transparent bg-transparent" : "border-b border-line bg-cream",
         overHero && "-mb-[var(--header-h)]",
       )}
     >
@@ -78,7 +82,7 @@ export function Header() {
         <div className="flex items-center">
           <button
             type="button"
-            className="-ml-2 inline-flex h-10 w-10 items-center justify-center text-ink md:hidden"
+            className={cn("-ml-2 inline-flex h-10 w-10 items-center justify-center md:hidden", fg)}
             aria-label="Open menu"
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
@@ -88,8 +92,8 @@ export function Header() {
           </button>
         </div>
 
-        {/* Center: the logo, exactly as supplied, over a soft haze so the pale pink reads */}
-        <Link href="/" onClick={goHome} className="logo-smoke flex items-center justify-center px-3" aria-label={`${site.name} home`}>
+        {/* Center: the logo, exactly as supplied. Light bar: over a soft haze so the pale pink reads. Dark bar: as is. */}
+        <Link href="/" onClick={goHome} className={cn("flex items-center justify-center px-3", !dark && "logo-smoke")} aria-label={`${site.name} home`}>
           <Image src="/brand/logo.png" alt={site.name} width={2100} height={600} priority className="h-14 w-auto md:h-[4.5rem]" sizes="(min-width: 768px) 260px, 200px" />
         </Link>
 
@@ -112,12 +116,12 @@ export function Header() {
           <button
             type="button"
             onClick={openCart}
-            className="relative -mr-2 inline-flex h-10 w-10 items-center justify-center text-ink"
+            className={cn("relative -mr-2 inline-flex h-10 w-10 items-center justify-center", fg)}
             aria-label={`Open bag, ${count} ${count === 1 ? "item" : "items"}`}
           >
             <BagIcon width={21} height={21} />
             {count > 0 && (
-              <span className="absolute top-0.5 right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-ink px-1 text-[0.58rem] font-medium text-white">{count}</span>
+              <span className={cn("absolute top-0.5 right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[0.58rem] font-medium", dark ? "bg-pink text-ink" : "bg-ink text-white")}>{count}</span>
             )}
           </button>
         </div>
