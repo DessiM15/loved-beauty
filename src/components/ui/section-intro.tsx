@@ -26,7 +26,7 @@ export function SectionIntro({
           {eyebrow}
         </p>
       )}
-      <h2 id={id} className="h-display mt-3 max-w-4xl text-4xl md:text-5xl" data-reveal style={{ "--d": "100ms" } as React.CSSProperties}>
+      <h2 id={id} className="h-display mt-3 max-w-4xl text-5xl md:text-6xl" data-reveal style={{ "--d": "100ms" } as React.CSSProperties}>
         {title} {italic && <em className="h-italic text-rose-deep">{italic}</em>}
       </h2>
       {text && (

@@ -61,12 +61,12 @@ export function Hero() {
         <p className="eyebrow text-[0.72rem] animate-fade-up" style={{ animationDelay: "200ms" }}>
           {hero.eyebrow}
         </p>
-        <h1 id="hero-heading" className="h-display mt-5 max-w-3xl text-[2.7rem] sm:text-6xl md:text-7xl lg:text-[5.4rem] animate-fade-up" style={{ animationDelay: "320ms" }}>
+        <h1 id="hero-heading" className="h-display mt-5 max-w-3xl text-[3.1rem] sm:text-7xl md:text-8xl lg:text-[6.2rem] animate-fade-up" style={{ animationDelay: "320ms" }}>
           {hero.headlineLead}
           <br />
           <span className="h-italic">{hero.headlineAccent}</span>
         </h1>
-        <p className="mx-auto mt-5 max-w-lg text-[0.95rem] leading-relaxed md:text-[1.02rem] text-plum animate-fade-up" style={{ animationDelay: "460ms" }}>
+        <p className="p-serif mx-auto mt-5 max-w-lg text-[1.15rem] text-plum md:text-[1.3rem] animate-fade-up" style={{ animationDelay: "460ms" }}>
           {hero.subhead}
         </p>
         <div className="mt-7 flex flex-wrap md:mt-9 items-center justify-center gap-5 animate-fade-up" style={{ animationDelay: "600ms" }}>

@@ -42,9 +42,9 @@
   --color-success: var(--lb-success);
   --color-danger: var(--lb-danger);
 
-  /* One family. Headers are Jost bold and larger; body is Jost regular. `serif` is kept as an alias so nothing falls back to Georgia. */
+  /* Serif for headings, hero copy, story and values; sans for the UI. */
   --font-sans: var(--font-jost), "Jost", "Helvetica Neue", Arial, sans-serif;
-  --font-serif: var(--font-jost), "Jost", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
 
   --tracking-luxe: 0.22em;
   --tracking-wide2: 0.14em;
@@ -174,20 +174,27 @@ strong {
   color: var(--lb-rose-deep);
 }
 
-/* Headers: Jost bold, larger, tight. */
+/* Headers: the luxury serif, medium weight, tight. */
 @utility h-display {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
 }
 
-/* Accent word inside a header: same weight, brand pink text. */
+/* Accent line inside a header: same face, the light brand pink (the button pink), as the client asked. */
 @utility h-italic {
-  font-family: var(--font-sans);
+  font-family: var(--font-serif);
   font-style: normal;
-  font-weight: 600;
-  color: var(--lb-rose-deep);
+  font-weight: 500;
+  color: var(--lb-pink);
+}
+
+/* Serif running text: story paragraphs, hero subhead, values. A step larger than Jost so the light face stays readable. */
+@utility p-serif {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 @utility gold-rule {

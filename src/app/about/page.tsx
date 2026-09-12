@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { about, site, values } from "@/content/site";
+import { about, hero, site, values } from "@/content/site";
 import { ArrowRightIcon } from "@/components/ui/icons";
 
 export const metadata: Metadata = {
@@ -22,17 +22,19 @@ export default function AboutPage() {
           <p className="eyebrow" data-reveal>
             {about.eyebrow}
           </p>
-          <h1 className="h-display mt-4 text-4xl md:text-5xl" data-reveal style={{ "--d": "80ms" } as React.CSSProperties}>
-            Beauty that feels like being <span className="h-italic">loved.</span>
+          <h1 className="h-display mt-4 text-5xl md:text-6xl" data-reveal style={{ "--d": "80ms" } as React.CSSProperties}>
+            {hero.headlineLead}
+            <br />
+            <span className="h-italic">{hero.headlineAccent}</span>
           </h1>
-          <div className="mt-8 space-y-5 text-[1.02rem] leading-relaxed text-plum">
+          <div className="p-serif mt-8 space-y-5 text-[1.25rem] text-plum">
             {about.paragraphs.map((p, i) => (
               <p key={p} data-reveal style={{ "--d": `${120 + i * 80}ms` } as React.CSSProperties}>
                 {p}
               </p>
             ))}
           </div>
-          <p className="mt-8 text-lg font-medium text-ink" data-reveal style={{ "--d": "400ms" } as React.CSSProperties}>
+          <p className="p-serif mt-8 text-[1.35rem] font-semibold text-ink" data-reveal style={{ "--d": "400ms" } as React.CSSProperties}>
             {about.founderNote}
           </p>
           <Link href="/shop" className="btn btn-primary mt-10" data-reveal style={{ "--d": "460ms" } as React.CSSProperties}>
@@ -47,10 +49,10 @@ export default function AboutPage() {
             <p className="eyebrow" data-reveal>
               What we stand for
             </p>
-            <h2 id="values-heading" className="h-display mt-4 text-3xl md:text-4xl" data-reveal style={{ "--d": "100ms" } as React.CSSProperties}>
+            <h2 id="values-heading" className="h-display mt-4 text-4xl md:text-5xl" data-reveal style={{ "--d": "100ms" } as React.CSSProperties}>
               Gentle formulas. Honest ingredients.
             </h2>
-            <p className="mt-5 text-[0.98rem] leading-relaxed text-plum" data-reveal style={{ "--d": "200ms" } as React.CSSProperties}>
+            <p className="p-serif mt-5 text-[1.2rem] text-plum" data-reveal style={{ "--d": "200ms" } as React.CSSProperties}>
               Every Loved Beauty product is verified by our manufacturing partner as vegan, cruelty-free, paraben-free and sulfate-free. Full ingredient lists are printed on every box and
               listed on each product page.
             </p>
@@ -58,8 +60,8 @@ export default function AboutPage() {
           <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {values.map((v, i) => (
               <li key={v.key} className="bg-white p-7 text-center" data-reveal style={{ "--d": `${i * 90}ms` } as React.CSSProperties}>
-                <p className="text-lg font-semibold">{v.title}</p>
-                <p className="mt-2 text-sm text-plum">{v.text}</p>
+                <p className="h-display text-3xl">{v.title}</p>
+                <p className="p-serif mt-2 text-[1.1rem] text-plum">{v.text}</p>
               </li>
             ))}
           </ul>

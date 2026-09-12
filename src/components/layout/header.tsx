@@ -144,7 +144,7 @@ export function Header() {
               <ul>
                 {nav.primary.map((item) => (
                   <li key={item.href}>
-                    <Link href={item.href} onClick={() => setMenuOpen(false)} className="flex items-baseline justify-between border-b border-line py-5 text-2xl font-semibold text-ink">
+                    <Link href={item.href} onClick={() => setMenuOpen(false)} className="h-display flex items-baseline justify-between border-b border-line py-5 text-3xl text-ink">
                       {item.label}
                     </Link>
                   </li>

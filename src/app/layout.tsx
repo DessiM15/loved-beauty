@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Jost } from "next/font/google";
+import { Cormorant_Garamond, Jost } from "next/font/google";
 import "./globals.css";
 import { site } from "@/content/site";
 import { CartProvider } from "@/components/cart/cart-context";
@@ -13,7 +13,18 @@ import { JsonLd } from "@/components/ui/json-ld";
 import { RevealObserver } from "@/components/motion/reveal-observer";
 import { ScrollManager } from "@/components/motion/scroll-manager";
 
-/** One family site-wide: regular for body, semibold/bold for headers. */
+/**
+ * Two families. Cormorant Garamond (the client's "luxury" serif) carries every
+ * heading, the hero copy, the story and the values. Jost carries the UI:
+ * nav, buttons, labels, prices, product details.
+ */
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+});
+
 const jost = Jost({
   variable: "--font-jost",
   subsets: ["latin"],
@@ -102,7 +113,7 @@ const websiteLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${jost.variable} h-full antialiased`}>
+    <html lang="en" className={`${cormorant.variable} ${jost.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <a
           href="#main"

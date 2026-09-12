@@ -17,7 +17,7 @@ export function ProductGrid({
   if (products.length === 0) {
     return (
       <div className="border border-dashed border-line p-16 text-center">
-        <p className="text-2xl font-semibold">Nothing here yet.</p>
+        <p className="h-display text-3xl">Nothing here yet.</p>
         <p className="mt-2 text-sm text-plum">Check back soon, new products are on their way.</p>
       </div>
     );

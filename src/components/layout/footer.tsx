@@ -26,8 +26,8 @@ export function Footer() {
                 <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-rose-deep">
                   <Icon />
                 </span>
-                <p className="text-sm font-semibold">{v.title}</p>
-                <p className="-mt-2 text-xs text-plum">{v.text}</p>
+                <p className="h-display text-2xl">{v.title}</p>
+                <p className="p-serif -mt-1 text-[1.05rem] text-plum">{v.text}</p>
               </li>
             );
           })}

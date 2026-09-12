@@ -53,7 +53,7 @@ export function ProductPurchase({ product, children }: { product: Product; child
 
       <div className="flex flex-col items-center px-5 py-10 text-center sm:px-10 lg:sticky lg:top-[var(--header-h)] lg:self-start lg:px-14 lg:py-16">
         <p className="eyebrow">{product.productType}</p>
-        <h1 className="h-display mt-3 text-4xl md:text-5xl">{product.title}</h1>
+        <h1 className="h-display mt-3 text-5xl md:text-6xl">{product.title}</h1>
         <div className="mt-4 text-xl font-medium">
           {variant ? <Price price={variant.price} compareAt={variant.compareAtPrice} /> : <Price price={product.priceRange.minVariantPrice} />}
         </div>

@@ -66,7 +66,7 @@ export function ProductCard({ product, priority = false, index = 0 }: { product:
       </Link>
 
       <div className="flex flex-1 flex-col items-center pt-4 text-center">
-        <h3 className="text-[0.95rem] font-medium leading-snug">
+        <h3 className="h-display text-[1.35rem]">
           <Link href={href} className="text-ink">
             {product.title}
           </Link>
