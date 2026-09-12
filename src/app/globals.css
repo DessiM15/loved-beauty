@@ -190,6 +190,15 @@ strong {
   color: var(--lb-pink);
 }
 
+/* Page-top headlines (home hero, Our Story, shop titles): the serif in capitals, larger. */
+@utility h-hero {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
 /* Serif running text: story paragraphs, hero subhead, values. A step larger than Jost so the light face stays readable. */
 @utility p-serif {
   font-family: var(--font-serif);

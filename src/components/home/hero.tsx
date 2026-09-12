@@ -61,7 +61,7 @@ export function Hero() {
         <p className="eyebrow text-[0.72rem] animate-fade-up" style={{ animationDelay: "200ms" }}>
           {hero.eyebrow}
         </p>
-        <h1 id="hero-heading" className="h-display mt-5 max-w-3xl text-[3.1rem] sm:text-7xl md:text-8xl lg:text-[6.2rem] animate-fade-up" style={{ animationDelay: "320ms" }}>
+        <h1 id="hero-heading" className="h-hero mt-5 max-w-5xl text-[2.5rem] sm:text-6xl md:text-[4.4rem] lg:text-[5.6rem] animate-fade-up" style={{ animationDelay: "320ms" }}>
           {hero.headlineLead}
           <br />
           <span className="h-italic">{hero.headlineAccent}</span>

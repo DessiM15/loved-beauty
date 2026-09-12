@@ -22,7 +22,7 @@ export default function AboutPage() {
           <p className="eyebrow" data-reveal>
             {about.eyebrow}
           </p>
-          <h1 className="h-display mt-4 text-5xl md:text-6xl" data-reveal style={{ "--d": "80ms" } as React.CSSProperties}>
+          <h1 className="h-hero mt-4 text-4xl sm:text-5xl md:text-[3.9rem]" data-reveal style={{ "--d": "80ms" } as React.CSSProperties}>
             {hero.headlineLead}
             <br />
             <span className="h-italic">{hero.headlineAccent}</span>

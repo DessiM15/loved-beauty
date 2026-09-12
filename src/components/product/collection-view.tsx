@@ -48,7 +48,7 @@ export function CollectionView({
   return (
     <div className="container-lb pb-16 md:pb-24">
       <div className="flex flex-col items-center pt-10 pb-8 text-center md:pt-14">
-        <h1 className="h-display text-4xl md:text-5xl">{title}</h1>
+        <h1 className="h-hero text-4xl md:text-6xl">{title}</h1>
         {description && <p className="mt-3 max-w-md text-[0.95rem] text-plum">{description}</p>}
       </div>
 
