@@ -5,9 +5,9 @@ import { about, hero, site, values } from "@/content/site";
 import { ArrowRightIcon } from "@/components/ui/icons";
 
 export const metadata: Metadata = {
-  title: "Our Story | Clean, Vegan Beauty from Cypress, Texas",
+  title: "Our Story | Clean, Vegan Beauty from Houston, Texas",
   description:
-    "Loved Beauty is a vegan, cruelty-free beauty brand founded in Cypress, Texas. Learn about our clean formulas, our values and why every product is made to feel like a little luxury.",
+    "Loved Beauty is a vegan, cruelty-free beauty brand founded in Houston, Texas. Learn about our clean formulas, our values and why every product is made to feel like a little luxury.",
   alternates: { canonical: "/about" },
 };
 

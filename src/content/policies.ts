@@ -13,7 +13,7 @@ export const policies: ShopPolicy[] = [
     title: "Shipping & Returns",
     body: `
 <h2>Shipping</h2>
-<p>All orders ship from Cypress, Texas within 1 to 3 business days. Standard U.S. shipping usually arrives in 3 to 6 business days after dispatch. You will receive a confirmation email with tracking as soon as your order ships.</p>
+<p>All orders ship from Houston, Texas within 1 to 3 business days. Standard U.S. shipping usually arrives in 3 to 6 business days after dispatch. You will receive a confirmation email with tracking as soon as your order ships.</p>
 <p>U.S. orders over $200 ship free. Shipping on all other orders is calculated at checkout based on weight and destination. We currently ship within the United States only.</p>
 <h2>Returns &amp; exchanges</h2>
 <p>Because our products are cosmetics, we are unable to accept returns or exchanges on opened or used items for hygiene and safety reasons. All sales of opened cosmetics are final.</p>

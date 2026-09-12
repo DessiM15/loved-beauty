@@ -95,7 +95,7 @@ const organizationLd = {
   url: site.url,
   logo: `${site.url}/brand/logo.png`,
   email: site.supportEmail,
-  address: { "@type": "PostalAddress", addressLocality: "Cypress", addressRegion: "TX", addressCountry: "US" },
+  address: { "@type": "PostalAddress", addressLocality: "Houston", addressRegion: "TX", addressCountry: "US" },
   sameAs: [site.social.instagram].filter(Boolean),
 };
 

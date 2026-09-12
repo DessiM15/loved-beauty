@@ -24,7 +24,7 @@ export const site = {
     "Loved Beauty is a clean, vegan, cruelty-free beauty brand. Shop hydrating lip gloss, lip oil, lip liner, sugar lip scrub and luminous shimmer sprays for face and body.",
   url: resolveSiteUrl(),
   supportEmail: "lovedbeautyshop@gmail.com",
-  location: "Cypress, Texas",
+  location: "Houston, TX",
   founded: "2025",
   social: {
     instagram: "https://www.instagram.com/lovedbeautyllc/",
@@ -166,7 +166,7 @@ export const about = {
   paragraphs: [
     "Loved Beauty began with a simple idea: the products you reach for every day should feel as good as they look. Soft textures. Hydrating formulas. Colors that flatter without trying too hard.",
     "Everything we make is vegan, cruelty-free and paraben-free, because caring for yourself should never cost anything else. From our first sugar lip scrub to our light-catching shimmer sprays, each formula is chosen to be gentle enough for daily wear and beautiful enough to feel like a little luxury.",
-    "Founded in Cypress, Texas, and made for every girl who deserves to feel loved.",
+    "Founded in Houston, Texas, and made for every girl who deserves to feel loved.",
   ],
   founderNote:
     "Thank you for being here. Every order is packed with care and a lot of heart. — Loved Beauty",
