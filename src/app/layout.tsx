@@ -12,7 +12,6 @@ import { Analytics } from "@/components/layout/analytics";
 import { JsonLd } from "@/components/ui/json-ld";
 import { RevealObserver } from "@/components/motion/reveal-observer";
 import { ScrollManager } from "@/components/motion/scroll-manager";
-import { navInitScript } from "@/lib/nav-style";
 
 /** One family site-wide: regular for body, semibold/bold for headers. */
 const jost = Jost({
@@ -71,7 +70,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#fbf7f5",
+  themeColor: "#e7457f",
   width: "device-width",
   initialScale: 1,
   colorScheme: "light",
@@ -103,10 +102,7 @@ const websiteLd = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${jost.variable} h-full antialiased`} suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: navInitScript }} />
-      </head>
+    <html lang="en" className={`${jost.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <a
           href="#main"

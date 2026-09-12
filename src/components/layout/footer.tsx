@@ -11,7 +11,7 @@ const valueIcons: Record<string, React.ComponentType<React.SVGProps<SVGSVGElemen
   "paraben-free": ShieldIcon,
 };
 
-/** Footer: the vegan / cruelty-free promise, then links, email sign-up and credits. */
+/** Footer: the vegan / cruelty-free promise, then a hot pink band with the logo, links and email sign-up, then credits. */
 export function Footer() {
   const year = new Date().getFullYear();
   return (
@@ -37,9 +37,7 @@ export function Footer() {
       <div className="footer-main hairline-t">
         <div className="container-lb grid gap-12 py-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <span className="logo-smoke inline-block">
-              <Image src="/brand/logo.png" alt={site.name} width={2100} height={600} className="h-12 w-auto" />
-            </span>
+            <Image src="/brand/logo.png" alt={site.name} width={2100} height={600} className="h-12 w-auto" />
             <p className="mt-6 mb-4 max-w-sm text-sm text-plum">10% off your first order, new shades and restocks. No noise.</p>
             <NewsletterForm variant="line" source="footer" className="max-w-sm" />
             <div className="mt-8 flex items-center gap-3">

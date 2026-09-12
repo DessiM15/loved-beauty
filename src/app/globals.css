@@ -15,8 +15,7 @@
   --lb-gold: #c9a24f; /* thin accents only */
   --lb-gold-soft: #e9d7ae;
   --lb-coral: #f0744c; /* the heart in the logo */
-  --lb-smoke: 122 78 88;
-  --lb-hot: #e7457f; /* hot pink bars behind the logo (header, footer) in V2 */ /* rgb: dusty haze behind the pale logo so it reads on light grounds */
+  --lb-hot: #e7457f; /* hot pink: header, announcement bar, footer band. The pale logo reads on it without help */ /* rgb: dusty haze behind the pale logo so it reads on light grounds */
   --lb-success: #3e7a5a;
   --lb-danger: #b23a48;
   --header-h: 5.5rem;
@@ -189,22 +188,6 @@ strong {
   font-style: normal;
   font-weight: 600;
   color: var(--lb-rose-deep);
-}
-
-/* Soft haze behind the pale pink logo so it reads on cream and white. */
-@utility logo-smoke {
-  position: relative;
-  isolation: isolate;
-  &::before {
-    content: "";
-    position: absolute;
-    inset: -38% -18%;
-    z-index: -1;
-    border-radius: 50%;
-    background: radial-gradient(ellipse at center, rgb(var(--lb-smoke) / 0.6) 0%, rgb(var(--lb-smoke) / 0.38) 34%, rgb(var(--lb-smoke) / 0.1) 64%, rgb(var(--lb-smoke) / 0) 78%);
-    filter: blur(9px);
-    pointer-events: none;
-  }
 }
 
 @utility gold-rule {
@@ -410,35 +393,31 @@ strong {
   color: var(--lb-ink);
 }
 
-/* ---------- Header/footer V2 (review only): hot pink bands behind the logo ---------- */
-:root[data-nav="dark"] .footer-main {
+/* ---------- Footer band: hot pink behind the logo, links and sign-up ---------- */
+.footer-main {
   background: var(--lb-hot);
   color: #fff;
 }
-:root[data-nav="dark"] .footer-main .logo-smoke::before {
-  display: none;
-}
-:root[data-nav="dark"] .footer-main .eyebrow {
+.footer-main .eyebrow {
   color: var(--lb-pink);
 }
-:root[data-nav="dark"] .footer-main a,
-:root[data-nav="dark"] .footer-main .text-ink {
+.footer-main a,
+.footer-main .text-ink {
   color: #fff;
 }
-:root[data-nav="dark"] .footer-main .text-plum {
+.footer-main .text-plum {
   color: rgb(255 255 255 / 0.82);
 }
-:root[data-nav="dark"] .footer-main .border-line {
+.footer-main .border-line {
   border-color: rgb(255 255 255 / 0.35);
 }
-:root[data-nav="dark"] .footer-main .input-line {
+.footer-main .input-line {
   border-bottom-color: #fff;
   color: #fff;
   &::placeholder {
     color: rgb(255 255 255 / 0.7);
   }
 }
-:root[data-nav="dark"] .footer-main .btn,
-:root[data-nav="dark"] .footer-main button {
+.footer-main button {
   color: #fff;
 }
