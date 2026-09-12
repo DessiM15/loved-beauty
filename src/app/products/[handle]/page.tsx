@@ -152,8 +152,8 @@ export default async function ProductPage({ params }: PageProps<"/products/[hand
 
       {related.length > 0 && (
         <section aria-labelledby="related-heading">
-          <SectionIntro id="related-heading" eyebrow="Complete the look" title="You may also" italic="like." link={{ label: "Shop everything", href: "/shop" }} />
-          <div className="hairline-t hairline-b">
+          <SectionIntro id="related-heading" eyebrow="Complete the look" title="You may also like" link={{ label: "Shop everything", href: "/shop" }} />
+          <div className="container-lb pb-16 md:pb-24">
             <ProductGrid products={related} priorityCount={0} />
           </div>
         </section>

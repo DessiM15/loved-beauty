@@ -8,7 +8,6 @@ import { ProductGallery } from "./product-gallery";
 import { hasRealOptions, cn } from "@/lib/utils";
 import { BagIcon, CheckIcon, MinusIcon, PlusIcon } from "@/components/ui/icons";
 import { freeShippingThreshold, shadeColors } from "@/content/site";
-import { ShadeFinderLink } from "./shade-finder-link";
 
 /**
  * Product page top: gallery bleeding to the left edge, purchase panel right.
@@ -37,11 +36,6 @@ export function ProductPurchase({ product, children }: { product: Product; child
 
   const lowStock = variant?.quantityAvailable != null && variant.quantityAvailable > 0 && variant.quantityAvailable <= 5;
 
-  // Lip colour products get a shade finder link even when they come in one shade:
-  // the finder still tells the shopper whether this product suits her undertone.
-  const isLipColour = /gloss|lacquer|liner|lip oil/i.test(product.productType);
-  const linkInOptions = showOptions && product.variants.length > 1;
-
   async function onAdd() {
     if (!variant) return;
     const ok = await addItem(variant.id, qty);
@@ -59,8 +53,8 @@ export function ProductPurchase({ product, children }: { product: Product; child
 
       <div className="flex flex-col items-center px-5 py-10 text-center sm:px-10 lg:sticky lg:top-[var(--header-h)] lg:self-start lg:px-14 lg:py-16">
         <p className="eyebrow">{product.productType}</p>
-        <h1 className="h-display mt-3 text-5xl md:text-6xl">{product.title}</h1>
-        <div className="mt-5 font-serif text-2xl">
+        <h1 className="h-display mt-3 text-4xl md:text-5xl">{product.title}</h1>
+        <div className="mt-4 text-xl font-medium">
           {variant ? <Price price={variant.price} compareAt={variant.compareAtPrice} /> : <Price price={product.priceRange.minVariantPrice} />}
         </div>
 
@@ -71,7 +65,7 @@ export function ProductPurchase({ product, children }: { product: Product; child
             <fieldset key={option.id} className="mt-8 flex flex-col items-center">
               <legend className="mb-3 flex items-baseline gap-3 text-[0.62rem] tracking-luxe uppercase">
                 {option.name}
-                <span className="font-serif text-base normal-case tracking-normal text-plum italic">{selected[option.name]}</span>
+                <span className="text-sm normal-case tracking-normal text-plum">{selected[option.name]}</span>
               </legend>
               <div className="flex flex-wrap justify-center gap-3">
                 {option.values.map((value) => {
@@ -109,11 +103,8 @@ export function ProductPurchase({ product, children }: { product: Product; child
                   );
                 })}
               </div>
-              {linkInOptions && <ShadeFinderLink />}
             </fieldset>
           ))}
-
-        {isLipColour && !linkInOptions && <ShadeFinderLink />}
 
         <div className="mt-9 flex w-full max-w-md flex-col gap-3 sm:flex-row">
           <div className="inline-flex h-[3.1rem] items-center self-center border border-line bg-white">
@@ -127,7 +118,7 @@ export function ProductPurchase({ product, children }: { product: Product; child
               <PlusIcon />
             </button>
           </div>
-          <button type="button" onClick={onAdd} disabled={!variant || !variant.availableForSale || isPending} className={cn("btn flex-1", justAdded ? "btn-rose" : "btn-primary")}>
+          <button type="button" onClick={onAdd} disabled={!variant || !variant.availableForSale || isPending} className={cn("btn flex-1", justAdded ? "btn-primary" : "btn-rose")}>
             {!variant || !variant.availableForSale ? (
               "Sold out"
             ) : justAdded ? (

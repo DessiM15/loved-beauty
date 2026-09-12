@@ -49,7 +49,7 @@ export function CartDrawer() {
         }`}
       >
         <div className="flex items-center justify-between border-b border-line px-5 py-4">
-          <h2 className="font-serif text-2xl">
+          <h2 className="text-xl font-semibold">
             Your bag{" "}
             {cart && cart.totalQuantity > 0 && (
               <span className="font-sans text-sm text-plum">({cart.totalQuantity})</span>
@@ -85,10 +85,10 @@ export function CartDrawer() {
         <div className="flex-1 overflow-y-auto px-5 py-4">
           {isEmpty ? (
             <div className="flex h-full flex-col items-center justify-center text-center">
-              <p className="font-serif text-2xl">Your bag is empty.</p>
+              <p className="text-xl font-semibold">Your bag is empty.</p>
               <p className="mt-2 text-sm text-plum">A little something for your lips?</p>
-              <Link href="/collections/bestsellers" onClick={closeCart} className="btn btn-primary mt-6">
-                Shop bestsellers
+              <Link href="/shop" onClick={closeCart} className="btn btn-primary mt-6">
+                Shop all
               </Link>
             </div>
           ) : (

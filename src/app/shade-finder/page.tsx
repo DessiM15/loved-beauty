@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { noir } from "@/content/site";
-import { ThemedImage } from "@/components/theme/themed";
+import Image from "next/image";
 import { ShadeFinder } from "@/components/shade/shade-finder";
 import { JsonLd } from "@/components/ui/json-ld";
 import { site } from "@/content/site";
 
+/** Hidden for launch: not linked anywhere and not indexed. The tool itself keeps working at /shade-finder for review. */
 export const metadata: Metadata = {
+  robots: { index: false, follow: false },
   title: "Find Your Shade | Lip Liner & Gloss Shade Finder",
   description:
     "Find your perfect Loved Beauty lip liner and gloss shade in 30 seconds. Use a selfie or answer three quick questions to get a personalized lip match for your undertone.",
@@ -26,7 +27,7 @@ export default function ShadeFinderPage() {
   return (
     <div>
       <section className="relative flex min-h-[60vh] flex-col justify-end overflow-hidden bg-blush">
-        <ThemedImage light={{ src: "/editorial/shade-page.webp", alt: "Lip color swatches on the back of a hand", position: "50% 40%" }} dark={noir.shadePage} fill priority sizes="100vw" className="object-cover" style={{ animation: "ken-burns 2.4s cubic-bezier(0.16,1,0.3,1) both" }} />
+        <Image src="/editorial/shade-page.webp" alt="Lip color swatches on the back of a hand" fill priority sizes="100vw" className="object-cover" style={{ objectPosition: "50% 40%" }} />
         <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(var(--veil),0.1) 0%, rgba(var(--veil),0) 40%, rgba(var(--veil),0.9) 100%)" }} />
         <div className="container-lb relative pt-[calc(var(--header-h)+5rem)] pb-12 text-center">
           <div className="relative mx-auto flex max-w-4xl flex-col items-center">

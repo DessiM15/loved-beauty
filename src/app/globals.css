@@ -4,59 +4,24 @@
 :root {
   --lb-white: #ffffff;
   --lb-cream: #fbf7f5; /* page ground */
-  --lb-blush: #f7e6e9; /* soft blush surfaces */
-  --lb-petal: #efd3d9; /* chips */
-  --lb-line: #e7d3d7; /* hairlines */
-  --lb-rose: #c47d8d; /* brand rose */
-  --lb-rose-deep: #a35f6f; /* hover / pressed */
-  --lb-plum: #6b4f56; /* muted body text */
+  --lb-pink: #fcdee1; /* brand pink: the logo wordmark. Surfaces and buttons, never small text on light grounds */
+  --lb-blush: #fcdee1; /* soft surfaces = brand pink */
+  --lb-petal: #f6c9cf; /* chips, hover on pink */
+  --lb-line: #f0d9dd; /* hairlines */
+  --lb-rose: #e39aa8; /* large accents, swatches */
+  --lb-rose-deep: #d27d8d; /* pink text, links, hover. Same hue as the logo, deep enough to read */
+  --lb-plum: #6f585d; /* muted body text */
   --lb-ink: #241c1e; /* headlines, body, buttons */
   --lb-gold: #c9a24f; /* thin accents only */
   --lb-gold-soft: #e9d7ae;
-  --lb-coral: #f07a5c; /* the heart in the logo */
+  --lb-coral: #f0744c; /* the heart in the logo */
+  --lb-smoke: 122 78 88; /* rgb: dusty haze behind the pale logo so it reads on light grounds */
   --lb-success: #3e7a5a;
   --lb-danger: #b23a48;
   --header-h: 5rem;
   --announce-h: 2.5rem;
   /* rgb triplet used by image veils and text spotlights; matches the page ground */
   --veil: 251, 247, 245;
-  --logo-transparent: url("/brand/logo-ink.png");
-}
-
-/* ---------- V2 "after dark": same tokens, different values ---------- */
-:root[data-theme="noir"],
-.theme-noir {
-  --lb-white: #17110f; /* fills that were white: inputs, button text on ivory */
-  --lb-cream: #120d0e; /* page ground: espresso-plum */
-  --lb-blush: #1c1416; /* raised surfaces */
-  --lb-petal: #2c1f23;
-  --lb-line: #3b2c30; /* hairlines */
-  --lb-rose: #d08a9b;
-  --lb-rose-deep: #e3a5b4; /* accent reads brighter on dark */
-  --lb-plum: #b8a3a8; /* muted text */
-  --lb-ink: #f5ece6; /* headlines, body, primary buttons */
-  --lb-gold: #d4ad5c;
-  --lb-gold-soft: #8a7038;
-  --veil: 18, 13, 14;
-  --logo-transparent: url("/brand/logo-cream.png");
-  color-scheme: dark;
-}
-
-/* Sections that stay light inside the dark theme (e.g. the bestseller grid). */
-.theme-light {
-  --lb-white: #ffffff;
-  --lb-cream: #fbf7f5;
-  --lb-blush: #f7e6e9;
-  --lb-petal: #efd3d9;
-  --lb-line: #e7d3d7;
-  --lb-rose: #c47d8d;
-  --lb-rose-deep: #a35f6f;
-  --lb-plum: #6b4f56;
-  --lb-ink: #241c1e;
-  --lb-gold: #c9a24f;
-  --lb-gold-soft: #e9d7ae;
-  --veil: 251, 247, 245;
-  color-scheme: light;
 }
 
 @theme inline {
@@ -72,11 +37,13 @@
   --color-gold: var(--lb-gold);
   --color-gold-soft: var(--lb-gold-soft);
   --color-coral: var(--lb-coral);
+  --color-pink: var(--lb-pink);
   --color-success: var(--lb-success);
   --color-danger: var(--lb-danger);
 
-  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  /* One family. Headers are Jost bold and larger; body is Jost regular. `serif` is kept as an alias so nothing falls back to Georgia. */
   --font-sans: var(--font-jost), "Jost", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: var(--font-jost), "Jost", "Helvetica Neue", Arial, sans-serif;
 
   --tracking-luxe: 0.22em;
   --tracking-wide2: 0.14em;
@@ -122,20 +89,12 @@
     transform-origin: bottom;
   }
 }
-@keyframes loader-bar {
+@keyframes float {
   from {
-    transform: scaleX(0);
+    transform: translateY(0) rotate(var(--r, 0deg));
   }
   to {
-    transform: scaleX(1);
-  }
-}
-@keyframes ken-burns {
-  from {
-    transform: scale(1.06);
-  }
-  to {
-    transform: scale(1);
+    transform: translateY(-14px) rotate(var(--r, 0deg));
   }
 }
 
@@ -147,13 +106,13 @@ body {
   background: var(--lb-cream);
   color: var(--lb-ink);
   font-family: var(--font-sans);
-  font-weight: 300;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 strong {
-  font-weight: 500;
+  font-weight: 600;
 }
 
 /* ---------- Scroll reveal (driven by components/motion/reveal-observer.tsx) ---------- */
@@ -216,24 +175,42 @@ strong {
 }
 
 @utility eyebrow-num {
-  font-family: var(--font-serif);
-  font-size: 1.1rem;
-  font-style: italic;
-  color: var(--lb-gold);
-  letter-spacing: 0.04em;
+  font-family: var(--font-sans);
+  font-size: 0.66rem;
+  letter-spacing: var(--tracking-luxe);
+  color: var(--lb-rose-deep);
 }
 
+/* Headers: Jost bold, larger, tight. */
 @utility h-display {
-  font-family: var(--font-serif);
-  font-weight: 400;
-  line-height: 0.98;
-  letter-spacing: -0.015em;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
 }
 
+/* Accent word inside a header: same weight, brand pink text. */
 @utility h-italic {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 600;
+  color: var(--lb-rose-deep);
+}
+
+/* Soft haze behind the pale pink logo so it reads on cream and white. */
+@utility logo-smoke {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -90% -22%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgb(var(--lb-smoke) / 0.58) 0%, rgb(var(--lb-smoke) / 0.36) 32%, rgb(var(--lb-smoke) / 0.1) 62%, rgb(var(--lb-smoke) / 0) 80%);
+    filter: blur(10px);
+    pointer-events: none;
+  }
 }
 
 @utility gold-rule {
@@ -259,7 +236,7 @@ strong {
   font-size: 0.7rem;
   letter-spacing: var(--tracking-luxe);
   text-transform: uppercase;
-  font-weight: 400;
+  font-weight: 500;
   border-radius: 2px;
   position: relative;
   overflow: hidden;
@@ -283,20 +260,23 @@ strong {
   }
 }
 
+/* Primary: brand pink with ink text (the exact logo pink). */
 @utility btn-primary {
-  background: var(--lb-ink);
-  color: var(--lb-white);
-  border: 1px solid var(--lb-ink);
+  background: var(--lb-pink);
+  color: var(--lb-ink);
+  border: 1px solid var(--lb-pink);
   &:hover:not(:disabled) {
-    background: var(--lb-rose-deep);
-    border-color: var(--lb-rose-deep);
+    background: var(--lb-ink);
+    border-color: var(--lb-ink);
+    color: var(--lb-white);
   }
 }
 
+/* Dark: ink with white text. */
 @utility btn-rose {
-  background: var(--lb-rose);
+  background: var(--lb-ink);
   color: var(--lb-white);
-  border: 1px solid var(--lb-rose);
+  border: 1px solid var(--lb-ink);
   &:hover:not(:disabled) {
     background: var(--lb-rose-deep);
     border-color: var(--lb-rose-deep);

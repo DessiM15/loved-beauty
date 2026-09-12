@@ -5,7 +5,6 @@ import { CollectionView } from "@/components/product/collection-view";
 import { JsonLd } from "@/components/ui/json-ld";
 import { site } from "@/content/site";
 import { truncate } from "@/lib/utils";
-import { noir } from "@/content/site";
 
 export const revalidate = 60;
 
@@ -62,7 +61,6 @@ export default async function CollectionPage({ params }: PageProps<"/collections
         products={products}
         collections={visibleCollections}
         activeHandle={handle}
-        banner={noir.banners[handle] ?? (collection.image ? { src: collection.image.url, alt: collection.image.altText ?? collection.title, position: "50% 50%" } : null)}
       />
       <JsonLd data={ld} />
     </>

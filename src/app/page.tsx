@@ -1,48 +1,6 @@
-import { getCollectionProducts, getCollections } from "@/lib/shopify";
 import { Hero } from "@/components/home/hero";
-import { CategoryPanels } from "@/components/home/category-panels";
-import { Statement } from "@/components/home/statement";
-import { Ritual } from "@/components/home/ritual";
-import { SetsFeature } from "@/components/home/sets-feature";
-import { ShadeFinderBanner } from "@/components/home/shade-finder-banner";
-import { InstagramGrid } from "@/components/home/instagram-grid";
-import { NewsletterSection } from "@/components/marketing/newsletter-section";
-import { ProductGrid } from "@/components/product/product-grid";
-import { SectionIntro } from "@/components/ui/section-intro";
 
-export const revalidate = 60;
-
-/**
- * Home flow: hero → categories → bestsellers → shade finder → promise →
- * ritual → sets → Instagram → email. Every section leads to a product.
- * The shade finder sits right after the grid to catch shoppers who
- * browsed but hesitated on shade.
- */
-export default async function HomePage() {
-  const [collections, bestsellers, sets] = await Promise.all([
-    getCollections(),
-    getCollectionProducts("bestsellers", "best-selling"),
-    getCollectionProducts("sets"),
-  ]);
-
-  return (
-    <>
-      <Hero />
-      <CategoryPanels collections={collections} />
-
-      <section aria-labelledby="bestsellers-heading" className="theme-light bg-cream text-ink">
-        <SectionIntro id="bestsellers-heading" eyebrow="Most loved" title="Bestsellers" text="The glosses, oils and glow sprays our community keeps coming back for." link={{ label: "Shop everything", href: "/shop" }} />
-        <div className="hairline-t hairline-b">
-          <ProductGrid products={bestsellers.slice(0, 4)} />
-        </div>
-      </section>
-
-      <ShadeFinderBanner />
-      <Statement />
-      <Ritual />
-      <SetsFeature sets={sets} />
-      <InstagramGrid />
-      <NewsletterSection />
-    </>
-  );
+/** Home = the hero. Everything else is one click away: Shop, About, Contact. */
+export default function HomePage() {
+  return <Hero />;
 }

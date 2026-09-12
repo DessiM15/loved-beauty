@@ -41,24 +41,18 @@ export const announcements = [
   { text: "Free U.S. shipping on orders $200+", href: "/shop" },
   { text: "10% off your first order with code LOVED10", href: "/shop" },
   { text: "Vegan · Cruelty-free · Paraben-free", href: "/about" },
-  { text: "New: find your shade in 30 seconds", href: "/shade-finder" },
 ];
 
 export const freeShippingThreshold = 200; // USD. Keep in sync with Shopify shipping profile.
 export const firstOrderCode = "LOVED10";
 
+/** Four links, nothing to guess at. Categories live on the shop page as tabs. */
 export const nav = {
   primary: [
-    { label: "Shop All", href: "/shop" },
-    { label: "Lips", href: "/collections/lips" },
-    { label: "Lip Care", href: "/collections/lip-care" },
-    { label: "Face & Body Glow", href: "/collections/face-and-body-glow" },
-  ],
-  secondary: [
-    { label: "Shade Finder", href: "/shade-finder" },
-    { label: "Sets", href: "/collections/sets" },
-    { label: "Bestsellers", href: "/collections/bestsellers" },
-    { label: "Our Story", href: "/about" },
+    { label: "Home", href: "/" },
+    { label: "Shop", href: "/shop" },
+    { label: "About", href: "/about" },
+    { label: "Contact", href: "/contact" },
   ],
   footer: {
     shop: [
@@ -67,10 +61,8 @@ export const nav = {
       { label: "Lip Care", href: "/collections/lip-care" },
       { label: "Face & Body Glow", href: "/collections/face-and-body-glow" },
       { label: "Sets & Bundles", href: "/collections/sets" },
-      { label: "Bestsellers", href: "/collections/bestsellers" },
     ],
     help: [
-      { label: "Find Your Shade", href: "/shade-finder" },
       { label: "FAQ", href: "/faq" },
       { label: "Contact Us", href: "/contact" },
       { label: "Shipping & Returns", href: "/policies/shipping-returns" },
@@ -79,47 +71,23 @@ export const nav = {
     ],
     about: [
       { label: "Our Story", href: "/about" },
-      { label: "Ingredients & Values", href: "/about#values" },
       { label: "Instagram", href: "https://www.instagram.com/lovedbeautyllc/" },
     ],
   },
 };
 
 /**
- * Hero copy follows the launch pattern (status → product → one line → shop).
- * Before launch: eyebrow "Launching October 2026". At launch: "Now available".
- * When a new product drops, point the headline and CTA at that product.
+ * Home page = the hero. Copy approved by the client (Sept 2026).
+ * Before launch the eyebrow reads "Launching October 2026"; at launch change it to "Now available".
+ * Product cut-outs live in public/hero (cut from the client's flat-lay; swap for her own cut-outs when they arrive).
  */
 export const hero = {
   eyebrow: "Launching October 2026",
-  headlineLead: "The Lip",
-  headlineItalic: "Collection.",
-  subhead: "Lustre gloss, hyaluronic shine, buttery liners and a sugar scrub. Eight shades, one ritual. Clean, vegan and cruelty-free.",
-  primaryCta: { label: "Shop the collection", href: "/collections/lips" },
-  secondaryCta: { label: "Find your shade", href: "/shade-finder" },
-  scrollLabel: "Scroll",
-  // Placeholder editorial photography (see public/editorial/CREDITS.md). Replace with the campaign shot.
-  image: {
-    src: "/editorial/hero.webp",
-    alt: "Lip gloss applied to glossy lips with a wand",
-  },
-};
-
-/** Home page category panels. Images are editorial placeholders until the photoshoot. */
-export const categoryPanels = [
-  { handle: "lips", title: "Lips", text: "Glosses, oils, lacquers and liners.", image: "/editorial/cat-lips.webp", alt: "A pink lip gloss wand applied to soft pink lips" },
-  { handle: "lip-care", title: "Lip Care", text: "Prep and treat for the softest lips.", image: "/editorial/cat-lip-care.webp", alt: "Natural glossy lips on glowing skin" },
-  { handle: "face-and-body-glow", title: "Face & Body Glow", text: "Light-catching sprays, lit from within.", image: "/editorial/cat-glow.webp", alt: "Radiant highlighted skin and glossy red lips in golden light" },
-  { handle: "sets", title: "Sets & Bundles", text: "Curated pairings that save a little.", image: "/editorial/cat-sets.webp", alt: "Lip liner and lipsticks arranged on blush pink" },
-];
-
-export const statement = {
-  eyebrow: "Our promise",
-  lineOne: "Vegan. Cruelty-free.",
-  lineTwo: "Loved.",
-  text: "Every formula is chosen to be gentle enough for every day and beautiful enough to feel like a little luxury. Nothing tested on animals, nothing you have to think twice about.",
-  cta: { label: "Read our story", href: "/about" },
-  image: { src: "/editorial/silk.webp", alt: "Soft blush silk folds" },
+  headlineLead: "Beauty That",
+  headlineAccent: "Loves You Back",
+  subhead: "Luxury makeup crafted for every skin tone. From bold lips to flawless skin, discover your perfect look with Loved Beauty.",
+  primaryCta: { label: "Shop the Collection", href: "/shop" },
+  secondaryCta: { label: "Our Story", href: "/about" },
 };
 
 export const values = [
@@ -144,35 +112,6 @@ export const values = [
     text: "Free of parabens and sulfates.",
   },
 ];
-
-export const editorial = {
-  eyebrow: "The Loved ritual",
-  headline: "Prep. Define. Glow.",
-  text: "Three quiet steps to a lip that looks cared for. Polish with sugar, line with a buttery pencil, then finish with a glossy veil of hydration.",
-  steps: [
-    { n: "01", title: "Prep", text: "Sugar Lip Scrub, thirty seconds, twice a week.", href: "/products/sugar-lip-scrub", linkLabel: "Sugar Lip Scrub" },
-    { n: "02", title: "Define", text: "Lip Liner Pencil to outline, then fill for a long-wear base.", href: "/products/lip-liner-pencil", linkLabel: "Lip Liner Pencil" },
-    { n: "03", title: "Glow", text: "Lustre Gloss or Ultra Light Lip Oil to finish.", href: "/products/lustre-lip-gloss", linkLabel: "Lustre Lip Gloss" },
-  ],
-  cta: { label: "Shop the ritual set", href: "/products/the-lip-ritual-set" },
-  image: { src: "/editorial/ritual.webp", alt: "A woman applying lip gloss with a wand" },
-};
-
-export const instagram = {
-  handle: "@lovedbeautyllc",
-  url: "https://www.instagram.com/lovedbeautyllc/",
-  headline: "Wearing Loved",
-  text: "Tag @lovedbeautyllc to be featured.",
-  // Replace with real posts. Each image should be square-ish.
-  posts: [
-    { src: "/editorial/ig-1.webp", alt: "Lips with lilac glitter" },
-    { src: "/products/lustre-lip-gloss-1.webp", alt: "Lustre Lip Gloss in Nude" },
-    { src: "/editorial/ig-2.webp", alt: "Glowing skin with a rose eye look" },
-    { src: "/products/shimmer-glow-oil-spray-1.webp", alt: "Shimmer Glow Oil Spray" },
-    { src: "/editorial/ig-3.webp", alt: "Glossy red lips" },
-    { src: "/products/sugar-lip-scrub-2.webp", alt: "Sugar Lip Scrub beside its box" },
-  ],
-};
 
 export const newsletter = {
   eyebrow: "Join the list",
@@ -248,39 +187,4 @@ export const shadeColors: Record<string, string> = {
   "Clear with Gold Foil": "linear-gradient(135deg,#f6e7c8,#e9cf93 45%,#fff5dd)",
 };
 
-/** Full-bleed collection banners. `position` is the CSS object-position focal point. */
-export const collectionBanners: Record<string, { src: string; alt: string; position: string }> = {
-  shop: { src: "/editorial/banner-shop.webp", alt: "Glossy peach lips being painted with a lip brush", position: "50% 55%" },
-  lips: { src: "/editorial/banner-lips.webp", alt: "Peach lip oil applied to glossy lips", position: "50% 42%" },
-  "lip-care": { src: "/editorial/banner-lip-care.webp", alt: "Natural lips on deep, glowing skin", position: "50% 68%" },
-  "face-and-body-glow": { src: "/editorial/banner-glow.webp", alt: "Collarbone and shoulder dusted with shimmer", position: "50% 50%" },
-  sets: { src: "/editorial/banner-sets.webp", alt: "Lip liner, lipsticks and a dried sprig on blush pink", position: "50% 50%" },
-  bestsellers: { src: "/editorial/banner-bestsellers.webp", alt: "Magenta lips in soft light", position: "50% 62%" },
-};
 
-/** V2 "after dark" imagery. Same slots as the light set, different photographs (see public/noir/CREDITS.md). */
-export const noir = {
-  hero: { model: "/noir/hero-model.webp", portrait: "/noir/hero-portrait.webp", alt: "Model in profile, hand at her collarbone, against black" },
-  panels: {
-    lips: { src: "/noir/cat-lips.webp", alt: "Gloss applied to lips in low light" },
-    "lip-care": { src: "/noir/cat-lip-care.webp", alt: "Red lips behind a rain-streaked window" },
-    "face-and-body-glow": { src: "/noir/cat-glow.webp", alt: "Gold-dusted hands framing a face in shadow" },
-    sets: { src: "/noir/cat-sets.webp", alt: "Red lip products on dark marble" },
-  } as Record<string, { src: string; alt: string }>,
-  statement: { src: "/noir/satin.webp", alt: "Black satin folds" },
-  ritual: { src: "/noir/ritual.webp", alt: "A woman applying red gloss in shadow" },
-  setsBackground: { src: "/noir/satin-2.webp", alt: "Dark charcoal satin" },
-  placeholder: { src: "/noir/satin-3.webp", alt: "Black silk" },
-  swatches: { src: "/noir/swatches.webp", alt: "Gold glitter freckles on skin", position: "50% 40%" },
-  shadePage: { src: "/noir/shade-page.webp", alt: "Gold glitter", position: "50% 50%" },
-  about: { src: "/noir/about.webp", alt: "Model in a coral dress against black", position: "50% 20%" },
-  instagram: ["/noir/ig-1.webp", "/noir/ig-2.webp", "/noir/ig-3.webp"],
-  banners: {
-    shop: { src: "/noir/banner-shop.webp", alt: "Dark hair blowing across red lips", position: "50% 45%" },
-    lips: { src: "/noir/banner-lips.webp", alt: "Applying red lip liner in low light", position: "50% 40%" },
-    "lip-care": { src: "/noir/banner-lip-care.webp", alt: "Coral lips framed by dark curls", position: "50% 50%" },
-    "face-and-body-glow": { src: "/noir/banner-glow.webp", alt: "A back dusted in gold shimmer", position: "50% 50%" },
-    sets: { src: "/noir/banner-sets.webp", alt: "Makeup flat lay on black", position: "50% 50%" },
-    bestsellers: { src: "/noir/banner-bestsellers.webp", alt: "Red lips, eyes closed, red coat", position: "50% 45%" },
-  } as Record<string, { src: string; alt: string; position: string }>,
-};

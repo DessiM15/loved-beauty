@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { getCollections, getProducts } from "@/lib/shopify";
 import { CollectionView } from "@/components/product/collection-view";
-import { noir } from "@/content/site";
 
 export const revalidate = 60;
 
@@ -16,13 +15,5 @@ export default async function ShopPage() {
   const [products, collections] = await Promise.all([getProducts(), getCollections()]);
   const visibleCollections = collections.filter((c) => c.handle !== "bestsellers");
 
-  return (
-    <CollectionView
-      title="Shop All"
-      description="Everything, in one place. Clean, vegan and cruelty-free."
-      products={products}
-      collections={visibleCollections}
-      banner={noir.banners.shop}
-    />
-  );
+  return <CollectionView title="Shop All" description="Everything, in one place. Clean, vegan and cruelty-free." products={products} collections={visibleCollections} />;
 }
