@@ -11,8 +11,8 @@ import { BagIcon, CloseIcon, InstagramIcon, MenuIcon } from "@/components/ui/ico
 import { cn } from "@/lib/utils";
 
 /**
- * Sticky header: four links on the left, the logo centered, the bag on the
- * far right. Transparent over the home hero, solid cream with a hairline
+ * Sticky header: the logo centered, the four links, Shop Now and the bag
+ * on the right. Transparent over the home hero, solid cream with a hairline
  * everywhere else and once the page scrolls.
  */
 export function Header() {
@@ -74,7 +74,7 @@ export function Header() {
       )}
     >
       <div className="container-lb grid h-[var(--header-h)] grid-cols-[1fr_auto_1fr] items-center">
-        {/* Left: links (desktop) / menu (mobile) */}
+        {/* Left: menu (mobile only) */}
         <div className="flex items-center">
           <button
             type="button"
@@ -86,8 +86,17 @@ export function Header() {
           >
             <MenuIcon />
           </button>
-          <nav aria-label="Primary" className="hidden md:block">
-            <ul className="flex items-center gap-8">
+        </div>
+
+        {/* Center: the logo, exactly as supplied, over a soft haze so the pale pink reads */}
+        <Link href="/" onClick={goHome} className="logo-smoke flex items-center justify-center px-3" aria-label={`${site.name} home`}>
+          <Image src="/brand/logo.png" alt={site.name} width={2100} height={600} priority className="h-14 w-auto md:h-[4.5rem]" sizes="(min-width: 768px) 260px, 200px" />
+        </Link>
+
+        {/* Right: links (desktop), Shop Now, bag */}
+        <div className="flex items-center justify-end gap-3 md:gap-5">
+          <nav aria-label="Primary" className="mr-2 hidden md:block lg:mr-4">
+            <ul className="flex items-center gap-7 lg:gap-8">
               {nav.primary.map((item) => (
                 <li key={item.href}>
                   <Link href={item.href} aria-current={isActive(item.href) ? "page" : undefined} className={linkClass}>
@@ -97,15 +106,6 @@ export function Header() {
               ))}
             </ul>
           </nav>
-        </div>
-
-        {/* Center: the logo, exactly as supplied, over a soft haze so the pale pink reads */}
-        <Link href="/" onClick={goHome} className="logo-smoke flex items-center justify-center px-3" aria-label={`${site.name} home`}>
-          <Image src="/brand/logo.png" alt={site.name} width={2100} height={600} priority className="h-14 w-auto md:h-[4.5rem]" sizes="(min-width: 768px) 260px, 200px" />
-        </Link>
-
-        {/* Right: shop now + bag */}
-        <div className="flex items-center justify-end gap-3 md:gap-5">
           <Link href="/shop" className="btn btn-primary hidden min-h-0 px-5 py-2.5 sm:inline-flex">
             Shop Now
           </Link>

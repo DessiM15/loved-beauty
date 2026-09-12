@@ -25,7 +25,7 @@ const pieces: Piece[] = [
   { src: "/hero/setting-spray.webp", alt: "Shimmer Glow Setting Spray", w: 206, h: 509, d: { left: "3%", top: "16%", height: "56%" }, m: { left: "3%", bottom: "4%", height: "32%" }, rotate: -8 },
   { src: "/hero/oil-spray.webp", alt: "Shimmer Glow Oil Spray", w: 228, h: 376, d: { left: "13%", top: "42%", height: "42%" } },
   { src: "/hero/holo-tube.webp", alt: "Loved Beauty lip oil", w: 372, h: 190, d: { left: "1%", bottom: "6%", width: "24%" }, rotate: 0 },
-  { src: "/hero/tan-tube.webp", alt: "Shimmer Highlighter", w: 202, h: 469, d: { right: "1.5%", top: "8%", height: "52%" }, rotate: 6 },
+  { src: "/hero/tan-tube.webp", alt: "Shimmer Highlighter", w: 202, h: 469, d: { right: "-0.6%", top: "8%", height: "52%" } },
   { src: "/hero/lip-scrub.webp", alt: "Sugar Lip Scrub", w: 233, h: 217, d: { right: "10%", top: "27%", height: "24%" } },
   { src: "/hero/gloss-trio.webp", alt: "Lustre lip glosses and Peptide Lip Lacquer", w: 462, h: 479, d: { right: "5%", bottom: "5%", height: "54%" }, m: { right: "1%", bottom: "3%", height: "34%" } },
 ];
