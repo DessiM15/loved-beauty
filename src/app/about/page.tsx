@@ -22,24 +22,11 @@ export default function AboutPage() {
           <p className="eyebrow" data-reveal>
             {about.eyebrow}
           </p>
-          <div className="relative mt-4" data-reveal style={{ "--d": "80ms" } as React.CSSProperties}>
-            {/* LB monogram watermark behind the slogan, as on the home hero */}
-            <Image
-              src="/brand/lb-monogram.png"
-              alt=""
-              width={1200}
-              height={1125}
-              aria-hidden="true"
-              sizes="40vw"
-              className="pointer-events-none absolute left-1/2 top-1/2 h-[112%] w-auto -translate-x-1/2 -translate-y-1/2 opacity-[0.18]"
-              style={{ maxWidth: "none" }}
-            />
-            <h1 className="h-hero relative text-4xl sm:text-5xl md:text-[3.9rem]">
-              {hero.headlineLead}
-              <br />
-              <span className="h-italic h-outline">{hero.headlineAccent}</span>
-            </h1>
-          </div>
+          <h1 className="h-hero mt-4 text-4xl sm:text-5xl md:text-[3.9rem]" data-reveal style={{ "--d": "80ms" } as React.CSSProperties}>
+            {hero.headlineLead}
+            <br />
+            <span className="h-italic h-outline">{hero.headlineAccent}</span>
+          </h1>
           <div className="p-serif mt-8 space-y-5 text-[1.25rem] text-plum">
             {about.paragraphs.map((p, i) => (
               <p key={p} data-reveal style={{ "--d": `${120 + i * 80}ms` } as React.CSSProperties}>
