@@ -2,31 +2,41 @@
 
 /* ---------- Loved Beauty design tokens ---------- */
 :root {
+  /* Tan & marble family (option 1G, the client's pick, 14 Sept 2026): white nav, light pink bar, tan strip and footer. */
   --lb-white: #ffffff;
-  --lb-cream: #fbf7f5; /* page ground */
-  --lb-pink: #fcdee1; /* brand pink: the logo wordmark. Surfaces and buttons, never small text on light grounds */
+  --lb-cream: #f6efe9; /* page ground */
+  --lb-ivory: #fbf7f3; /* lighter sections: bestsellers, cards on tan */
+  --lb-sand: #e9ddd3; /* soft tan surfaces */
+  --lb-tan: #dfcfc1; /* trust strip, footer */
+  --lb-tan-line: #d0bdad; /* hairlines on tan */
+  --lb-taupe: #a08272; /* muted accents on tan */
+  --lb-pink: #fcdee1; /* brand pink: the logo wordmark, the announcement bar, buttons, the italic headline line on the photo */
   --lb-blush: #fcdee1; /* soft surfaces = brand pink */
   --lb-petal: #f6c9cf; /* chips, hover on pink */
-  --lb-line: #f0d9dd; /* hairlines */
-  --lb-rose: #f08cb0; /* large accents, swatches */
-  --lb-rose-deep: #e7457f; /* hot pink: the second headline line, labels, links, hover */
+  --lb-line: #e3d5cb; /* hairlines */
+  --lb-rose: #f08cb0; /* swatches only */
+  --lb-rose-deep: #8e6e5c; /* tan accent: labels, links, hover. Replaces the retired hot pink */
   --lb-plum: #6f585d; /* muted body text */
-  --lb-ink: #241c1e; /* headlines, body, buttons */
+  --lb-ink: #2a2220; /* headlines, body, buttons */
   --lb-gold: #c9a24f; /* thin accents only */
   --lb-gold-soft: #e9d7ae;
   --lb-coral: #f0744c; /* the heart in the logo */
-  --lb-hot: #e7457f; /* hot pink: header, announcement bar, footer band. The pale logo reads on it without help */ /* rgb: dusty haze behind the pale logo so it reads on light grounds */
   --lb-success: #3e7a5a;
   --lb-danger: #b23a48;
   --header-h: 5.5rem;
   --announce-h: 2.5rem;
   /* rgb triplet used by image veils and text spotlights; matches the page ground */
-  --veil: 251, 247, 245;
+  --veil: 246, 239, 233;
 }
 
 @theme inline {
   --color-white: var(--lb-white);
   --color-cream: var(--lb-cream);
+  --color-ivory: var(--lb-ivory);
+  --color-sand: var(--lb-sand);
+  --color-tan: var(--lb-tan);
+  --color-tan-line: var(--lb-tan-line);
+  --color-taupe: var(--lb-taupe);
   --color-blush: var(--lb-blush);
   --color-petal: var(--lb-petal);
   --color-line: var(--lb-line);
@@ -38,7 +48,6 @@
   --color-gold-soft: var(--lb-gold-soft);
   --color-coral: var(--lb-coral);
   --color-pink: var(--lb-pink);
-  --color-hot: var(--lb-hot);
   --color-success: var(--lb-success);
   --color-danger: var(--lb-danger);
 
@@ -165,6 +174,7 @@ strong {
   letter-spacing: var(--tracking-luxe);
   text-transform: uppercase;
   color: var(--lb-rose-deep);
+  font-weight: 500;
 }
 
 @utility eyebrow-num {
@@ -182,19 +192,30 @@ strong {
   letter-spacing: -0.01em;
 }
 
-/* Accent line inside a header: same face, the light brand pink (the button pink), as the client asked. */
+/* Accent line inside a header: same face, italic, the light brand pink (option 1G). Only on the photo or a tan ground; it vanishes on cream. */
 @utility h-italic {
   font-family: var(--font-serif);
-  font-style: normal;
+  font-style: italic;
   font-weight: 500;
   color: var(--lb-pink);
 }
 
-/* The slogan's second line: hot-pink outline so the light pink holds on cream (client's pick, option 7) */
-@utility h-outline {
-  -webkit-text-stroke: 0.022em var(--lb-hot);
-  paint-order: stroke fill;
-  text-shadow: 0 0.03em 0.06em rgba(231, 69, 127, 0.25);
+/* The same italic in tan, for the slogan on light grounds (Our Story). */
+@utility h-italic-tan {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--lb-rose-deep);
+}
+
+/* Slogan lead line (option 1G): letter-spaced capitals, smaller than the italic so the italic stays the hero. */
+@utility h-lead {
+  display: block;
+  font-size: 0.74em;
+  line-height: 1.1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.04em;
 }
 
 /* Page-top headlines (home hero, Our Story, shop titles): the serif in capitals, larger. */
@@ -369,7 +390,7 @@ strong {
     color: color-mix(in oklab, var(--lb-plum) 60%, white);
   }
   &:focus {
-    border-bottom-color: var(--lb-rose);
+    border-bottom-color: var(--lb-ink);
   }
 }
 
@@ -414,33 +435,4 @@ strong {
 ::selection {
   background: var(--lb-petal);
   color: var(--lb-ink);
-}
-
-/* ---------- Footer band: hot pink behind the logo, links and sign-up ---------- */
-.footer-main {
-  background: var(--lb-hot);
-  color: #fff;
-}
-.footer-main .eyebrow {
-  color: var(--lb-pink);
-}
-.footer-main a,
-.footer-main .text-ink {
-  color: #fff;
-}
-.footer-main .text-plum {
-  color: rgb(255 255 255 / 0.82);
-}
-.footer-main .border-line {
-  border-color: rgb(255 255 255 / 0.35);
-}
-.footer-main .input-line {
-  border-bottom-color: #fff;
-  color: #fff;
-  &::placeholder {
-    color: rgb(255 255 255 / 0.7);
-  }
-}
-.footer-main button {
-  color: #fff;
 }

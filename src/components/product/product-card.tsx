@@ -11,9 +11,10 @@ import { cn, hasRealOptions, isOnSale, productHasRange } from "@/lib/utils";
 import { CheckIcon } from "@/components/ui/icons";
 
 /**
- * Plain product card: image, name, price, one button. Nothing to decode.
- * Single-variant products add straight to the bag; shade products go to
- * the page to choose.
+ * Product card (option 1G): the photo in a bordered cream box, the name in the
+ * serif, then price on the left and a small light-pink "Add to bag" on the
+ * right. Single-variant products add straight to the bag; shade products go
+ * to the page to choose.
  */
 export function ProductCard({ product, priority = false, index = 0 }: { product: Product; priority?: boolean; index?: number }) {
   const { addItem, isPending } = useCart();
@@ -32,9 +33,11 @@ export function ProductCard({ product, priority = false, index = 0 }: { product:
     if (ok) setTimeout(() => setState("idle"), 1800);
   }
 
+  const pill = "inline-flex items-center gap-1.5 whitespace-nowrap rounded-[2px] px-2.5 py-2 text-[0.58rem] font-medium tracking-[0.2em] uppercase transition-colors md:px-3.5 md:py-2.5 md:text-[0.62rem]";
+
   return (
     <article className="group flex h-full flex-col" data-reveal style={{ "--d": `${(index % 4) * 60}ms` } as React.CSSProperties}>
-      <Link href={href} className="relative block overflow-hidden bg-pink/60" aria-label={product.title}>
+      <Link href={href} className="relative block overflow-hidden border border-line bg-cream" aria-label={product.title}>
         <div className="relative aspect-[4/5]">
           {primary ? (
             <>
@@ -65,20 +68,19 @@ export function ProductCard({ product, priority = false, index = 0 }: { product:
         </div>
       </Link>
 
-      <div className="flex flex-1 flex-col items-center pt-4 text-center">
-        <h3 className="h-display text-[1.35rem]">
+      <div className="flex flex-1 flex-col pt-3.5 text-left">
+        <h3 className="h-display text-[1.2rem] md:text-[1.5rem]">
           <Link href={href} className="text-ink">
             {product.title}
           </Link>
         </h3>
-        <p className="mt-1 text-[0.62rem] tracking-wide2 uppercase text-plum">{multi ? `${product.variants.length} shades` : product.productType}</p>
-        <Price price={product.priceRange.minVariantPrice} compareAt={product.compareAtPriceRange?.minVariantPrice} prefix={productHasRange(product) ? "from" : undefined} className="mt-2 text-base font-medium" />
-
-        <div className="mt-4 w-full">
+        {multi && <p className="mt-1 text-[0.6rem] tracking-wide2 uppercase text-plum">{product.variants.length} shades</p>}
+        <div className="mt-auto flex items-center justify-between gap-3 pt-3 text-[0.8rem] md:text-[0.85rem]">
+          <Price price={product.priceRange.minVariantPrice} compareAt={product.compareAtPriceRange?.minVariantPrice} prefix={productHasRange(product) ? "from" : undefined} />
           {soldOut ? (
-            <span className="btn btn-ghost w-full px-3 opacity-60">Sold out</span>
+            <span className={cn(pill, "border border-line text-plum")}>Sold out</span>
           ) : multi ? (
-            <Link href={href} className="btn btn-primary w-full px-3">
+            <Link href={href} className={cn(pill, "bg-pink text-ink hover:bg-ink hover:text-white")}>
               Choose shade
             </Link>
           ) : (
@@ -87,11 +89,11 @@ export function ProductCard({ product, priority = false, index = 0 }: { product:
               onClick={quickAdd}
               disabled={state === "adding" || isPending}
               aria-label={`Add ${product.title} to bag`}
-              className={cn("btn w-full px-3", state === "added" ? "btn-rose" : "btn-primary")}
+              className={cn(pill, state === "added" ? "bg-ink text-white" : "bg-pink text-ink hover:bg-ink hover:text-white", "disabled:opacity-60")}
             >
               {state === "added" ? (
                 <>
-                  <CheckIcon /> Added
+                  <CheckIcon width={12} height={12} /> Added
                 </>
               ) : state === "adding" ? (
                 "Adding…"

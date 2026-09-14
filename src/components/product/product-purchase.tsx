@@ -136,7 +136,7 @@ export function ProductPurchase({ product, children }: { product: Product; child
         </div>
 
         {lowStock && (
-          <p className="mt-3 text-xs text-rose-deep" aria-live="polite">
+          <p className="mt-3 text-xs text-danger" aria-live="polite">
             Only {variant?.quantityAvailable} left in this shade.
           </p>
         )}

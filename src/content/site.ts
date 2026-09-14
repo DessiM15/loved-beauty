@@ -29,7 +29,8 @@ export const site = {
   social: {
     instagram: "https://www.instagram.com/lovedbeautyllc/",
     instagramHandle: "@lovedbeautyllc",
-    tiktok: "", // add when the handle is confirmed
+    tiktok: "https://www.tiktok.com/@lovedbeautyshop",
+    tiktokHandle: "@lovedbeautyshop",
   },
   agency: {
     name: "Smart Scale, LLC",
@@ -72,22 +73,40 @@ export const nav = {
     about: [
       { label: "Our Story", href: "/about" },
       { label: "Instagram", href: "https://www.instagram.com/lovedbeautyllc/" },
+      { label: "TikTok", href: "https://www.tiktok.com/@lovedbeautyshop" },
     ],
   },
 };
 
 /**
- * Home page = the hero. Copy approved by the client (Sept 2026).
- * Before launch the eyebrow reads "Launching October 2026"; at launch change it to "Now available".
- * Product cut-outs live in public/hero (cut from the client's flat-lay; swap for her own cut-outs when they arrive).
+ * Home page hero (option 1G, the client's pick, 14 Sept 2026): her counter photo full-bleed,
+ * the slogan floating on the wall beside the spray. "Beauty That" in letter-spaced capitals,
+ * "Loves You Back" in the brand pink italic. Copy approved by the client (Sept 2026).
+ * The eyebrow is no longer shown on the hero; it is kept here for the launch popup and any future use.
  */
 export const hero = {
   eyebrow: "Launching October 2026",
+  photo: { src: "/hero/scene.jpg", alt: "Loved Beauty glosses, lip oil and shimmer spray on a marble counter" },
   headlineLead: "Beauty That",
   headlineAccent: "Loves You Back",
   subhead: "Luxury makeup crafted for every skin tone. From bold lips to flawless skin, discover your perfect look with Loved Beauty.",
   primaryCta: { label: "Shop the Collection", href: "/shop" },
   secondaryCta: { label: "Our Story", href: "/about" },
+};
+
+/** Home page trust strip under the hero (1G). Three short promises. */
+export const trust = [
+  { key: "clean", label: "Clean formulas" },
+  { key: "tones", label: "For all skin tones" },
+  { key: "results", label: "Real results" },
+];
+
+/** Home page bestsellers grid (1G). Products come from the Shopify "bestsellers" collection. */
+export const bestsellers = {
+  eyebrow: "Featured",
+  headline: "Shop Our Bestsellers",
+  count: 4,
+  link: { label: "Shop all", href: "/shop" },
 };
 
 export const values = [

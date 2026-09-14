@@ -15,17 +15,17 @@ export default function AboutPage() {
   return (
     <>
       <section className="container-lb grid items-center gap-12 py-12 md:py-20 lg:grid-cols-2 lg:gap-20">
-        <div className="relative aspect-[4/5] overflow-hidden bg-pink/60" data-reveal>
+        <div className="relative aspect-[4/5] overflow-hidden bg-sand" data-reveal>
           <Image src="/products/shimmer-glow-setting-spray-1.webp" alt="Loved Beauty Shimmer Glow Setting Spray" fill priority sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
         </div>
         <div className="flex flex-col items-start">
           <p className="eyebrow" data-reveal>
             {about.eyebrow}
           </p>
-          <h1 className="h-hero mt-4 text-4xl sm:text-5xl md:text-[3.9rem]" data-reveal style={{ "--d": "80ms" } as React.CSSProperties}>
-            {hero.headlineLead}
-            <br />
-            <span className="h-italic h-outline">{hero.headlineAccent}</span>
+          {/* The slogan as on the hero (1G): caps lead, italic second line. Tan italic here because the brand pink vanishes on cream. */}
+          <h1 className="h-display mt-4 text-[3rem] sm:text-[3.6rem] md:text-[4.6rem]" data-reveal style={{ "--d": "80ms" } as React.CSSProperties}>
+            <span className="h-lead">{hero.headlineLead}</span>
+            <span className="h-italic-tan block">{hero.headlineAccent}</span>
           </h1>
           <div className="p-serif mt-8 space-y-5 text-[1.25rem] text-plum">
             {about.paragraphs.map((p, i) => (
@@ -43,7 +43,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section id="values" className="hairline-t scroll-mt-20 bg-pink/40" aria-labelledby="values-heading">
+      <section id="values" className="scroll-mt-20 border-t border-tan-line bg-tan/45" aria-labelledby="values-heading">
         <div className="container-lb py-16 md:py-20">
           <div className="mx-auto max-w-2xl text-center">
             <p className="eyebrow" data-reveal>

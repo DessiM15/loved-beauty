@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { site } from "@/content/site";
 import { ContactForm } from "@/components/marketing/contact-form";
-import { InstagramIcon, MailIcon } from "@/components/ui/icons";
+import { InstagramIcon, MailIcon, TikTokIcon } from "@/components/ui/icons";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -21,15 +21,21 @@ export default function ContactPage() {
           </p>
           <ul className="mt-8 space-y-4 text-sm">
             <li className="flex items-center gap-3">
-              <MailIcon className="text-rose" />
-              <a href={`mailto:${site.supportEmail}`} className="underline decoration-petal underline-offset-4 hover:decoration-rose">
+              <MailIcon className="text-rose-deep" />
+              <a href={`mailto:${site.supportEmail}`} className="underline decoration-line underline-offset-4 hover:decoration-ink">
                 {site.supportEmail}
               </a>
             </li>
             <li className="flex items-center gap-3">
-              <InstagramIcon className="text-rose" />
-              <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" className="underline decoration-petal underline-offset-4 hover:decoration-rose">
+              <InstagramIcon className="text-rose-deep" />
+              <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" className="underline decoration-line underline-offset-4 hover:decoration-ink">
                 {site.social.instagramHandle}
+              </a>
+            </li>
+            <li className="flex items-center gap-3">
+              <TikTokIcon className="text-rose-deep" />
+              <a href={site.social.tiktok} target="_blank" rel="noopener noreferrer" className="underline decoration-line underline-offset-4 hover:decoration-ink">
+                {site.social.tiktokHandle}
               </a>
             </li>
           </ul>

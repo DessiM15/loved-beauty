@@ -7,12 +7,12 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { nav, site } from "@/content/site";
 import { useCart } from "@/components/cart/cart-context";
-import { BagIcon, CloseIcon, InstagramIcon, MenuIcon } from "@/components/ui/icons";
+import { BagIcon, CloseIcon, InstagramIcon, MenuIcon, SearchIcon, TikTokIcon } from "@/components/ui/icons";
 import { cn } from "@/lib/utils";
 
 /**
- * Sticky hot pink header: the logo centered (exactly as supplied), the four
- * links, Shop Now and the bag on the right.
+ * Sticky white header (option 1G): the four links on the left, the logo
+ * centered exactly as supplied, search and the bag on the right.
  */
 export function Header() {
   const pathname = usePathname();
@@ -52,17 +52,17 @@ export function Header() {
     else router.push("/");
   }
 
-  const fg = "text-white";
-  const linkClass = cn("link-underline text-[0.7rem] font-medium tracking-luxe uppercase", fg);
+  const linkClass = "link-underline text-[0.7rem] font-medium tracking-luxe uppercase text-ink";
+  const iconBtn = "inline-flex h-10 w-10 items-center justify-center text-ink";
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/15 bg-hot">
+    <header className="sticky top-0 z-40 border-b border-line bg-white">
       <div className="container-lb grid h-[var(--header-h)] grid-cols-[1fr_auto_1fr] items-center">
-        {/* Left: menu (mobile only) */}
+        {/* Left: menu (mobile), links (desktop) */}
         <div className="flex items-center">
           <button
             type="button"
-            className={cn("-ml-2 inline-flex h-10 w-10 items-center justify-center md:hidden", fg)}
+            className={cn(iconBtn, "-ml-2 md:hidden")}
             aria-label="Open menu"
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
@@ -70,16 +70,7 @@ export function Header() {
           >
             <MenuIcon />
           </button>
-        </div>
-
-        {/* Center: the logo, exactly as supplied */}
-        <Link href="/" onClick={goHome} className="flex items-center justify-center px-3" aria-label={`${site.name} home`}>
-          <Image src="/brand/logo.png" alt={site.name} width={2100} height={600} priority className="h-14 w-auto md:h-[4.5rem]" sizes="(min-width: 768px) 260px, 200px" />
-        </Link>
-
-        {/* Right: links (desktop), Shop Now, bag */}
-        <div className="flex items-center justify-end gap-3 md:gap-5">
-          <nav aria-label="Primary" className="mr-2 hidden md:block lg:mr-4">
+          <nav aria-label="Primary" className="hidden md:block">
             <ul className="flex items-center gap-7 lg:gap-8">
               {nav.primary.map((item) => (
                 <li key={item.href}>
@@ -90,18 +81,22 @@ export function Header() {
               ))}
             </ul>
           </nav>
-          <Link href="/shop" className="btn btn-primary hidden min-h-0 px-5 py-2.5 sm:inline-flex">
-            Shop Now
+        </div>
+
+        {/* Center: the logo, exactly as supplied */}
+        <Link href="/" onClick={goHome} className="flex items-center justify-center px-3" aria-label={`${site.name} home`}>
+          <Image src="/brand/logo.png" alt={site.name} width={2100} height={600} priority className="h-14 w-auto md:h-[4.5rem]" sizes="(min-width: 768px) 260px, 200px" />
+        </Link>
+
+        {/* Right: search, bag */}
+        <div className="flex items-center justify-end gap-2 md:gap-4">
+          <Link href="/search" className={iconBtn} aria-label="Search">
+            <SearchIcon width={21} height={21} />
           </Link>
-          <button
-            type="button"
-            onClick={openCart}
-            className={cn("relative -mr-2 inline-flex h-10 w-10 items-center justify-center", fg)}
-            aria-label={`Open bag, ${count} ${count === 1 ? "item" : "items"}`}
-          >
+          <button type="button" onClick={openCart} className={cn(iconBtn, "relative -mr-2")} aria-label={`Open bag, ${count} ${count === 1 ? "item" : "items"}`}>
             <BagIcon width={21} height={21} />
             {count > 0 && (
-              <span className={cn("absolute top-0.5 right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[0.58rem] font-medium", "bg-pink text-ink")}>{count}</span>
+              <span className="absolute top-0.5 right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-pink px-1 text-[0.58rem] font-medium text-ink">{count}</span>
             )}
           </button>
         </div>
@@ -121,8 +116,8 @@ export function Header() {
             aria-modal="true"
             aria-label="Menu"
           >
-            <div className="container-lb grid h-[var(--header-h)] shrink-0 grid-cols-[1fr_auto_1fr] items-center bg-hot text-white">
-              <button type="button" className="-ml-2 inline-flex h-10 w-10 items-center justify-center text-white" aria-label="Close menu" onClick={() => setMenuOpen(false)}>
+            <div className="container-lb grid h-[var(--header-h)] shrink-0 grid-cols-[1fr_auto_1fr] items-center border-b border-line bg-white text-ink">
+              <button type="button" className={cn(iconBtn, "-ml-2")} aria-label="Close menu" onClick={() => setMenuOpen(false)}>
                 <CloseIcon />
               </button>
               <Link href="/" onClick={goHome} aria-label={`${site.name} home`} className="px-3">
@@ -134,7 +129,7 @@ export function Header() {
                   setMenuOpen(false);
                   openCart();
                 }}
-                className="-mr-2 inline-flex h-10 w-10 items-center justify-center justify-self-end text-white"
+                className={cn(iconBtn, "-mr-2 justify-self-end")}
                 aria-label="Open bag"
               >
                 <BagIcon width={21} height={21} />
@@ -152,6 +147,11 @@ export function Header() {
               </ul>
               <ul className="mt-8 space-y-3 text-[0.7rem] tracking-luxe uppercase text-plum">
                 <li>
+                  <Link href="/search" onClick={() => setMenuOpen(false)}>
+                    Search
+                  </Link>
+                </li>
+                <li>
                   <Link href="/faq" onClick={() => setMenuOpen(false)}>
                     FAQ
                   </Link>
@@ -162,9 +162,14 @@ export function Header() {
                   </Link>
                 </li>
               </ul>
-              <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" className="mt-10 inline-flex items-center gap-2 text-sm text-rose-deep">
-                <InstagramIcon /> {site.social.instagramHandle}
-              </a>
+              <div className="mt-10 flex flex-col gap-3 text-sm text-rose-deep">
+                <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2">
+                  <InstagramIcon /> {site.social.instagramHandle}
+                </a>
+                <a href={site.social.tiktok} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2">
+                  <TikTokIcon /> {site.social.tiktokHandle}
+                </a>
+              </div>
             </div>
           </div>,
           document.body,

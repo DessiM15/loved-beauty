@@ -81,7 +81,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#e7457f",
+  themeColor: "#fcdee1",
   width: "device-width",
   initialScale: 1,
   colorScheme: "light",
@@ -96,7 +96,7 @@ const organizationLd = {
   logo: `${site.url}/brand/logo.png`,
   email: site.supportEmail,
   address: { "@type": "PostalAddress", addressLocality: "Houston", addressRegion: "TX", addressCountry: "US" },
-  sameAs: [site.social.instagram].filter(Boolean),
+  sameAs: [site.social.instagram, site.social.tiktok].filter(Boolean),
 };
 
 const websiteLd = {
