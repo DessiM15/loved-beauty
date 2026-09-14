@@ -190,6 +190,13 @@ strong {
   color: var(--lb-pink);
 }
 
+/* The slogan's second line: hot-pink outline so the light pink holds on cream (client's pick, option 7) */
+@utility h-outline {
+  -webkit-text-stroke: 0.022em var(--lb-hot);
+  paint-order: stroke fill;
+  text-shadow: 0 0.03em 0.06em rgba(231, 69, 127, 0.25);
+}
+
 /* Page-top headlines (home hero, Our Story, shop titles): the serif in capitals, larger. */
 @utility h-hero {
   font-family: var(--font-serif);

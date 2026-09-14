@@ -31,13 +31,13 @@ export default function AboutPage() {
               height={1125}
               aria-hidden="true"
               sizes="40vw"
-              className="pointer-events-none absolute left-1/2 top-1/2 h-[128%] w-auto -translate-x-1/2 -translate-y-1/2 opacity-30"
+              className="pointer-events-none absolute left-1/2 top-1/2 h-[112%] w-auto -translate-x-1/2 -translate-y-1/2 opacity-[0.18]"
               style={{ maxWidth: "none" }}
             />
             <h1 className="h-hero relative text-4xl sm:text-5xl md:text-[3.9rem]">
               {hero.headlineLead}
               <br />
-              <span className="h-italic">{hero.headlineAccent}</span>
+              <span className="h-italic h-outline">{hero.headlineAccent}</span>
             </h1>
           </div>
           <div className="p-serif mt-8 space-y-5 text-[1.25rem] text-plum">

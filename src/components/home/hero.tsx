@@ -8,8 +8,9 @@ import { ArrowRightIcon } from "@/components/ui/icons";
  * around centred copy (the Kylie Cosmetics pattern). Each product is a
  * transparent cut-out positioned in percentages so the composition reflows
  * instead of cropping. Phones show two groups, desktops all six. They hold still.
- * Behind everything, her LB monogram sits large as a watermark: hot pink at
- * 30%, so it reads as a soft rose (the option the client chose, 2026-09-13).
+ * Behind everything, her LB monogram sits as a watermark: hot pink at 18%, so
+ * it reads as a pale rose, with the second headline line outlined in hot pink
+ * (option 7 from the mock-ups, the client's pick, 2026-09-13).
  */
 type Piece = {
   src: string;
@@ -51,7 +52,7 @@ export function Hero() {
           height={1125}
           priority
           sizes="(min-width: 768px) 60vw, 80vw"
-          className="absolute left-1/2 top-[33%] h-[46%] w-auto -translate-x-1/2 -translate-y-1/2 opacity-30 md:top-[54%] md:h-[82%]"
+          className="absolute left-1/2 top-[33%] h-[40%] w-auto -translate-x-1/2 -translate-y-1/2 opacity-[0.18] md:top-[53%] md:h-[68%]"
           style={{ maxWidth: "none" }}
         />
       </div>
@@ -80,7 +81,7 @@ export function Hero() {
         <h1 id="hero-heading" className="h-hero mt-5 max-w-5xl text-[2.5rem] sm:text-6xl md:text-[4.4rem] lg:text-[5.6rem] animate-fade-up" style={{ animationDelay: "320ms" }}>
           {hero.headlineLead}
           <br />
-          <span className="h-italic">{hero.headlineAccent}</span>
+          <span className="h-italic h-outline">{hero.headlineAccent}</span>
         </h1>
         <p className="p-serif mx-auto mt-5 max-w-lg text-[1.15rem] text-plum md:text-[1.3rem] animate-fade-up" style={{ animationDelay: "460ms" }}>
           {hero.subhead}
