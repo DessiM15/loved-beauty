@@ -40,7 +40,7 @@ Without Shopify credentials the site serves the mock catalog in `src/lib/mock/ca
 
 | Feature | Env var | Notes |
 | --- | --- | --- |
-| Contact form email | `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` | Free Resend account; verify the sending domain once DNS access exists. Without a key, messages are logged only. |
+| Contact form email | `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` | Free Web3Forms key (public by design; the form posts from the browser because the free plan blocks server calls). Messages are emailed to the address the key was created with; change that, or lock the key to the domain, in the Web3Forms dashboard. Without a key, messages are logged in the browser console only. |
 | Google Analytics 4 | `NEXT_PUBLIC_GA_ID` | Also add the same ID in Shopify → Customer events so purchases are tracked. |
 | Meta Pixel | `NEXT_PUBLIC_META_PIXEL_ID` | Same: add in Shopify for purchase events. |
 | Reviews section | `NEXT_PUBLIC_SHOW_REVIEWS=true` | Hidden until there are real reviews. Wire to Judge.me / Loox / Shopify Reviews. |

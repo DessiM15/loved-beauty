@@ -8,6 +8,8 @@ import { ArrowRightIcon } from "@/components/ui/icons";
  * around centred copy (the Kylie Cosmetics pattern). Each product is a
  * transparent cut-out positioned in percentages so the composition reflows
  * instead of cropping. Phones show two groups, desktops all six. They hold still.
+ * Behind everything, her LB monogram sits large as a watermark: hot pink at
+ * 30%, so it reads as a soft rose (the option the client chose, 2026-09-13).
  */
 type Piece = {
   src: string;
@@ -40,6 +42,20 @@ export function Hero() {
           "radial-gradient(ellipse 70% 60% at 50% 30%, #fdf6f3 0%, rgba(253,246,243,0) 70%), radial-gradient(ellipse 60% 50% at 15% 85%, #fbe4e4 0%, rgba(251,228,228,0) 70%), radial-gradient(ellipse 60% 50% at 88% 80%, #fae3df 0%, rgba(250,227,223,0) 70%), linear-gradient(180deg, #fbf3f0 0%, #f8e8e6 100%)",
       }}
     >
+      {/* LB monogram watermark, under the products and the copy */}
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <Image
+          src="/brand/lb-monogram.png"
+          alt=""
+          width={1200}
+          height={1125}
+          priority
+          sizes="(min-width: 768px) 60vw, 80vw"
+          className="absolute left-1/2 top-[33%] h-[46%] w-auto -translate-x-1/2 -translate-y-1/2 opacity-30 md:top-[54%] md:h-[82%]"
+          style={{ maxWidth: "none" }}
+        />
+      </div>
+
       {/* Products */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         {pieces.map((p) => (

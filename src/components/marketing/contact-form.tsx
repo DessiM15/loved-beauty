@@ -5,6 +5,16 @@ import { CheckIcon } from "@/components/ui/icons";
 
 const topics = ["Order question", "Product question", "Wholesale / collaboration", "Something else"];
 
+/**
+ * Messages go through Web3Forms (web3forms.com), which emails them to the
+ * address the access key was registered with. The free plan only accepts
+ * submissions from the browser, so the key is public by design
+ * (NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY) and the post happens here, not in an API
+ * route. Restrict the key to the site's domain in the Web3Forms dashboard.
+ */
+const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+const FALLBACK = "Something went wrong. Please email us directly.";
+
 export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
   const [message, setMessage] = useState("");
@@ -12,21 +22,54 @@ export function ContactForm() {
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
-    const data = Object.fromEntries(new FormData(form).entries());
+    const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>;
+
+    // Honeypot: bots fill every field. Pretend it worked and drop it.
+    if (data.website) {
+      setStatus("done");
+      form.reset();
+      return;
+    }
+
+    const name = data.name.trim();
+    const email = data.email.trim();
+    const topic = data.topic?.trim() || "New message";
+    const order = data.order?.trim();
+
+    if (!ACCESS_KEY) {
+      console.info("[contact] (no NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY set)", data);
+      setStatus("done");
+      form.reset();
+      return;
+    }
+
     setStatus("loading");
     try {
-      const res = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
-      const json = (await res.json()) as { ok: boolean; message?: string };
-      if (json.ok) {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: ACCESS_KEY,
+          subject: `[Loved Beauty website] ${topic} from ${name}`,
+          from_name: "Loved Beauty website",
+          name,
+          email, // Web3Forms uses this as the reply-to, so a Gmail reply goes straight to the customer
+          topic,
+          order_number: order || "-",
+          message: data.message.trim(),
+        }),
+      });
+      const json = (await res.json()) as { success?: boolean; message?: string };
+      if (res.ok && json.success) {
         setStatus("done");
         form.reset();
       } else {
         setStatus("error");
-        setMessage(json.message ?? "Something went wrong. Please email us directly.");
+        setMessage(FALLBACK);
       }
     } catch {
       setStatus("error");
-      setMessage("Something went wrong. Please email us directly.");
+      setMessage(FALLBACK);
     }
   }
 
