@@ -80,7 +80,7 @@ export function ContactForm() {
           <CheckIcon width={22} height={22} />
         </span>
         <p className="mt-4 font-serif text-2xl">Thank you.</p>
-        <p className="mt-1 text-sm text-plum">We&rsquo;ve received your message and will reply within one business day.</p>
+        <p className="mt-1 text-sm text-plum">We&rsquo;ve received your message and will get back to you.</p>
       </div>
     );
   }

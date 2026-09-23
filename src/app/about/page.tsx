@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { about, hero, site, values } from "@/content/site";
+import { about, hero, values } from "@/content/site";
 import { ArrowRightIcon } from "@/components/ui/icons";
 
 export const metadata: Metadata = {
   title: "Our Story | Clean, Vegan Beauty from Houston, Texas",
   description:
-    "Loved Beauty is a vegan, cruelty-free beauty brand founded in Houston, Texas. Learn about our clean formulas, our values and why every product is made to feel like a little luxury.",
+    "Loved Beauty is a vegan, cruelty-free beauty brand founded in Houston, Texas. Learn about our clean formulas and our values.",
   alternates: { canonical: "/about" },
 };
 
@@ -53,8 +53,7 @@ export default function AboutPage() {
               Gentle formulas. Honest ingredients.
             </h2>
             <p className="p-serif mt-5 text-[1.2rem] text-plum" data-reveal style={{ "--d": "200ms" } as React.CSSProperties}>
-              Every Loved Beauty product is verified by our manufacturing partner as vegan, cruelty-free, paraben-free and sulfate-free. Full ingredient lists are printed on every box and
-              listed on each product page.
+              Every Loved Beauty product is verified by our manufacturing partner as vegan, cruelty-free, paraben-free and sulfate-free. Full ingredient lists are printed on every box.
             </p>
           </div>
           <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -65,12 +64,6 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
-          <p className="pt-10 text-center text-sm text-plum">
-            Questions about an ingredient?{" "}
-            <a href={`mailto:${site.supportEmail}`} className="link-underline text-ink">
-              Email us
-            </a>
-          </p>
         </div>
       </section>
     </>

@@ -5,7 +5,7 @@ import { InstagramIcon, MailIcon, TikTokIcon } from "@/components/ui/icons";
 
 export const metadata: Metadata = {
   title: "Contact Us",
-  description: "Get in touch with Loved Beauty about an order, a product or a collaboration. We reply within one business day.",
+  description: "Get in touch with Loved Beauty about an order, a product or a collaboration.",
   alternates: { canonical: "/contact" },
 };
 
@@ -17,7 +17,7 @@ export default function ContactPage() {
           <p className="eyebrow">Say hello</p>
           <h1 className="h-display mt-3 text-5xl">We&rsquo;d love to hear from you.</h1>
           <p className="mt-4 text-[0.95rem] leading-relaxed text-plum">
-            Questions about an order, a shade, or a collaboration? Send a note and we&rsquo;ll get back to you within one business day.
+            Questions about an order, a shade, or a collaboration? Send a note and we&rsquo;ll get back to you.
           </p>
           <ul className="mt-8 space-y-4 text-sm">
             <li className="flex items-center gap-3">

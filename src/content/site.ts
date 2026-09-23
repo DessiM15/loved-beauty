@@ -171,7 +171,7 @@ export const faqs = [
   },
   {
     q: "Where can I find the full ingredient list?",
-    a: "Full ingredient lists are printed on every box and listed on each product page under Ingredients.",
+    a: "Full ingredient lists are printed on every box.",
   },
   {
     q: "Do you ship internationally?",
@@ -184,7 +184,7 @@ export const about = {
   headline: "Beauty that feels like being loved.",
   paragraphs: [
     "Loved Beauty began with a simple idea: the products you reach for every day should feel as good as they look. Soft textures. Hydrating formulas. Colors that flatter without trying too hard.",
-    "Everything we make is vegan, cruelty-free and paraben-free, because caring for yourself should never cost anything else. From our first sugar lip scrub to our light-catching shimmer sprays, each formula is chosen to be gentle enough for daily wear and beautiful enough to feel like a little luxury.",
+    "Everything we make is vegan, cruelty-free and paraben-free, because caring for yourself should never cost anything else. From our first sugar lip scrub to our light-catching shimmer sprays, each formula is chosen to be gentle enough for daily wear.",
     "Founded in Houston, Texas, and made for every girl who deserves to feel loved.",
   ],
   founderNote:

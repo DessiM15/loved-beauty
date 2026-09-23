@@ -19,9 +19,7 @@ export const policies: ShopPolicy[] = [
 <p>Because our products are cosmetics, we are unable to accept returns or exchanges on opened or used items for hygiene and safety reasons. All sales of opened cosmetics are final.</p>
 <p>Unopened, unused products in their original sealed packaging may be returned within 14 days of delivery for store credit. Return shipping is the customer's responsibility.</p>
 <h2>Damaged or incorrect orders</h2>
-<p>If your order arrives damaged, defective or incorrect, please email <a href="mailto:lovedbeautyshop@gmail.com">lovedbeautyshop@gmail.com</a> within 7 days of delivery with your order number and a photo. We will send a replacement or issue a refund right away.</p>
-<h2>Lost packages</h2>
-<p>If tracking shows delivered but you have not received your package, please check with neighbors and your local carrier first, then contact us within 7 days so we can help.</p>
+<p>If your order arrives damaged, defective or incorrect, please email <a href="mailto:lovedbeautyshop@gmail.com">lovedbeautyshop@gmail.com</a> within 7 days of delivery with your order number and a photo. We will investigate and help provide a solution right away.</p>
 `,
   },
   {

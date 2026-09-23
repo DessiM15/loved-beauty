@@ -13,7 +13,7 @@ export function Footer() {
       <div className="container-lb grid gap-12 py-16 md:grid-cols-[1.5fr_1fr_1fr_1fr] md:gap-10 md:py-[4.5rem]">
         <div>
           <Image src="/brand/logo.png" alt={site.name} width={2100} height={600} className="h-[4.5rem] w-auto" sizes="300px" />
-          <p className="mt-6 mb-4 max-w-sm text-sm text-plum">10% off your first order, new shades and restocks. No noise.</p>
+          <p className="mt-6 mb-4 max-w-sm text-sm text-plum">10% off your first order. No noise.</p>
           <NewsletterForm variant="line" source="footer" className="max-w-sm" />
           <div className="mt-8 flex items-center gap-3">
             <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Loved Beauty on Instagram" className={social}>
