@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { useCart } from "./cart-context";
 import { freeShippingThreshold } from "@/content/site";
+import { useModal } from "@/lib/a11y/use-modal";
 import { cn, formatMoney, placeholderTint } from "@/lib/utils";
 import { CloseIcon, LockIcon, MinusIcon, PlusIcon, TrashIcon } from "@/components/ui/icons";
 import { CartUpsell } from "./cart-upsell";
@@ -12,14 +13,10 @@ import { CartUpsell } from "./cart-upsell";
 export function CartDrawer() {
   const { cart, isOpen, closeCart, updateItem, removeItem, isPending, error } = useCart();
   const panelRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    if (!isOpen) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && closeCart();
-    window.addEventListener("keydown", onKey);
-    panelRef.current?.focus();
-    return () => window.removeEventListener("keydown", onKey);
-  }, [isOpen, closeCart]);
+  // Focus lands on Close, stays inside while open, and returns to the control that opened the bag.
+  useModal(panelRef, isOpen, closeCart, { initialFocus: closeRef, fallback: "[data-cart-trigger]" });
 
   const subtotal = Number(cart?.cost.subtotalAmount.amount ?? 0);
   const remaining = Math.max(0, freeShippingThreshold - subtotal);
@@ -27,38 +24,46 @@ export function CartDrawer() {
   const lines = cart?.lines ?? [];
   const isEmpty = lines.length === 0;
 
+  // Removing a product removes the button that had focus. Put focus back in the bag instead of losing it.
+  useEffect(() => {
+    if (isOpen && !panelRef.current?.contains(document.activeElement)) closeRef.current?.focus({ preventScroll: true });
+  }, [isOpen, lines.length]);
+
   return (
-    <div className={cn("fixed inset-0 z-50 overflow-hidden", !isOpen && "pointer-events-none")} aria-hidden={!isOpen}>
-      {/* Backdrop */}
-      <button
-        type="button"
-        aria-label="Close bag"
+    // Stays mounted so it can slide; inert while closed, so nothing in it can be tabbed to or read.
+    <div className={cn("fixed inset-0 z-50 overflow-hidden", !isOpen && "pointer-events-none")} inert={!isOpen}>
+      {/* Backdrop: a click target for the mouse. Keyboard and screen readers use Close or Escape. */}
+      <div
+        aria-hidden="true"
         onClick={closeCart}
         className={`absolute inset-0 bg-ink/30 transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0"}`}
-        tabIndex={isOpen ? 0 : -1}
       />
       {/* Panel */}
       <div
         ref={panelRef}
         role="dialog"
         aria-modal="true"
-        aria-label="Your bag"
+        aria-labelledby="cart-heading"
         tabIndex={-1}
-        className={`absolute inset-y-0 right-0 flex w-full max-w-md flex-col bg-cream shadow-2xl transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        className={`absolute inset-y-0 right-0 flex w-full max-w-md flex-col bg-cream shadow-2xl outline-none transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex items-center justify-between border-b border-line px-5 py-4">
-          <h2 className="h-display text-2xl">
+          <h2 id="cart-heading" className="h-display text-2xl">
             Your bag{" "}
             {cart && cart.totalQuantity > 0 && (
-              <span className="font-sans text-sm text-plum">({cart.totalQuantity})</span>
+              <span className="font-sans text-sm text-plum">
+                ({cart.totalQuantity}
+                <span className="sr-only"> {cart.totalQuantity === 1 ? "item" : "items"}</span>)
+              </span>
             )}
           </h2>
           <button
+            ref={closeRef}
             type="button"
             onClick={closeCart}
-            className="inline-flex h-10 w-10 items-center justify-center hover:bg-blush"
+            className="inline-flex h-10 w-10 items-center justify-center hover:bg-blush focus-visible:outline-offset-0"
             aria-label="Close bag"
           >
             <CloseIcon />
@@ -94,27 +99,24 @@ export function CartDrawer() {
           ) : (
             <ul className="divide-y divide-line">
               {lines.map((line) => {
+                const title = line.merchandise.product.title;
                 const optionLabel = line.merchandise.selectedOptions
                   .filter((o) => o.value !== "Default Title")
                   .map((o) => o.value)
                   .join(" · ");
+                const named = optionLabel ? `${title}, ${optionLabel}` : title;
                 return (
                   <li key={line.id} className="flex gap-4 py-4">
+                    {/* The photo repeats the title link beside it, so it is skipped by keyboard and screen readers. */}
                     <Link
                       href={`/products/${line.merchandise.product.handle}`}
                       onClick={closeCart}
+                      tabIndex={-1}
+                      aria-hidden="true"
                       className="relative h-24 w-20 shrink-0 overflow-hidden"
                       style={{ background: placeholderTint(line.merchandise.product.handle) }}
                     >
-                      {line.merchandise.image ? (
-                        <Image
-                          src={line.merchandise.image.url}
-                          alt={line.merchandise.image.altText ?? line.merchandise.product.title}
-                          fill
-                          sizes="80px"
-                          className="object-cover"
-                        />
-                      ) : null}
+                      {line.merchandise.image ? <Image src={line.merchandise.image.url} alt="" fill sizes="80px" className="object-cover" /> : null}
                     </Link>
                     <div className="flex flex-1 flex-col">
                       <div className="flex items-start justify-between gap-3">
@@ -124,29 +126,30 @@ export function CartDrawer() {
                             onClick={closeCart}
                             className="text-sm font-medium text-ink"
                           >
-                            {line.merchandise.product.title}
+                            {title}
                           </Link>
                           {optionLabel && <p className="mt-0.5 text-xs text-plum">{optionLabel}</p>}
                         </div>
                         <p className="text-sm">{formatMoney(line.cost.totalAmount)}</p>
                       </div>
                       <div className="mt-auto flex items-center justify-between pt-3">
-                        <div className="inline-flex items-center border border-line bg-white">
+                        <div className="inline-flex items-center border border-line bg-white" role="group" aria-label={`Quantity of ${named}`}>
                           <button
                             type="button"
-                            className="inline-flex h-8 w-8 items-center justify-center hover:bg-blush"
-                            aria-label={`Decrease quantity of ${line.merchandise.product.title}`}
+                            className="inline-flex h-8 w-8 items-center justify-center hover:bg-blush focus-visible:outline-offset-0"
+                            aria-label={line.quantity > 1 ? `Decrease quantity of ${named}` : `Remove ${named} from bag`}
                             onClick={() => updateItem(line.id, line.merchandise.id, line.quantity - 1)}
                           >
                             <MinusIcon />
                           </button>
-                          <span className="w-6 text-center text-sm tabular-nums" aria-live="polite">
+                          <span className="w-6 text-center text-sm tabular-nums">
+                            <span className="sr-only">Quantity: </span>
                             {line.quantity}
                           </span>
                           <button
                             type="button"
-                            className="inline-flex h-8 w-8 items-center justify-center hover:bg-blush"
-                            aria-label={`Increase quantity of ${line.merchandise.product.title}`}
+                            className="inline-flex h-8 w-8 items-center justify-center hover:bg-blush focus-visible:outline-offset-0"
+                            aria-label={`Increase quantity of ${named}`}
                             onClick={() => updateItem(line.id, line.merchandise.id, line.quantity + 1)}
                           >
                             <PlusIcon />
@@ -154,9 +157,9 @@ export function CartDrawer() {
                         </div>
                         <button
                           type="button"
-                          className="inline-flex items-center gap-1 text-xs text-plum hover:text-danger"
+                          className="inline-flex min-h-6 items-center gap-1 text-xs text-plum hover:text-danger"
                           onClick={() => removeItem(line.id)}
-                          aria-label={`Remove ${line.merchandise.product.title}`}
+                          aria-label={`Remove ${named} from bag`}
                         >
                           <TrashIcon /> Remove
                         </button>

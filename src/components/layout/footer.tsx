@@ -3,6 +3,7 @@ import Link from "next/link";
 import { nav, site } from "@/content/site";
 import { InstagramIcon, TikTokIcon } from "@/components/ui/icons";
 import { NewsletterForm } from "@/components/marketing/newsletter-form";
+import { NEW_TAB_SUFFIX, NewTabHint } from "@/components/ui/new-tab";
 
 /** Footer (option 1G): light tan ground, the logo (larger, per the client), email sign-up, links, socials, credits. */
 export function Footer() {
@@ -16,10 +17,10 @@ export function Footer() {
           <p className="mt-6 mb-4 max-w-sm text-sm text-plum">10% off your first order. No noise.</p>
           <NewsletterForm variant="line" source="footer" className="max-w-sm" />
           <div className="mt-8 flex items-center gap-3">
-            <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Loved Beauty on Instagram" className={social}>
+            <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" aria-label={`Loved Beauty on Instagram${NEW_TAB_SUFFIX}`} className={social}>
               <InstagramIcon width={18} height={18} />
             </a>
-            <a href={site.social.tiktok} target="_blank" rel="noopener noreferrer" aria-label="Loved Beauty on TikTok" className={social}>
+            <a href={site.social.tiktok} target="_blank" rel="noopener noreferrer" aria-label={`Loved Beauty on TikTok${NEW_TAB_SUFFIX}`} className={social}>
               <TikTokIcon width={18} height={18} />
             </a>
           </div>
@@ -45,6 +46,7 @@ export function Footer() {
             Designed by{" "}
             <a href={site.agency.url} target="_blank" rel="noopener noreferrer" className="link-underline text-ink">
               {site.agency.name}
+              <NewTabHint />
             </a>
           </p>
         </div>
@@ -54,15 +56,20 @@ export function Footer() {
 }
 
 function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
+  const id = `footer-${title.toLowerCase()}`;
   return (
-    <div>
-      <p className="eyebrow mb-5 text-[#7c5f4e]">{title}</p>
+    <nav aria-labelledby={id}>
+      {/* #5e4535 on the tan footer is 5.8:1 */}
+      <h2 id={id} className="eyebrow mb-5 text-[#5e4535]">
+        {title}
+      </h2>
       <ul className="space-y-2.5">
         {links.map((l) => (
           <li key={l.href}>
             {l.href.startsWith("http") ? (
               <a href={l.href} target="_blank" rel="noopener noreferrer" className="link-underline text-sm text-ink">
                 {l.label}
+                <NewTabHint />
               </a>
             ) : (
               <Link href={l.href} className="link-underline text-sm text-ink">
@@ -72,6 +79,6 @@ function FooterColumn({ title, links }: { title: string; links: { label: string;
           </li>
         ))}
       </ul>
-    </div>
+    </nav>
   );
 }

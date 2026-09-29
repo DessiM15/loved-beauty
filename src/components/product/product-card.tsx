@@ -7,7 +7,7 @@ import type { Product } from "@/lib/shopify/types";
 import { useCart } from "@/components/cart/cart-context";
 import { Price } from "./price";
 import { ProductPlaceholder } from "./product-placeholder";
-import { cn, hasRealOptions, isOnSale, productHasRange } from "@/lib/utils";
+import { cn, hasRealOptions, imageAlt, isOnSale, productHasRange } from "@/lib/utils";
 import { CheckIcon } from "@/components/ui/icons";
 
 /**
@@ -26,7 +26,11 @@ export function ProductCard({ product, priority = false, index = 0 }: { product:
   const isBestseller = product.tags.includes("bestseller");
   const sale = isOnSale(product);
 
+  const busy = state === "adding" || isPending;
+  const tag = soldOut ? "Sold out" : isBestseller ? "Bestseller" : sale ? "Set & save" : null;
+
   async function quickAdd() {
+    if (busy) return;
     setState("adding");
     const ok = await addItem(product.variants[0].id, 1);
     setState(ok ? "added" : "idle");
@@ -36,14 +40,15 @@ export function ProductCard({ product, priority = false, index = 0 }: { product:
   const pill = "inline-flex items-center gap-1.5 whitespace-nowrap rounded-[2px] px-2.5 py-2 text-[0.58rem] font-medium tracking-[0.2em] uppercase transition-colors md:px-3.5 md:py-2.5 md:text-[0.62rem]";
 
   return (
-    <article className="group flex h-full flex-col" data-reveal style={{ "--d": `${(index % 4) * 60}ms` } as React.CSSProperties}>
-      <Link href={href} className="relative block overflow-hidden border border-line bg-cream" aria-label={product.title}>
+    <article className="group relative flex h-full flex-col" data-reveal style={{ "--d": `${(index % 4) * 60}ms` } as React.CSSProperties}>
+      {/* One link per card: the name. Its ::after covers the whole card, so the photo is still clickable and keeps its alt text. */}
+      <div className="relative block overflow-hidden border border-line bg-cream">
         <div className="relative aspect-[4/5]">
           {primary ? (
             <>
               <Image
                 src={primary.url}
-                alt={primary.altText ?? product.title}
+                alt={imageAlt(primary, product.title)}
                 fill
                 sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
                 priority={priority}
@@ -52,7 +57,7 @@ export function ProductCard({ product, priority = false, index = 0 }: { product:
               {secondary && (
                 <Image
                   src={secondary.url}
-                  alt={secondary.altText ?? product.title}
+                  alt=""
                   fill
                   sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
                   className="object-cover opacity-0 transition-opacity duration-700 group-hover:opacity-100"
@@ -64,13 +69,13 @@ export function ProductCard({ product, priority = false, index = 0 }: { product:
           )}
         </div>
         <div className="absolute top-3 left-3 flex flex-col items-start gap-1.5">
-          {soldOut ? <Tag>Sold out</Tag> : isBestseller ? <Tag>Bestseller</Tag> : sale ? <Tag>Set &amp; save</Tag> : null}
+          {tag && <Tag>{tag}</Tag>}
         </div>
-      </Link>
+      </div>
 
       <div className="flex flex-1 flex-col pt-3.5 text-left">
         <h3 className="h-display text-[1.2rem] md:text-[1.5rem]">
-          <Link href={href} className="text-ink">
+          <Link href={href} className="text-ink after:absolute after:inset-0 after:content-['']">
             {product.title}
           </Link>
         </h3>
@@ -80,16 +85,17 @@ export function ProductCard({ product, priority = false, index = 0 }: { product:
           {soldOut ? (
             <span className={cn(pill, "border border-line text-plum")}>Sold out</span>
           ) : multi ? (
-            <Link href={href} className={cn(pill, "bg-pink text-ink hover:bg-ink hover:text-white")}>
-              Choose shade
+            <Link href={href} className={cn(pill, "relative z-10 bg-pink text-ink hover:bg-ink hover:text-white")}>
+              Choose shade<span className="sr-only"> for {product.title}</span>
             </Link>
           ) : (
             <button
               type="button"
               onClick={quickAdd}
-              disabled={state === "adding" || isPending}
+              // Not the disabled attribute: a disabled button drops keyboard focus mid-add.
+              aria-disabled={busy}
               aria-label={`Add ${product.title} to bag`}
-              className={cn(pill, state === "added" ? "bg-ink text-white" : "bg-pink text-ink hover:bg-ink hover:text-white", "disabled:opacity-60")}
+              className={cn(pill, "relative z-10", state === "added" ? "bg-ink text-white" : "bg-pink text-ink hover:bg-ink hover:text-white", "aria-disabled:opacity-60")}
             >
               {state === "added" ? (
                 <>

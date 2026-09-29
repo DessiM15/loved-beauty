@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { CheckIcon } from "@/components/ui/icons";
+import { emailError, focusFirstError, requiredError, type FieldErrors } from "@/lib/a11y/form-errors";
 
 const topics = ["Order question", "Product question", "Wholesale / collaboration", "Something else"];
 
@@ -15,9 +16,13 @@ const topics = ["Order question", "Product question", "Wholesale / collaboration
 const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
 const FALLBACK = "Something went wrong. Please email us directly.";
 
+const labelClass = "mb-1.5 block text-xs tracking-wide2 uppercase";
+const hintClass = "normal-case tracking-normal text-plum";
+
 export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
   const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState<FieldErrors>({});
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -28,6 +33,20 @@ export function ContactForm() {
     if (data.website) {
       setStatus("done");
       form.reset();
+      return;
+    }
+
+    const found: FieldErrors = {};
+    const nameProblem = requiredError(data.name, "Enter your name.");
+    const emailProblem = emailError(data.email);
+    const messageProblem = requiredError(data.message, "Enter a message.");
+    if (nameProblem) found.name = nameProblem;
+    if (emailProblem) found.email = emailProblem;
+    if (messageProblem) found.message = messageProblem;
+    setErrors(found);
+    if (Object.keys(found).length > 0) {
+      setStatus("idle");
+      focusFirstError(form, found);
       return;
     }
 
@@ -85,27 +104,38 @@ export function ContactForm() {
     );
   }
 
+  /** Error text under a field. Same id the field points at with aria-describedby. */
+  const fieldError = (name: string) =>
+    errors[name] ? (
+      <p id={`${name}-error`} className="mt-1.5 text-xs text-danger">
+        <span className="font-medium">Error:</span> {errors[name]}
+      </p>
+    ) : null;
+  const invalid = (name: string) => ({ "aria-invalid": errors[name] ? true : undefined, "aria-describedby": errors[name] ? `${name}-error` : undefined });
+
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
+    <form onSubmit={onSubmit} noValidate className="space-y-4">
       {/* honeypot */}
       <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label htmlFor="name" className="mb-1.5 block text-xs tracking-wide2 uppercase">
-            Name
+          <label htmlFor="name" className={labelClass}>
+            Name <span className={hintClass}>(required)</span>
           </label>
-          <input id="name" name="name" required autoComplete="name" className="input-lb" />
+          <input id="name" name="name" required autoComplete="name" className="input-lb" {...invalid("name")} />
+          {fieldError("name")}
         </div>
         <div>
-          <label htmlFor="email" className="mb-1.5 block text-xs tracking-wide2 uppercase">
-            Email
+          <label htmlFor="email" className={labelClass}>
+            Email <span className={hintClass}>(required)</span>
           </label>
-          <input id="email" name="email" type="email" required autoComplete="email" className="input-lb" />
+          <input id="email" name="email" type="email" required autoComplete="email" className="input-lb" {...invalid("email")} />
+          {fieldError("email")}
         </div>
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label htmlFor="topic" className="mb-1.5 block text-xs tracking-wide2 uppercase">
+          <label htmlFor="topic" className={labelClass}>
             Topic
           </label>
           <select id="topic" name="topic" className="input-lb appearance-none">
@@ -115,24 +145,25 @@ export function ContactForm() {
           </select>
         </div>
         <div>
-          <label htmlFor="order" className="mb-1.5 block text-xs tracking-wide2 uppercase">
-            Order number <span className="normal-case tracking-normal text-plum">(optional)</span>
+          <label htmlFor="order" className={labelClass}>
+            Order number <span className={hintClass}>(optional)</span>
           </label>
-          <input id="order" name="order" className="input-lb" placeholder="#1001" />
+          <input id="order" name="order" autoComplete="off" className="input-lb" placeholder="#1001" />
         </div>
       </div>
       <div>
-        <label htmlFor="message" className="mb-1.5 block text-xs tracking-wide2 uppercase">
-          Message
+        <label htmlFor="message" className={labelClass}>
+          Message <span className={hintClass}>(required)</span>
         </label>
-        <textarea id="message" name="message" required className="textarea-lb" />
+        <textarea id="message" name="message" required className="textarea-lb" {...invalid("message")} />
+        {fieldError("message")}
       </div>
       {status === "error" && (
         <p className="text-sm text-danger" role="alert">
           {message}
         </p>
       )}
-      <button type="submit" disabled={status === "loading"} className="btn btn-primary w-full sm:w-auto">
+      <button type="submit" aria-disabled={status === "loading"} onClick={(e) => status === "loading" && e.preventDefault()} className="btn btn-primary w-full aria-disabled:opacity-50 sm:w-auto">
         {status === "loading" ? "Sending…" : "Send message"}
       </button>
     </form>

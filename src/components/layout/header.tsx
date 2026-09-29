@@ -3,11 +3,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { nav, site } from "@/content/site";
 import { useCart } from "@/components/cart/cart-context";
 import { BagIcon, CloseIcon, InstagramIcon, MenuIcon, SearchIcon, TikTokIcon } from "@/components/ui/icons";
+import { NewTabHint } from "@/components/ui/new-tab";
+import { prefersReducedMotion } from "@/lib/a11y/motion";
+import { useModal } from "@/lib/a11y/use-modal";
 import { cn } from "@/lib/utils";
 
 /**
@@ -20,6 +23,9 @@ export function Header() {
   const { cart, openCart } = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
   const count = cart?.totalQuantity ?? 0;
+  const bagLabel = `Open bag, ${count} ${count === 1 ? "item" : "items"}`;
+  const menuRef = useRef<HTMLDivElement>(null);
+  const closeMenuRef = useRef<HTMLButtonElement>(null);
 
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
@@ -42,13 +48,16 @@ export function Header() {
     };
   }, [menuOpen]);
 
+  // Phone menu: focus moves in, stays in, Escape closes, focus returns to the menu button.
+  useModal(menuRef, menuOpen, () => setMenuOpen(false), { initialFocus: closeMenuRef, fallback: "[data-menu-trigger]" });
+
   const isActive = (href: string) => pathname === href || (href !== "/" && pathname.startsWith(href + "/"));
 
   /** Logo always lands on the top of the home page, even when already there. */
   function goHome(e: React.MouseEvent) {
     setMenuOpen(false);
     e.preventDefault();
-    if (pathname === "/") window.scrollTo({ top: 0, behavior: "smooth" });
+    if (pathname === "/") window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? "auto" : "smooth" });
     else router.push("/");
   }
 
@@ -64,8 +73,10 @@ export function Header() {
             type="button"
             className={cn(iconBtn, "-ml-2 md:hidden")}
             aria-label="Open menu"
+            aria-haspopup="dialog"
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
+            data-menu-trigger
             onClick={() => setMenuOpen(true)}
           >
             <MenuIcon />
@@ -93,10 +104,12 @@ export function Header() {
           <Link href="/search" className={iconBtn} aria-label="Search">
             <SearchIcon width={21} height={21} />
           </Link>
-          <button type="button" onClick={openCart} className={cn(iconBtn, "relative -mr-2")} aria-label={`Open bag, ${count} ${count === 1 ? "item" : "items"}`}>
+          <button type="button" onClick={openCart} className={cn(iconBtn, "relative -mr-2")} aria-label={bagLabel} aria-haspopup="dialog" data-cart-trigger>
             <BagIcon width={21} height={21} />
             {count > 0 && (
-              <span className="absolute top-0.5 right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-pink px-1 text-[0.58rem] font-medium text-ink">{count}</span>
+              <span aria-hidden="true" className="absolute top-0.5 right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-pink px-1 text-[0.58rem] font-medium text-ink">
+                {count}
+              </span>
             )}
           </button>
         </div>
@@ -106,18 +119,21 @@ export function Header() {
       {mounted &&
         createPortal(
           <div
+            ref={menuRef}
             id="mobile-menu"
             className={cn(
-              "fixed inset-0 z-50 flex flex-col bg-cream transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] md:hidden",
+              "fixed inset-0 z-50 flex flex-col bg-cream outline-none transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] md:hidden",
               menuOpen ? "translate-x-0" : "-translate-x-full",
             )}
-            aria-hidden={!menuOpen}
+            // Stays mounted so it can slide; inert while closed, so nothing in it can be tabbed to or read.
+            inert={!menuOpen}
             role="dialog"
             aria-modal="true"
             aria-label="Menu"
+            tabIndex={-1}
           >
             <div className="container-lb grid h-[var(--header-h)] shrink-0 grid-cols-[1fr_auto_1fr] items-center border-b border-line bg-white text-ink">
-              <button type="button" className={cn(iconBtn, "-ml-2")} aria-label="Close menu" onClick={() => setMenuOpen(false)}>
+              <button ref={closeMenuRef} type="button" className={cn(iconBtn, "-ml-2")} aria-label="Close menu" onClick={() => setMenuOpen(false)}>
                 <CloseIcon />
               </button>
               <Link href="/" onClick={goHome} aria-label={`${site.name} home`} className="px-3">
@@ -130,16 +146,22 @@ export function Header() {
                   openCart();
                 }}
                 className={cn(iconBtn, "-mr-2 justify-self-end")}
-                aria-label="Open bag"
+                aria-label={bagLabel}
+                aria-haspopup="dialog"
               >
                 <BagIcon width={21} height={21} />
               </button>
             </div>
-            <div className="container-lb flex-1 overflow-y-auto pt-4 pb-10">
+            <nav aria-label="Primary" className="container-lb flex-1 overflow-y-auto pt-4 pb-10">
               <ul>
                 {nav.primary.map((item) => (
                   <li key={item.href}>
-                    <Link href={item.href} onClick={() => setMenuOpen(false)} className="h-display flex items-baseline justify-between border-b border-line py-5 text-3xl text-ink">
+                    <Link
+                      href={item.href}
+                      aria-current={isActive(item.href) ? "page" : undefined}
+                      onClick={() => setMenuOpen(false)}
+                      className="h-display flex items-baseline justify-between border-b border-line py-5 text-3xl text-ink focus-visible:outline-offset-0"
+                    >
                       {item.label}
                     </Link>
                   </li>
@@ -162,15 +184,17 @@ export function Header() {
                   </Link>
                 </li>
               </ul>
-              <div className="mt-10 flex flex-col gap-3 text-sm text-rose-deep">
+              <div className="mt-10 flex flex-col items-start gap-3 text-sm text-rose-ink">
                 <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2">
                   <InstagramIcon /> {site.social.instagramHandle}
+                  <NewTabHint />
                 </a>
                 <a href={site.social.tiktok} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2">
                   <TikTokIcon /> {site.social.tiktokHandle}
+                  <NewTabHint />
                 </a>
               </div>
-            </div>
+            </nav>
           </div>,
           document.body,
         )}

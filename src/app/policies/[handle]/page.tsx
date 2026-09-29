@@ -19,6 +19,13 @@ async function resolve(handle: string): Promise<ShopPolicy[] | null> {
   return hits.length ? hits : null;
 }
 
+/** Policy text is written in Shopify. Any link there that opens a new tab gets the screen reader hint added. */
+function withNewTabHints(html: string): string {
+  return html.replace(/(<a\b[^>]*\btarget=["']?_blank["']?[^>]*>)([\s\S]*?)<\/a>/gi, (m, open: string, text: string) =>
+    text.includes("opens in new tab") ? m : `${open}${text}<span class="sr-only"> (opens in new tab)</span></a>`,
+  );
+}
+
 export async function generateStaticParams() {
   return Object.keys(ALIASES).map((handle) => ({ handle }));
 }
@@ -46,7 +53,7 @@ export default async function PolicyPage({ params }: PageProps<"/policies/[handl
           <article
             key={p.handle}
             className="mt-8 text-[0.95rem] leading-relaxed text-plum [&_a]:text-ink [&_a]:underline [&_a]:underline-offset-4 [&_h2]:mt-8 [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:text-ink [&_li]:mt-1 [&_p]:mt-3 [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:pl-5"
-            dangerouslySetInnerHTML={{ __html: p.body }}
+            dangerouslySetInnerHTML={{ __html: withNewTabHints(p.body) }}
           />
         ))}
       </div>

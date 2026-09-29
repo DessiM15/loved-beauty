@@ -65,6 +65,18 @@ export const CheckIcon = (p: P) => (
   </svg>
 );
 
+export const PauseIcon = (p: P) => (
+  <svg viewBox="0 0 24 24" width={16} height={16} aria-hidden="true" fill="currentColor" {...p}>
+    <path d="M7 4h3.5v16H7zM13.5 4H17v16h-3.5z" />
+  </svg>
+);
+
+export const PlayIcon = (p: P) => (
+  <svg viewBox="0 0 24 24" width={16} height={16} aria-hidden="true" fill="currentColor" {...p}>
+    <path d="M7 4v16l13-8L7 4Z" />
+  </svg>
+);
+
 export const HeartIcon = (p: P) => (
   <svg viewBox="0 0 24 24" width={16} height={16} aria-hidden="true" fill="currentColor" {...p}>
     <path d="M12 21s-7.5-4.6-9.5-9.2C1.2 8.6 3.2 5 6.8 5c2 0 3.4 1.1 4.2 2.4C11.8 6.1 13.2 5 15.2 5c3.6 0 5.6 3.6 4.3 6.8C17.5 16.4 12 21 12 21Z" />

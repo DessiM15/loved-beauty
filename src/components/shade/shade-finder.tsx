@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { useCart } from "@/components/cart/cart-context";
 import { BagIcon, CheckIcon, LockIcon, SparkleIcon } from "@/components/ui/icons";
-import { cn, formatMoney, placeholderTint } from "@/lib/utils";
+import { prefersReducedMotion } from "@/lib/a11y/motion";
+import { cn, formatMoney, imageAlt, placeholderTint } from "@/lib/utils";
 import type { Money, Image as ProductImage } from "@/lib/shopify/types";
 
 type Pick = {
@@ -94,7 +95,7 @@ export function ShadeFinder({ selfieEnabled }: { selfieEnabled: boolean }) {
       if (json.ok) {
         setResult(json);
         setStatus("done");
-        setTimeout(() => document.getElementById("shade-results")?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+        setTimeout(() => document.getElementById("shade-results")?.scrollIntoView({ behavior: prefersReducedMotion() ? "auto" : "smooth", block: "start" }), 50);
       } else {
         setStatus("error");
         setMessage(json.message ?? "Something went wrong. Please try again.");
@@ -110,7 +111,7 @@ export function ShadeFinder({ selfieEnabled }: { selfieEnabled: boolean }) {
   return (
     <div>
       {/* Mode switch */}
-      <div className="mx-auto flex max-w-sm border border-line bg-white p-1" role="tablist" aria-label="How to find your shade">
+      <div className="mx-auto flex max-w-sm border border-line bg-white p-1" role="group" aria-label="How to find your shade">
         {(
           [
             ["selfie", "Use a selfie"],
@@ -119,9 +120,8 @@ export function ShadeFinder({ selfieEnabled }: { selfieEnabled: boolean }) {
         ).map(([m, label]) => (
           <button
             key={m}
-            role="tab"
             type="button"
-            aria-selected={mode === m}
+            aria-pressed={mode === m}
             onClick={() => setMode(m)}
             className={cn(
               "flex-1 px-4 py-2.5 text-[0.62rem] tracking-luxe uppercase transition-colors",
@@ -294,7 +294,7 @@ function Results({ result }: { result: Result }) {
           <li key={p.variantId} className="flex flex-col rounded-sm border border-line bg-white p-4">
             <Link href={`/products/${p.handle}`} className="relative block aspect-[4/5] overflow-hidden rounded-sm" style={{ background: placeholderTint(p.handle) }}>
               {p.image ? (
-                <Image src={p.image.url} alt={p.image.altText ?? p.title} fill sizes="(min-width: 768px) 30vw, 90vw" className="object-cover" />
+                <Image src={p.image.url} alt={imageAlt(p.image, p.shade ? `${p.title} in ${p.shade}` : p.title)} fill sizes="(min-width: 768px) 30vw, 90vw" className="object-cover" />
               ) : (
                 <span className="absolute inset-0 flex items-center justify-center font-serif text-lg text-ink/70">{p.title}</span>
               )}

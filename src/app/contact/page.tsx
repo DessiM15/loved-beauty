@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { site } from "@/content/site";
 import { ContactForm } from "@/components/marketing/contact-form";
 import { InstagramIcon, MailIcon, TikTokIcon } from "@/components/ui/icons";
+import { NewTabHint } from "@/components/ui/new-tab";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -30,12 +31,14 @@ export default function ContactPage() {
               <InstagramIcon className="text-rose-deep" />
               <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" className="underline decoration-line underline-offset-4 hover:decoration-ink">
                 {site.social.instagramHandle}
+                <NewTabHint />
               </a>
             </li>
             <li className="flex items-center gap-3">
               <TikTokIcon className="text-rose-deep" />
               <a href={site.social.tiktok} target="_blank" rel="noopener noreferrer" className="underline decoration-line underline-offset-4 hover:decoration-ink">
                 {site.social.tiktokHandle}
+                <NewTabHint />
               </a>
             </li>
           </ul>

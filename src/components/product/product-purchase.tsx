@@ -5,7 +5,7 @@ import type { Product, ProductVariant } from "@/lib/shopify/types";
 import { useCart } from "@/components/cart/cart-context";
 import { Price } from "./price";
 import { ProductGallery } from "./product-gallery";
-import { hasRealOptions, cn } from "@/lib/utils";
+import { hasRealOptions, cn, imageAlt } from "@/lib/utils";
 import { BagIcon, CheckIcon, MinusIcon, PlusIcon } from "@/components/ui/icons";
 import { freeShippingThreshold, shadeColors } from "@/content/site";
 
@@ -35,9 +35,21 @@ export function ProductPurchase({ product, children }: { product: Product; child
   }, [variant, product.images]);
 
   const lowStock = variant?.quantityAvailable != null && variant.quantityAvailable > 0 && variant.quantityAvailable <= 5;
+  const soldOut = !variant || !variant.availableForSale;
+
+  // Photos of a shade say which shade; the rest fall back to the product name.
+  const images = useMemo(
+    () =>
+      product.images.map((img) => {
+        const shade = product.variants.find((v) => v.image?.url === img.url && product.variants.filter((o) => o.image?.url === img.url).length === 1);
+        const shadeName = shade?.selectedOptions.find((o) => o.value !== "Default Title")?.value;
+        return { ...img, altText: imageAlt(img, shadeName ? `${product.title} in ${shadeName}` : product.title) };
+      }),
+    [product],
+  );
 
   async function onAdd() {
-    if (!variant) return;
+    if (!variant || soldOut || isPending) return;
     const ok = await addItem(variant.id, qty);
     if (ok) {
       setJustAdded(true);
@@ -48,7 +60,7 @@ export function ProductPurchase({ product, children }: { product: Product; child
   return (
     <div className="grid lg:grid-cols-[1.1fr_1fr]">
       <div className="lg:border-r lg:border-line">
-        <ProductGallery images={product.images} title={product.title} handle={product.handle} activeIndex={galleryIndex} />
+        <ProductGallery images={images} title={product.title} handle={product.handle} activeIndex={galleryIndex} />
       </div>
 
       <div className="flex flex-col items-center px-5 py-10 text-center sm:px-10 lg:sticky lg:top-[var(--header-h)] lg:self-start lg:px-14 lg:py-16">
@@ -65,7 +77,11 @@ export function ProductPurchase({ product, children }: { product: Product; child
             <fieldset key={option.id} className="mt-8 flex flex-col items-center">
               <legend className="mb-3 flex items-baseline gap-3 text-[0.62rem] tracking-luxe uppercase">
                 {option.name}
-                <span className="text-sm normal-case tracking-normal text-plum">{selected[option.name]}</span>
+                <span className="text-sm normal-case tracking-normal text-plum">
+                  <span className="sr-only">selected: </span>
+                  {selected[option.name]}
+                  {soldOut && " (sold out)"}
+                </span>
               </legend>
               <div className="flex flex-wrap justify-center gap-3">
                 {option.values.map((value) => {
@@ -81,24 +97,27 @@ export function ProductPurchase({ product, children }: { product: Product; child
                       type="button"
                       onClick={() => setSelected((s) => ({ ...s, [option.name]: value }))}
                       aria-pressed={active}
-                      aria-label={value}
-                      title={value}
+                      aria-label={available ? value : `${value}, sold out`}
+                      title={available ? value : `${value} (sold out)`}
                       className={cn(
                         "relative inline-flex items-center justify-center transition-transform duration-300",
-                        swatch ? "h-9 w-9 rounded-full" : "border px-4 py-2 text-sm",
+                        // The keyboard ring sits outside the selection ring, so both can be seen at once.
+                        swatch ? "h-9 w-9 rounded-full focus-visible:outline-offset-[7px]" : "border px-4 py-2 text-sm",
                         swatch
                           ? active
                             ? "ring-1 ring-ink ring-offset-4 ring-offset-cream"
                             : "ring-1 ring-line ring-offset-4 ring-offset-cream hover:ring-ink"
                           : active
                             ? "border-ink bg-ink text-white"
-                            : "border-line bg-white text-ink hover:border-ink",
-                        !available && "opacity-40",
+                            : available
+                              ? "border-line bg-white text-ink hover:border-ink"
+                              : "border-dashed border-plum bg-white text-plum line-through hover:border-ink",
                       )}
-                      style={swatch ? { background: swatch } : undefined}
                     >
+                      {/* The colour is faded when sold out; the strike-through line and the name carry the meaning. */}
+                      {swatch && <span className={cn("absolute inset-0 rounded-full", !available && "opacity-40")} style={{ background: swatch }} aria-hidden="true" />}
                       {!swatch && value}
-                      {!available && <span className="absolute inset-0 m-auto h-px w-full rotate-45 bg-ink" aria-hidden="true" />}
+                      {!available && swatch && <span className="absolute inset-0 m-auto h-px w-full rotate-45 bg-ink" aria-hidden="true" />}
                     </button>
                   );
                 })}
@@ -107,19 +126,33 @@ export function ProductPurchase({ product, children }: { product: Product; child
           ))}
 
         <div className="mt-9 flex w-full max-w-md flex-col gap-3 sm:flex-row">
-          <div className="inline-flex h-[3.1rem] items-center self-center border border-line bg-white">
-            <button type="button" className="inline-flex h-full w-11 items-center justify-center hover:bg-blush" aria-label="Decrease quantity" onClick={() => setQty((q) => Math.max(1, q - 1))}>
+          <div className="inline-flex h-[3.1rem] items-center self-center border border-line bg-white" role="group" aria-label={`Quantity of ${product.title}`}>
+            <button
+              type="button"
+              className="inline-flex h-full w-11 items-center justify-center hover:bg-blush focus-visible:outline-offset-0 aria-disabled:opacity-40"
+              aria-label="Decrease quantity"
+              aria-disabled={qty <= 1}
+              onClick={() => setQty((q) => Math.max(1, q - 1))}
+            >
               <MinusIcon />
             </button>
-            <span className="w-8 text-center text-sm tabular-nums" aria-live="polite">
+            <span className="w-8 text-center text-sm tabular-nums" role="status">
+              <span className="sr-only">Quantity: </span>
               {qty}
             </span>
-            <button type="button" className="inline-flex h-full w-11 items-center justify-center hover:bg-blush" aria-label="Increase quantity" onClick={() => setQty((q) => Math.min(10, q + 1))}>
+            <button
+              type="button"
+              className="inline-flex h-full w-11 items-center justify-center hover:bg-blush focus-visible:outline-offset-0 aria-disabled:opacity-40"
+              aria-label="Increase quantity"
+              aria-disabled={qty >= 10}
+              onClick={() => setQty((q) => Math.min(10, q + 1))}
+            >
               <PlusIcon />
             </button>
           </div>
-          <button type="button" onClick={onAdd} disabled={!variant || !variant.availableForSale || isPending} className={cn("btn flex-1", justAdded ? "btn-primary" : "btn-rose")}>
-            {!variant || !variant.availableForSale ? (
+          {/* Sold out is a real disabled button. While adding it only looks busy, so keyboard focus is not dropped. */}
+          <button type="button" onClick={onAdd} disabled={soldOut} aria-disabled={isPending} className={cn("btn flex-1 aria-disabled:opacity-50", justAdded ? "btn-primary" : "btn-rose")}>
+            {soldOut ? (
               "Sold out"
             ) : justAdded ? (
               <>
@@ -136,7 +169,7 @@ export function ProductPurchase({ product, children }: { product: Product; child
         </div>
 
         {lowStock && (
-          <p className="mt-3 text-xs text-danger" aria-live="polite">
+          <p className="mt-3 text-xs text-danger" role="status">
             Only {variant?.quantityAvailable} left in this shade.
           </p>
         )}

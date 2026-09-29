@@ -67,6 +67,27 @@ Per-page titles and meta descriptions, canonical URLs, Open Graph image, `Produc
 
 Still to do once live: Google Search Console verification + sitemap submission, Google Business Profile (Cypress, TX), Instagram Shopping via Shopify catalog.
 
+## Accessibility (WCAG 2.2 AA)
+
+The site is built to WCAG 2.2 Level AA and says so at `/accessibility`. Three checks keep it there. Run them against a running server (they default to `http://localhost:3111`; pass another URL as the first argument):
+
+```bash
+npm run build && npx next start -p 3111   # in one terminal
+npm run a11y            # axe-core on every route, at 1366px and 390px, plus bag open, bag empty, phone menu open and the welcome offer. Must print ZERO VIOLATIONS.
+npm run a11y:keyboard   # real key presses: home → shop → product → add to bag → bag → checkout link; focus ring on every stop; forms; phone menu
+npm run a11y:photos     # contrast of text that sits on a photograph (axe cannot judge this)
+```
+
+Product and collection pages are read from the sitemap, so new products are scanned without editing the scripts. Rules to keep when changing the site:
+
+- **Colour.** Small text uses `text-ink`, `text-plum` or `text-rose-ink`. `text-rose-deep` and `text-pink` are for large headlines and surfaces only; they fail as small text. Tokens and their ratios are at the top of `src/app/globals.css`.
+- **Focus ring.** Set once in `globals.css`. Never add `outline-none` to a control.
+- **Bag, menu, welcome offer.** All three use `src/lib/a11y/use-modal.ts` (page behind goes inert, focus moves in and comes back, Escape closes). Closed panels stay mounted with `inert`.
+- **New-tab links** carry `<NewTabHint />` (`src/components/ui/new-tab.tsx`).
+- **Product photos.** Alt text comes from Shopify (Admin → Products → photo → *Add alt text*): describe the product and the shade, e.g. "Lustre Lip Gloss in Nude with a pink cap". If it is empty or a file name, the site reads the product name instead.
+- **The statement.** `/accessibility` lists known limitations; keep it true. The reply time promised there is `accessibility.responseDays` in `src/content/site.ts`.
+- **No overlay widgets** (accessiBe, UserWay, AudioEye and the like).
+
 ## Deploy
 
 Vercel, framework preset Next.js. Add the env vars above. Point `lovedbeautyshop.net` (A/ALIAS) and `www` (CNAME) at Vercel when DNS access is granted.

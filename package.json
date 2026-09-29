@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "a11y": "node scripts/a11y.cjs",
+    "a11y:keyboard": "node scripts/a11y-keyboard.cjs",
+    "a11y:photos": "node scripts/a11y-photo-contrast.cjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.125.0",
@@ -20,6 +23,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "axe-core": "^4.13.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.4",
     "puppeteer-core": "^25.10.0",

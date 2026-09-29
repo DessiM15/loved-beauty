@@ -4,6 +4,7 @@ import "./globals.css";
 import { site } from "@/content/site";
 import { CartProvider } from "@/components/cart/cart-context";
 import { CartDrawer } from "@/components/cart/cart-drawer";
+import { CartAnnouncer } from "@/components/cart/cart-announcer";
 import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -124,11 +125,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <CartProvider>
           <AnnouncementBar />
           <Header />
-          <main id="main" className="flex-1">
+          <main id="main" tabIndex={-1} className="flex-1 outline-none">
             {children}
           </main>
           <Footer />
           <CartDrawer />
+          <CartAnnouncer />
           <WelcomePopup />
         </CartProvider>
         <RevealObserver />

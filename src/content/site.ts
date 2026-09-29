@@ -44,6 +44,16 @@ export const announcements = [
   { text: "Vegan · Cruelty-free · Paraben-free", href: "/about" },
 ];
 
+/**
+ * Accessibility statement (/accessibility). `responseDays` is a promise made to shoppers:
+ * change it only to what the team can keep. `reviewed` is the date of the last full check.
+ */
+export const accessibility = {
+  email: site.supportEmail,
+  responseDays: 5,
+  reviewed: "September 29, 2026",
+};
+
 export const freeShippingThreshold = 200; // USD. Keep in sync with Shopify shipping profile.
 export const firstOrderCode = "LOVED10";
 
@@ -69,6 +79,7 @@ export const nav = {
       { label: "Shipping & Returns", href: "/policies/shipping-returns" },
       { label: "Privacy Policy", href: "/policies/privacy" },
       { label: "Terms of Service", href: "/policies/terms" },
+      { label: "Accessibility", href: "/accessibility" },
     ],
     about: [
       { label: "Our Story", href: "/about" },

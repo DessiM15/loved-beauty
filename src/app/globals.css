@@ -15,14 +15,15 @@
   --lb-petal: #f6c9cf; /* chips, hover on pink */
   --lb-line: #e3d5cb; /* hairlines */
   --lb-rose: #f08cb0; /* swatches only */
-  --lb-rose-deep: #8e6e5c; /* tan accent: labels, links, hover. Replaces the retired hot pink */
-  --lb-plum: #6f585d; /* muted body text */
+  --lb-rose-deep: #8e6e5c; /* tan accent: large italic headlines, icons, hover. Too light for small text (4.06:1 on cream) */
+  --lb-rose-ink: #6f5445; /* the tan accent at text strength: labels, small links, focus ring. 4.5:1 or better on every ground, tan included */
+  --lb-plum: #5c474b; /* muted body text. 5.6:1 on tan, 7.5:1 on cream */
   --lb-ink: #2a2220; /* headlines, body, buttons */
   --lb-gold: #c9a24f; /* thin accents only */
   --lb-gold-soft: #e9d7ae;
   --lb-coral: #f0744c; /* the heart in the logo */
-  --lb-success: #3e7a5a;
-  --lb-danger: #b23a48;
+  --lb-success: #2f6046; /* 4.8:1 on tan */
+  --lb-danger: #9c2f3d; /* 4.8:1 on tan, 5.5:1 on its own 10% tint */
   --header-h: 5.5rem;
   --announce-h: 2.5rem;
   /* rgb triplet used by image veils and text spotlights; matches the page ground */
@@ -42,6 +43,7 @@
   --color-line: var(--lb-line);
   --color-rose: var(--lb-rose);
   --color-rose-deep: var(--lb-rose-deep);
+  --color-rose-ink: var(--lb-rose-ink);
   --color-plum: var(--lb-plum);
   --color-ink: var(--lb-ink);
   --color-gold: var(--lb-gold);
@@ -137,6 +139,13 @@ strong {
   opacity: 1;
   transform: none;
 }
+/* Whatever holds keyboard focus is shown at once, even if it has not been scrolled into view yet. */
+[data-reveal]:focus-visible,
+[data-reveal]:focus-within {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -169,19 +178,19 @@ strong {
 
 @utility eyebrow {
   font-family: var(--font-sans);
-  font-size: 0.66rem;
+  font-size: 0.75rem;
   font-weight: 400;
   letter-spacing: var(--tracking-luxe);
   text-transform: uppercase;
-  color: var(--lb-rose-deep);
+  color: var(--lb-rose-ink);
   font-weight: 500;
 }
 
 @utility eyebrow-num {
   font-family: var(--font-sans);
-  font-size: 0.66rem;
+  font-size: 0.75rem;
   letter-spacing: var(--tracking-luxe);
-  color: var(--lb-rose-deep);
+  color: var(--lb-rose-ink);
 }
 
 /* Headers: the luxury serif, medium weight, tight. */
@@ -364,12 +373,12 @@ strong {
   padding: 0.9rem 1.1rem;
   font-size: 0.95rem;
   color: var(--lb-ink);
-  outline: none;
   transition:
     border-color 0.3s ease,
     box-shadow 0.3s ease;
   &::placeholder {
-    color: color-mix(in oklab, var(--lb-plum) 55%, white);
+    color: var(--lb-plum);
+    opacity: 1;
   }
   &:focus {
     border-color: var(--lb-ink);
@@ -384,10 +393,10 @@ strong {
   padding: 0.9rem 0;
   font-size: 1rem;
   color: var(--lb-ink);
-  outline: none;
   border-radius: 0;
   &::placeholder {
-    color: color-mix(in oklab, var(--lb-plum) 60%, white);
+    color: var(--lb-plum);
+    opacity: 1;
   }
   &:focus {
     border-bottom-color: var(--lb-ink);
@@ -402,7 +411,6 @@ strong {
   padding: 0.9rem 1.1rem;
   font-size: 0.95rem;
   color: var(--lb-ink);
-  outline: none;
   min-height: 8rem;
   &:focus {
     border-color: var(--lb-ink);
@@ -426,10 +434,32 @@ strong {
   }
 }
 
-/* Focus rings: keyboard only */
-:focus-visible {
-  outline: 1px solid var(--lb-rose-deep);
-  outline-offset: 4px;
+/*
+ * Focus rings: keyboard only. 2px at text strength so the ring holds 3:1 on every ground.
+ * In the base layer so a utility on the element (an offset, or none on a panel that only
+ * receives focus from script) can adjust it. Never remove it from a control.
+ */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--lb-rose-ink);
+    outline-offset: 4px;
+  }
+  /* Fields sit flush in their boxes, so the ring hugs the edge instead of floating. */
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline-offset: 2px;
+  }
+}
+/* A box that holds a borderless field (search) shows the ring itself. */
+@utility focus-ring-within {
+  &:focus-within {
+    outline: 2px solid var(--lb-rose-ink);
+    outline-offset: 2px;
+  }
+  & input:focus-visible {
+    outline: none;
+  }
 }
 
 ::selection {

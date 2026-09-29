@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRightIcon } from "./icons";
+import { NewTabHint } from "./new-tab";
 
 /** Centered section opener: eyebrow, large serif title (optional italic tail), optional line and link. */
 export function SectionIntro({
@@ -37,7 +38,8 @@ export function SectionIntro({
       {link &&
         (link.external ? (
           <a href={link.href} target="_blank" rel="noopener noreferrer" className="link-underline mt-6 inline-flex items-center gap-2 text-[0.68rem] tracking-luxe uppercase text-ink" data-reveal style={{ "--d": "240ms" } as React.CSSProperties}>
-            {link.label} <ArrowRightIcon width={12} height={12} />
+            {link.label}
+            <NewTabHint /> <ArrowRightIcon width={12} height={12} />
           </a>
         ) : (
           <Link href={link.href} className="link-underline mt-6 inline-flex items-center gap-2 text-[0.68rem] tracking-luxe uppercase text-ink" data-reveal style={{ "--d": "240ms" } as React.CSSProperties}>

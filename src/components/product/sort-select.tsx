@@ -12,15 +12,19 @@ const options: { value: SortValue; label: string }[] = [
   { value: "price-desc", label: "Price: high to low" },
 ];
 
+export const sortLabels = Object.fromEntries(options.map((o) => [o.value, o.label.toLowerCase()])) as Record<SortValue, string>;
+
 export function SortSelect({ value, onChange }: { value: SortValue; onChange: (v: SortValue) => void }) {
   return (
     <label className="relative inline-flex items-center gap-2 text-[0.62rem] tracking-luxe uppercase text-plum">
-      <span className="hidden sm:inline">Sort</span>
+      <span className="hidden sm:inline" aria-hidden="true">
+        Sort
+      </span>
       <span className="relative">
         <select
           value={value}
           onChange={(e) => onChange(e.target.value as SortValue)}
-          className="appearance-none bg-transparent py-1 pr-6 pl-0 text-[0.62rem] tracking-luxe uppercase text-ink outline-none"
+          className="min-h-6 appearance-none bg-transparent py-1 pr-6 pl-0 text-[0.62rem] tracking-luxe uppercase text-ink"
           aria-label="Sort products"
         >
           {options.map((o) => (

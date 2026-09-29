@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { Collection, Product } from "@/lib/shopify/types";
 import { ProductGrid } from "./product-grid";
-import { SortSelect, type SortValue } from "./sort-select";
+import { SortSelect, sortLabels, type SortValue } from "./sort-select";
 import { cn } from "@/lib/utils";
 
 /**
@@ -68,12 +68,16 @@ export function CollectionView({
         </ul>
       </nav>
 
+      {/* Cards are H3, so the grid needs an H2 above it. The product count is that heading, styled as before. */}
       <div className="flex items-center justify-between py-5">
-        <span className="text-[0.66rem] tracking-luxe uppercase text-plum">
+        <h2 className="text-[0.66rem] font-normal tracking-luxe uppercase text-plum">
           {products.length} {products.length === 1 ? "product" : "products"}
-        </span>
+        </h2>
         <SortSelect value={sort} onChange={setSort} />
       </div>
+      <p className="sr-only" role="status">
+        {sort === "featured" ? "" : `Sorted by ${sortLabels[sort]}`}
+      </p>
 
       <ProductGrid products={sorted} />
     </div>

@@ -8,17 +8,20 @@ export function ProductGrid({
   columns = 4,
   priorityCount = 4,
   className,
+  empty = { title: "Nothing here yet.", text: "Check back soon, new products are on their way." },
 }: {
   products: Product[];
   columns?: 3 | 4;
   priorityCount?: number;
   className?: string;
+  /** Words shown when there are no products. */
+  empty?: { title: string; text: string };
 }) {
   if (products.length === 0) {
     return (
       <div className="border border-dashed border-line p-16 text-center">
-        <p className="h-display text-3xl">Nothing here yet.</p>
-        <p className="mt-2 text-sm text-plum">Check back soon, new products are on their way.</p>
+        <p className="h-display text-3xl">{empty.title}</p>
+        <p className="mt-2 text-sm text-plum">{empty.text}</p>
       </div>
     );
   }

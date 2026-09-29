@@ -33,7 +33,7 @@ export default function ShadeFinderPage() {
           <div className="relative mx-auto flex max-w-4xl flex-col items-center">
             <div aria-hidden="true" className="pointer-events-none absolute -inset-x-24 -inset-y-14 md:-inset-x-48 md:-inset-y-24" style={{ background: "radial-gradient(ellipse at center, rgba(var(--veil),0.96) 0%, rgba(var(--veil),0.85) 40%, rgba(var(--veil),0.4) 62%, rgba(var(--veil),0) 76%)" }} />
             <div className="relative">
-          <p className="eyebrow animate-fade-up">Shade finder</p>
+          <p className="eyebrow text-ink animate-fade-up">Shade finder</p>
           <h1 className="h-display mx-auto mt-4 max-w-3xl text-6xl md:text-8xl animate-fade-up" style={{ animationDelay: "120ms" }}>
             Find your shade in <em className="h-italic text-rose-deep">30 seconds.</em>
           </h1>

@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { newsletter, firstOrderCode } from "@/content/site";
 import { NewsletterForm } from "./newsletter-form";
 import { CloseIcon } from "@/components/ui/icons";
+import { useModal } from "@/lib/a11y/use-modal";
 
 const KEY = "lb_welcome_dismissed";
 
@@ -14,6 +15,8 @@ const KEY = "lb_welcome_dismissed";
  */
 export function WelcomePopup() {
   const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_SHOW_WELCOME_POPUP !== "true") return;
@@ -27,6 +30,8 @@ export function WelcomePopup() {
     let shown = false;
     const show = () => {
       if (shown) return;
+      // Never on top of the bag or the menu: two modals at once strand keyboard focus. It waits for the next scroll.
+      if (Array.from(document.querySelectorAll('[role="dialog"]')).some((d) => !d.closest("[inert]"))) return;
       shown = true;
       setOpen(true);
     };
@@ -51,16 +56,21 @@ export function WelcomePopup() {
     }
   }
 
+  // Focus moves into the offer, stays there, Escape dismisses it, and focus returns to where the shopper was.
+  useModal(rootRef, open, dismiss, { initialFocus: closeRef, fallback: "#main" });
+
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center p-4 sm:items-center" role="dialog" aria-modal="true" aria-labelledby="welcome-heading">
-      <button type="button" aria-label="Close" onClick={dismiss} className="absolute inset-0 bg-ink/40" />
+    <div ref={rootRef} className="fixed inset-0 z-50 flex items-end justify-center p-4 outline-none sm:items-center" role="dialog" aria-modal="true" aria-labelledby="welcome-heading" tabIndex={-1}>
+      {/* Backdrop: a click target for the mouse. Keyboard and screen readers use Close or Escape. */}
+      <div aria-hidden="true" onClick={dismiss} className="absolute inset-0 bg-ink/40" />
       <div className="relative w-full max-w-md rounded-sm bg-cream p-7 text-center shadow-2xl animate-fade-up">
         <button
+          ref={closeRef}
           type="button"
           onClick={dismiss}
-          aria-label="Close"
+          aria-label="Close offer"
           className="absolute top-3 right-3 inline-flex h-9 w-9 items-center justify-center rounded-sm hover:bg-blush"
         >
           <CloseIcon width={18} height={18} />

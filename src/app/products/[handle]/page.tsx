@@ -69,7 +69,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[hand
         <p>
           Ships from Texas in 1 to 3 business days. Free U.S. shipping on orders over $200. Opened cosmetics can&rsquo;t be returned, but if anything arrives damaged
           we&rsquo;ll replace it.{" "}
-          <Link href="/policies/shipping-returns" className="underline underline-offset-4">
+          <Link href="/policies/shipping-returns" className="text-ink underline underline-offset-4">
             Read our policy
           </Link>
           .

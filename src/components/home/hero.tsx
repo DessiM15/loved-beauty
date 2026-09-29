@@ -31,7 +31,7 @@ export function Hero() {
             <span className="h-lead whitespace-nowrap">{hero.headlineLead}</span>
             <span className="h-italic block whitespace-nowrap [text-shadow:0_1px_3px_rgba(70,48,42,0.28)] md:[text-shadow:none]">{hero.headlineAccent}</span>
           </h1>
-          <p className="p-serif max-w-[18ch] text-[1.1rem] leading-[1.3] text-plum sm:max-w-[22ch] md:max-w-[26ch] md:text-[clamp(1.2rem,1.8vw,1.65rem)] animate-fade-up" style={{ animationDelay: "340ms" }}>
+          <p className="p-serif max-w-[18ch] text-[1.1rem] leading-[1.3] text-ink sm:max-w-[22ch] md:text-plum md:max-w-[26ch] md:text-[clamp(1.2rem,1.8vw,1.65rem)] animate-fade-up" style={{ animationDelay: "340ms" }}>
             {hero.subhead}
           </p>
           <div className="mt-1 flex flex-wrap items-center gap-x-6 gap-y-4 animate-fade-up" style={{ animationDelay: "480ms" }}>

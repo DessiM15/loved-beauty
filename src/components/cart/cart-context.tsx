@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, useTransition, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, useTransition, type ReactNode } from "react";
 import type { Cart } from "@/lib/shopify/types";
 import { addItemAction, fetchCartAction, removeItemAction, updateItemAction } from "@/lib/cart/actions";
 
@@ -10,6 +10,8 @@ type CartContextValue = {
   isPending: boolean;
   error: string | null;
   lastAdded: string | null;
+  /** What just happened to the bag, in words. Read out by <CartAnnouncer />. */
+  announcement: string;
   openCart: () => void;
   closeCart: () => void;
   addItem: (merchandiseId: string, quantity?: number) => Promise<boolean>;
@@ -19,12 +21,28 @@ type CartContextValue = {
 
 const CartContext = createContext<CartContextValue | null>(null);
 
+function bagCount(cart: Cart | null): string {
+  const n = cart?.totalQuantity ?? 0;
+  return `${n} ${n === 1 ? "item" : "items"} in bag`;
+}
+
+function lineTitle(cart: Cart | null, match: (line: Cart["lines"][number]) => boolean): string {
+  return cart?.lines.find(match)?.merchandise.product.title ?? "Item";
+}
+
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<Cart | null>(null);
   const [isOpen, setOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastAdded, setLastAdded] = useState<string | null>(null);
+  const [announcement, setAnnouncement] = useState("");
   const [isPending, startTransition] = useTransition();
+
+  // The latest cart, readable from callbacks without re-creating them.
+  const cartRef = useRef<Cart | null>(null);
+  useEffect(() => {
+    cartRef.current = cart;
+  }, [cart]);
 
   // Hydrate the cart after mount so every page can stay static.
   useEffect(() => {
@@ -58,10 +76,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
         if (res.ok) {
           setCart(res.cart);
           setLastAdded(merchandiseId);
+          setAnnouncement(`${lineTitle(res.cart, (l) => l.merchandise.id === merchandiseId)} added to bag, ${bagCount(res.cart)}`);
           setOpen(true);
           resolve(true);
         } else {
+          // The message is shown in the bag, so open it; otherwise a failed add from a product card says nothing.
           setError(res.error);
+          setOpen(true);
           resolve(false);
         }
       });
@@ -71,13 +92,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const updateItem = useCallback(async (lineId: string, merchandiseId: string, quantity: number) => {
     setError(null);
     // Optimistic update for a snappy drawer.
-    setCart((prev) => {
-      if (!prev) return prev;
+    const prev = cartRef.current;
+    if (prev) {
+      const title = lineTitle(prev, (l) => l.id === lineId);
       const lines = prev.lines
         .map((l) => (l.id === lineId ? { ...l, quantity } : l))
         .filter((l) => l.quantity > 0);
-      return { ...prev, lines, totalQuantity: lines.reduce((n, l) => n + l.quantity, 0) };
-    });
+      const next = { ...prev, lines, totalQuantity: lines.reduce((n, l) => n + l.quantity, 0) };
+      setCart(next);
+      setAnnouncement(quantity > 0 ? `${title} quantity ${quantity}, ${bagCount(next)}` : `${title} removed from bag, ${bagCount(next)}`);
+    }
     startTransition(async () => {
       const res = await updateItemAction(lineId, merchandiseId, quantity);
       if (res.ok) setCart(res.cart);
@@ -87,11 +111,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const removeItem = useCallback(async (lineId: string) => {
     setError(null);
-    setCart((prev) => {
-      if (!prev) return prev;
+    const prev = cartRef.current;
+    if (prev) {
+      const title = lineTitle(prev, (l) => l.id === lineId);
       const lines = prev.lines.filter((l) => l.id !== lineId);
-      return { ...prev, lines, totalQuantity: lines.reduce((n, l) => n + l.quantity, 0) };
-    });
+      const next = { ...prev, lines, totalQuantity: lines.reduce((n, l) => n + l.quantity, 0) };
+      setCart(next);
+      setAnnouncement(`${title} removed from bag, ${bagCount(next)}`);
+    }
     startTransition(async () => {
       const res = await removeItemAction(lineId);
       if (res.ok) setCart(res.cart);
@@ -100,8 +127,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo(
-    () => ({ cart, isOpen, isPending, error, lastAdded, openCart, closeCart, addItem, updateItem, removeItem }),
-    [cart, isOpen, isPending, error, lastAdded, openCart, closeCart, addItem, updateItem, removeItem],
+    () => ({ cart, isOpen, isPending, error, lastAdded, announcement, openCart, closeCart, addItem, updateItem, removeItem }),
+    [cart, isOpen, isPending, error, lastAdded, announcement, openCart, closeCart, addItem, updateItem, removeItem],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

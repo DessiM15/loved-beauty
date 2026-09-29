@@ -1,4 +1,4 @@
-import type { Money, Product } from "@/lib/shopify/types";
+import type { Image, Money, Product } from "@/lib/shopify/types";
 import { site } from "@/content/site";
 
 export function cn(...classes: Array<string | false | null | undefined>): string {
@@ -36,6 +36,18 @@ export function truncate(text: string, max = 155): string {
 export function absoluteUrl(path: string): string {
   const base = site.url;
   return `${base}${path.startsWith("/") ? path : `/${path}`}`;
+}
+
+/**
+ * Alt text for a product photo. Uses what was typed in Shopify, unless that is
+ * empty or just the file name ("IMG_6285.jpg", "lip-gloss-2"), in which case
+ * the product name (and shade) is read instead.
+ */
+export function imageAlt(image: Pick<Image, "altText"> | null | undefined, fallback: string): string {
+  const alt = image?.altText?.trim();
+  if (!alt) return fallback;
+  const looksLikeFile = /\.(jpe?g|png|webp|gif|avif|heic)$/i.test(alt) || (!/\s/.test(alt) && /[_\-\d]/.test(alt));
+  return looksLikeFile ? fallback : alt;
 }
 
 /** Deterministic placeholder tint for products with no photo yet. */
