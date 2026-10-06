@@ -25,6 +25,15 @@ export const CACHE_TAGS = {
  */
 export function isShopifyConfigured(): boolean {
   if (process.env.COMMERCE_SOURCE === "mock") return false;
+  return hasShopifyCredentials();
+}
+
+/**
+ * True when the store's credentials are set, whatever COMMERCE_SOURCE says.
+ * Email signups use this: the placeholder catalog must never swallow a real
+ * subscriber, so they go to Shopify as soon as the store is connected.
+ */
+export function hasShopifyCredentials(): boolean {
   return Boolean(process.env.SHOPIFY_STORE_DOMAIN && process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN);
 }
 

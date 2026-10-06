@@ -1,7 +1,7 @@
 import "server-only";
 
 import type { Cart, CartLine, Collection, Product, ShopPolicy } from "./types";
-import { CACHE_TAGS, isShopifyConfigured, shopifyFetch, unwrap } from "./client";
+import { CACHE_TAGS, hasShopifyCredentials, isShopifyConfigured, shopifyFetch, unwrap } from "./client";
 import * as q from "./queries";
 import * as mock from "@/lib/mock/commerce";
 
@@ -237,21 +237,24 @@ export async function removeFromCart(cartId: string, lineIds: string[]): Promise
 
 /**
  * Newsletter signup. With Shopify connected this creates a customer record with
- * marketing consent, which Shopify Email (or Klaviyo) picks up automatically.
+ * marketing consent, which Shopify Messaging (or Klaviyo) picks up automatically.
+ * Runs against Shopify whenever the store is connected, even while the catalog
+ * is still the placeholder one (COMMERCE_SOURCE=mock).
  */
-export async function subscribeEmail(email: string): Promise<{ ok: boolean; message?: string }> {
-  if (!isShopifyConfigured()) return mock.subscribeEmail(email);
+export async function subscribeEmail(email: string, firstName?: string): Promise<{ ok: boolean; message?: string }> {
+  if (!hasShopifyCredentials()) return mock.subscribeEmail(email);
   const data = await shopifyFetch<{
     customerCreate: { customer: { id: string } | null; customerUserErrors: { code: string; message: string }[] };
   }>({
     query: q.customerCreateMutation,
-    variables: { input: { email, acceptsMarketing: true, password: cryptoRandomPassword() } },
+    variables: { input: { email, ...(firstName ? { firstName } : {}), acceptsMarketing: true, password: cryptoRandomPassword() } },
     cache: "no-store",
   });
   const errors = data.customerCreate.customerUserErrors;
   if (data.customerCreate.customer) return { ok: true };
   // "TAKEN" means they already have an account: treat as success for UX.
   if (errors.some((e) => e.code === "TAKEN")) return { ok: true };
+  console.error("newsletter: Shopify refused the signup", errors);
   return { ok: false, message: errors[0]?.message ?? "Could not subscribe" };
 }
 
