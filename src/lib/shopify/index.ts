@@ -258,8 +258,9 @@ export async function subscribeEmail(email: string, firstName?: string): Promise
   return { ok: false, message: errors[0]?.message ?? "Could not subscribe" };
 }
 
+/** Shopify caps passwords at 40 characters; 16 random bytes make 32 hex characters. */
 function cryptoRandomPassword(): string {
-  const bytes = new Uint8Array(24);
+  const bytes = new Uint8Array(16);
   crypto.getRandomValues(bytes);
   return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
 }
