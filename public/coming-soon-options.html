@@ -138,6 +138,7 @@ body.full { overflow: hidden; }
 .cs[data-mood="light"] .cs-glow canvas { filter: blur(46px) saturate(1.2) brightness(1.12); }
 .cs[data-mood="light"] .cs-glow::after { background: rgb(246 239 233 / 0.58); }
 
+.cs-wings { display: none; }
 .cs-film { position: absolute; inset: 0; background: #000; overflow: hidden; }
 .cs-film video { width: 100%; height: 100%; display: block; object-fit: cover; object-position: 50% 30%; }
 .cs-scrim { position: absolute; inset: 0; pointer-events: none; background:
@@ -274,6 +275,16 @@ body.full { overflow: hidden; }
   .cs[data-layout="portrait"] .cs-glow { display: block; }
   .cs[data-layout="portrait"] .cs-film { position: relative; inset: auto; grid-area: 1 / 1; height: 92cqh; aspect-ratio: 9 / 16; box-shadow: 0 0 0 1px rgb(201 162 79 / 0.55), 0 50px 100px -40px rgb(0 0 0 / 0.8); }
   .cs[data-layout="portrait"] .cs-panel { grid-area: 1 / 1; height: 92cqh; width: 51.75cqh; }
+
+  /* D. Three panel: three moments of the film side by side fill the window, each in its full tall shape.
+     --pw is one panel's width: tall enough to fill the height, or a third of the width, whichever is larger. */
+  .cs[data-layout="triptych"][data-mood="light"] { background: var(--cs-cream); }
+  .cs[data-layout="triptych"] .cs-in { place-items: center; --pw: max(56.25cqh, 33.334cqw); --u: calc(var(--pw) / 100); }
+  .cs[data-layout="triptych"] .cs-wings { display: flex; gap: var(--pw); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.5; }
+  .cs[data-layout="triptych"][data-mood="light"] .cs-wings { opacity: 0.62; }
+  .cs[data-layout="triptych"] .cs-wings video { display: block; flex: none; width: var(--pw); aspect-ratio: 9 / 16; object-fit: cover; background: #000; }
+  .cs[data-layout="triptych"] .cs-film { position: relative; inset: auto; grid-area: 1 / 1; width: var(--pw); aspect-ratio: 9 / 16; box-shadow: 0 0 0 1px rgb(201 162 79 / 0.55), 0 0 90px rgb(0 0 0 / 0.6); }
+  .cs[data-layout="triptych"] .cs-panel { grid-area: 1 / 1; width: var(--pw); height: 100cqh; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -286,7 +297,7 @@ body.full { overflow: hidden; }
   <header class="intro">
     <p class="eyebrow">Loved Beauty · Launch page</p>
     <h1>Coming Soon Options</h1>
-    <p>Three layouts, two moods and two ways for &ldquo;Coming Soon&rdquo; to appear. Switch between them below, then send back the three words shown under &ldquo;Your pick&rdquo;.</p>
+    <p>Four layouts, two moods and two ways for &ldquo;Coming Soon&rdquo; to appear. Switch between them below, then send back the three words shown under &ldquo;Your pick&rdquo;.</p>
   </header>
 
   <section class="rail" aria-label="Options">
@@ -296,6 +307,7 @@ body.full { overflow: hidden; }
         <label><input type="radio" name="layout" value="split" id="opt-layout-split" checked><span>Split</span></label>
         <label><input type="radio" name="layout" value="full" id="opt-layout-full"><span>Full screen</span></label>
         <label><input type="radio" name="layout" value="portrait" id="opt-layout-portrait"><span>Portrait</span></label>
+        <label><input type="radio" name="layout" value="triptych" id="opt-layout-triptych"><span>Three panel</span></label>
       </div>
     </fieldset>
     <fieldset class="group">
@@ -339,8 +351,8 @@ body.full { overflow: hidden; }
       <li>&ldquo;Dramatic reveal&rdquo; plays at the end of the film. Press &ldquo;Play the ending&rdquo; to skip to it.</li>
       <li>The email box shows its thank-you message here but does not save addresses yet.</li>
       <li>The film starts silent. The round buttons on it pause it and turn the sound on.</li>
-      <li>On a phone the film fills the screen in all three layouts, so only Mood and &ldquo;Coming Soon&rdquo; change the phone view.</li>
-      <li>Full screen crops the film on wide screens. Split and Portrait show the whole picture.</li>
+      <li>On a phone the film fills the screen in all four layouts, so only Mood and &ldquo;Coming Soon&rdquo; change the phone view.</li>
+      <li>Full screen crops the film on wide screens. Split and Portrait show the whole picture. Three panel fills a wide screen with three moments of the film side by side, trimming no more than a sliver at the edges.</li>
       <li>Her pink logo is faint on the cream panel in Split · Light, as it is in the store&rsquo;s menu bar.</li>
     </ul>
   </section>
@@ -350,6 +362,10 @@ body.full { overflow: hidden; }
   <div class="cs" data-layout="split" data-mood="dark" data-soon="always">
     <div class="cs-in">
       <div class="cs-glow" aria-hidden="true"><canvas width="18" height="32"></canvas></div>
+      <div class="cs-wings" aria-hidden="true">
+        <video muted loop playsinline preload="none" tabindex="-1"></video>
+        <video muted loop playsinline preload="none" tabindex="-1"></video>
+      </div>
       <div class="cs-film">
         <video muted playsinline preload="auto" poster="/coming-soon/poster.jpg" src="/coming-soon/loved-beauty-film.mp4" aria-label="Loved Beauty launch film"></video>
         <div class="cs-scrim"></div>
@@ -413,7 +429,7 @@ body.full { overflow: hidden; }
     sound: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M2 6h2.5L8 3v10L4.5 10H2z" fill="currentColor"/><path d="M10.5 5.5a3.5 3.5 0 0 1 0 5M12.3 3.6a6 6 0 0 1 0 8.8"/></svg>'
   };
   var LABEL = {
-    layout: { split: "Split", full: "Full screen", portrait: "Portrait" },
+    layout: { split: "Split", full: "Full screen", portrait: "Portrait", triptych: "Three panel" },
     mood: { dark: "Dark", light: "Light" },
     soon: { always: "Always on", reveal: "Dramatic reveal" }
   };
@@ -429,7 +445,8 @@ body.full { overflow: hidden; }
     var cs = frame.querySelector(".cs");
     var c = {
       frame: frame, cs: cs,
-      video: cs.querySelector("video"),
+      video: cs.querySelector(".cs-film video"),
+      wings: Array.prototype.slice.call(cs.querySelectorAll(".cs-wings video")),
       ctx: cs.querySelector("canvas").getContext("2d"),
       form: cs.querySelector(".cs-form"),
       done: cs.querySelector(".cs-done"),
@@ -455,6 +472,21 @@ body.full { overflow: hidden; }
     c.soundBtn.setAttribute("aria-label", c.video.muted ? "Turn sound on" : "Turn sound off");
   }
 
+  // Three panel layout: the two side panels play the same film from other moments.
+  // They load only when that layout is showing on a wide screen, and follow the main film's play and pause.
+  function syncWings(c) {
+    var on = c.cs.dataset.layout === "triptych" && c.cs.clientWidth >= 700;
+    c.wings.forEach(function (w, i) {
+      if (!on) { if (!w.paused) w.pause(); return; }
+      if (!w.getAttribute("src")) {
+        w.addEventListener("loadedmetadata", function () { w.currentTime = ((c.video.currentTime || 0) + (i + 1) * 11) % w.duration; }, { once: true });
+        w.src = c.video.getAttribute("src");
+      }
+      if (c.video.paused && !c.video.ended) { w.pause(); }
+      else { var p = w.play(); if (p && p.catch) p.catch(function () {}); }
+    });
+  }
+
   function restart(c) {
     c.video.currentTime = 0;
     var p = c.video.play();
@@ -463,7 +495,7 @@ body.full { overflow: hidden; }
 
   function wire(c) {
     var v = c.video;
-    ["play", "pause", "volumechange"].forEach(function (ev) { v.addEventListener(ev, function () { syncButtons(c); }); });
+    ["play", "pause", "volumechange"].forEach(function (ev) { v.addEventListener(ev, function () { syncButtons(c); syncWings(c); }); });
     c.pauseBtn.addEventListener("click", function () {
       if (v.paused) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } else { v.pause(); }
     });
@@ -548,6 +580,7 @@ body.full { overflow: hidden; }
       c.cs.dataset.layout = state.layout;
       c.cs.dataset.mood = state.mood;
       c.cs.dataset.soon = state.soon;
+      syncWings(c);
     });
     document.getElementById("pick-text").textContent =
       LABEL.layout[state.layout] + " · " + LABEL.mood[state.mood] + " · " + LABEL.soon[state.soon];
@@ -571,6 +604,7 @@ body.full { overflow: hidden; }
     desktop.frame.classList.toggle("is-full", on);
     document.body.classList.toggle("full", on);
     btnClose.hidden = !on;
+    comps.forEach(syncWings);
     if (on) { phone.video.pause(); btnClose.focus(); }
     else { if (!REDUCED) { var p = phone.video.play(); if (p && p.catch) p.catch(function () {}); } btnFull.focus(); fit(); }
   }
