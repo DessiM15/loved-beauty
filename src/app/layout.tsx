@@ -2,17 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Jost } from "next/font/google";
 import "./globals.css";
 import { site } from "@/content/site";
-import { CartProvider } from "@/components/cart/cart-context";
-import { CartDrawer } from "@/components/cart/cart-drawer";
-import { CartAnnouncer } from "@/components/cart/cart-announcer";
-import { AnnouncementBar } from "@/components/layout/announcement-bar";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import { WelcomePopup } from "@/components/marketing/welcome-popup";
 import { Analytics } from "@/components/layout/analytics";
 import { JsonLd } from "@/components/ui/json-ld";
-import { RevealObserver } from "@/components/motion/reveal-observer";
-import { ScrollManager } from "@/components/motion/scroll-manager";
 
 /**
  * Two families. Cormorant Garamond (the client's "luxury" serif) carries every
@@ -112,29 +103,16 @@ const websiteLd = {
   },
 };
 
+/**
+ * The root layout carries only what every page shares: fonts, metadata,
+ * analytics and structured data. The store's chrome (header, footer, bag)
+ * lives in the (store) route group; the coming-soon page has none of it.
+ */
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${cormorant.variable} ${jost.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-ink focus:px-4 focus:py-2 focus:text-white"
-        >
-          Skip to content
-        </a>
-        <CartProvider>
-          <AnnouncementBar />
-          <Header />
-          <main id="main" tabIndex={-1} className="flex-1 outline-none">
-            {children}
-          </main>
-          <Footer />
-          <CartDrawer />
-          <CartAnnouncer />
-          <WelcomePopup />
-        </CartProvider>
-        <RevealObserver />
-        <ScrollManager />
+        {children}
         <JsonLd data={[organizationLd, websiteLd]} />
         <Analytics />
       </body>
