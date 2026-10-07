@@ -4,7 +4,7 @@ import { subscribeEmail } from "@/lib/shopify";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(req: Request) {
-  let body: { email?: string; source?: string } = {};
+  let body: { email?: string; firstName?: string; source?: string } = {};
   try {
     body = await req.json();
   } catch {
@@ -15,7 +15,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, message: "Please enter a valid email address." }, { status: 400 });
   }
   try {
-    const result = await subscribeEmail(email);
+    const firstName = typeof body.firstName === "string" ? body.firstName.trim().slice(0, 60) : "";
+    const result = await subscribeEmail(email, firstName || undefined);
     return NextResponse.json(result, { status: result.ok ? 200 : 400 });
   } catch (e) {
     console.error("newsletter", e);
