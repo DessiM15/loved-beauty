@@ -30,7 +30,7 @@
 
 .cs-film { position: absolute; inset: 0; background: #000; overflow: hidden; }
 .cs-film video { width: 100%; height: 100%; display: block; object-fit: cover; object-position: 50% 30%; }
-.cs-scrim { position: absolute; inset: 0; pointer-events: none; background:
+.cs-scrim { position: absolute; inset: 0; pointer-events: none; transition: opacity 0.9s ease; background:
   linear-gradient(180deg, rgb(8 6 6 / 0.55) 0%, rgb(8 6 6 / 0) 22%),
   linear-gradient(0deg, rgb(8 6 6 / 0.95) 0%, rgb(8 6 6 / 0.84) 34%, rgb(8 6 6 / 0) 66%); }
 
@@ -74,6 +74,9 @@
 .cs-social svg { width: calc(5.4 * var(--u)); height: calc(5.4 * var(--u)); }
 .cs-credit { margin: 0; font-size: calc(2.7 * var(--u)); letter-spacing: 0.08em; color: var(--p-muted); }
 
+/* The end card: the picture is black, so the scrim lifts and the pink wordmark shows at full strength. */
+.cs.is-ending .cs-scrim { opacity: 0; }
+
 /* Play/pause and sound. Top right on a phone, bottom left on a desktop. */
 .cs-ctl { position: absolute; z-index: 4; top: calc(4 * var(--u) + env(safe-area-inset-top, 0px)); right: calc(4 * var(--u)); display: flex; flex-direction: column; gap: 8px; }
 .cs-ctl button { width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1px solid rgb(246 239 233 / 0.6); background: rgb(8 6 6 / 0.5); color: var(--cs-ivory); display: grid; place-items: center; cursor: pointer; }
@@ -98,6 +101,7 @@
 @container cs (min-width: 700px) {
   .cs-in { place-items: center; }
   .cs-film video { object-position: 50% 26%; }
+  .cs-finale { gap: clamp(14px, 2.4cqh, 30px); }
   .cs-scrim { background: radial-gradient(ellipse 70% 80% at 50% 52%, rgb(8 6 6 / 0.72) 0%, rgb(8 6 6 / 0.5) 60%, rgb(8 6 6 / 0.46) 100%); }
   .cs-panel { height: auto; width: min(640px, 86cqw); justify-content: center; gap: clamp(14px, 3cqh, 30px); padding: 0; }
   .cs-top { padding: 0; }
@@ -120,10 +124,25 @@
   .cs-social svg { width: 22px; height: 22px; }
   .cs-credit { font-size: 12px; }
   .cs-ctl { top: auto; right: auto; left: 24px; bottom: 24px; flex-direction: row; }
-  .cs-finale { gap: clamp(14px, 2.4cqh, 30px); }
   .f-lead { font-size: clamp(18px, 2.3cqw, 40px); }
   .f-acc { font-size: clamp(120px, min(19cqw, 34cqh), 340px); }
   .f-rule { width: min(30cqw, 460px); }
+}
+
+/*
+  Wide screens (wider than the film's 9:16): the video element takes the film's full height and
+  is parked so the same 26% crop shows as before. Because the whole frame is in the element, it
+  can pinch in and lift for the end card (values set by the component from the window size).
+*/
+@container cs (min-width: 700px) and (min-aspect-ratio: 9 / 16) {
+  .cs-film video { position: absolute; left: 0; top: calc((100cqh - 177.778cqw) * 0.26); width: 100%; max-width: none; height: 177.778cqw; transform-origin: 50% var(--end-origin, 50%); transition: transform 0.9s var(--ease); will-change: transform; }
+  .cs.is-ending .cs-film video { transform: translateY(var(--end-dy, 0px)) scale(var(--end-scale, 1)); }
+}
+
+/* Taller than the film (phones): the element takes the film's full width, centred, so the end card can pinch to fit. */
+@container cs (max-aspect-ratio: 9 / 16) {
+  .cs-film video { position: absolute; top: 0; height: 100%; width: 56.25cqh; max-width: none; left: calc((100cqw - 56.25cqh) / 2); transform-origin: 50% var(--end-origin, 50%); transition: transform 0.9s var(--ease); will-change: transform; }
+  .cs.is-ending .cs-film video { transform: scale(var(--end-scale, 1)); }
 }
 
 @media (prefers-reduced-motion: reduce) {

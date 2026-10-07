@@ -44,6 +44,8 @@ export function ComingSoon() {
   const [paused, setPaused] = useState(true);
   const [muted, setMuted] = useState(true);
   const [finale, setFinale] = useState(false);
+  const [ending, setEnding] = useState(false);
+  const endingRef = useRef(false);
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
   const [message, setMessage] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -67,10 +69,11 @@ export function ComingSoon() {
   }, []);
 
   // The film: starts silent (React does not write the muted attribute, so it is set here),
-  // and stages its ending instead of looping on its own.
+  // pinches in for its end card on wide screens, and stages its ending instead of looping on its own.
   useEffect(() => {
     const v = videoRef.current;
-    if (!v) return;
+    const cs = v?.closest<HTMLElement>(".cs");
+    if (!v || !cs) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     v.muted = true;
     v.defaultMuted = true;
@@ -79,29 +82,93 @@ export function ComingSoon() {
       setMuted(v.muted);
     };
     const timers: number[] = [];
+    let raf = 0;
+
+    const setEndingState = (on: boolean) => {
+      endingRef.current = on;
+      setEnding(on);
+    };
+
+    // On a wide screen the film is cropped to a band and its end-card wordmark falls below the
+    // bottom edge. Here the film shrinks and lifts so the whole wordmark fits in the clear space
+    // between the credit line and the bottom of the window.
+    const stageEnding = () => {
+      const W = cs.clientWidth;
+      const H = cs.clientHeight;
+      const { wordmark } = copy.endCard;
+      if (W / H > 9 / 16) {
+        const filmH = (W * 16) / 9;
+        const top = 0.26 * (H - filmH); // mirrors the CSS crop
+        const wmCenter = (wordmark.top + wordmark.bottom) / 2;
+        const wmH = (wordmark.bottom - wordmark.top) * filmH;
+        const panel = cs.querySelector<HTMLElement>(".cs-panel");
+        const panelBottom = panel ? panel.getBoundingClientRect().bottom - cs.getBoundingClientRect().top : H * 0.75;
+        let zoneTop = panelBottom + 12;
+        let zoneBottom = H - 16;
+        if (zoneBottom - zoneTop < 60) {
+          zoneTop = H - 120;
+          zoneBottom = H - 16;
+        }
+        const scale = Math.min(1, Math.max(0.2, ((zoneBottom - zoneTop) * 0.8) / wmH));
+        const from = top + wmCenter * filmH;
+        const to = (zoneTop + zoneBottom) / 2;
+        cs.style.setProperty("--end-origin", `${(wmCenter * 100).toFixed(2)}%`);
+        cs.style.setProperty("--end-scale", scale.toFixed(3));
+        cs.style.setProperty("--end-dy", `${(to - from).toFixed(1)}px`);
+      } else {
+        // Taller than the film (phones): the frame is cropped at the sides, so the film only
+        // shrinks until the wordmark fits the width with a little room, staying where it is.
+        const visible = W / H / (9 / 16);
+        const scale = Math.min(1, (0.92 * visible) / (wordmark.right - wordmark.left));
+        cs.style.setProperty("--end-origin", `${(((wordmark.top + wordmark.bottom) / 2) * 100).toFixed(2)}%`);
+        cs.style.setProperty("--end-scale", scale.toFixed(3));
+        cs.style.setProperty("--end-dy", "0px");
+      }
+      setEndingState(true);
+    };
+
+    const watch = () => {
+      if (!endingRef.current && v.currentTime >= copy.endCard.at) stageEnding();
+      raf = window.requestAnimationFrame(watch);
+    };
+    const onPlay = () => {
+      sync();
+      window.cancelAnimationFrame(raf);
+      raf = window.requestAnimationFrame(watch);
+    };
+    const onPause = () => {
+      sync();
+      window.cancelAnimationFrame(raf);
+    };
+
     const restart = () => {
+      setEndingState(false);
       v.currentTime = 0;
       v.play().catch(() => {});
     };
     const onEnded = () => {
+      window.cancelAnimationFrame(raf);
       const typing = formRef.current?.contains(document.activeElement) ?? false;
       if (typing) return restart();
       setFinale(true);
       const hold = reduced ? 3200 : copy.revealMs;
+      // The film snaps back to full size while the black ending still covers it.
+      timers.push(window.setTimeout(() => setEndingState(false), hold - 300));
       timers.push(window.setTimeout(() => setFinale(false), hold));
       timers.push(window.setTimeout(restart, hold + 500));
     };
-    v.addEventListener("play", sync);
-    v.addEventListener("pause", sync);
+    v.addEventListener("play", onPlay);
+    v.addEventListener("pause", onPause);
     v.addEventListener("volumechange", sync);
     v.addEventListener("ended", onEnded);
     sync();
     if (!reduced) v.play().catch(() => {});
     return () => {
-      v.removeEventListener("play", sync);
-      v.removeEventListener("pause", sync);
+      v.removeEventListener("play", onPlay);
+      v.removeEventListener("pause", onPause);
       v.removeEventListener("volumechange", sync);
       v.removeEventListener("ended", onEnded);
+      window.cancelAnimationFrame(raf);
       timers.forEach((t) => window.clearTimeout(t));
     };
   }, []);
@@ -157,7 +224,7 @@ export function ComingSoon() {
   const busy = status === "loading";
 
   return (
-    <div className={`cs${finale ? " is-finale" : ""}`} data-testid="coming-soon">
+    <div className={`cs${finale ? " is-finale" : ""}${ending ? " is-ending" : ""}`} data-testid="coming-soon">
       <main id="main" className="cs-in" tabIndex={-1}>
         <div className="cs-film">
           <video
