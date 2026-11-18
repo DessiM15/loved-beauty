@@ -8,39 +8,16 @@ import "./coming-soon.css";
 
 /**
  * The launch page: Full screen · Dark · Dramatic reveal (the client's pick, 7 Oct 2026).
- * The film fills the window and loops; the logo, countdown and signup float on it.
+ * The film fills the window and loops; the logo and signup float on it.
  * When the film ends the screen falls to black and "Coming Soon" arrives letter by
  * letter, then the film starts again. The headline is only ever shown that way, but
  * it is always present for screen readers.
  */
 
-const UNITS = [
-  ["d", "Days"],
-  ["h", "Hours"],
-  ["m", "Minutes"],
-  ["s", "Seconds"],
-] as const;
-
-type Unit = (typeof UNITS)[number][0];
-type Parts = Record<Unit, string>;
-
-const ZERO: Parts = { d: "00", h: "00", m: "00", s: "00" };
-const TARGET = new Date(copy.launchAt).getTime();
-
-function pad(n: number) {
-  return String(n).padStart(2, "0");
-}
-
-function partsAt(now: number): Parts {
-  const s = Math.max(0, Math.floor((TARGET - now) / 1000));
-  return { d: pad(Math.floor(s / 86400)), h: pad(Math.floor((s % 86400) / 3600)), m: pad(Math.floor((s % 3600) / 60)), s: pad(s % 60) };
-}
-
 export function ComingSoon() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
-  const [parts, setParts] = useState<Parts>(ZERO);
   const [paused, setPaused] = useState(true);
   const [muted, setMuted] = useState(true);
   const [finale, setFinale] = useState(false);
@@ -49,14 +26,6 @@ export function ComingSoon() {
   const [status, setStatus] = useState<"idle" | "loading" | "done" | "error">("idle");
   const [message, setMessage] = useState("");
   const [firstName, setFirstName] = useState("");
-
-  // The countdown.
-  useEffect(() => {
-    const tick = () => setParts(partsAt(Date.now()));
-    tick();
-    const id = window.setInterval(tick, 1000);
-    return () => window.clearInterval(id);
-  }, []);
 
   // The window behind the page is black too, so nothing cream shows on overscroll.
   useEffect(() => {
@@ -250,14 +219,6 @@ export function ComingSoon() {
               <span className="acc">{copy.headline.accent}</span>
             </h1>
             <p className="cs-sub">{copy.subhead}</p>
-            <ul className="cs-count" aria-label="Time until launch">
-              {UNITS.map(([key, label]) => (
-                <li key={key}>
-                  <b>{parts[key]}</b>
-                  <span>{label}</span>
-                </li>
-              ))}
-            </ul>
 
             {status === "done" ? (
               <p className="cs-done" role="status">
