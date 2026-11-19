@@ -14,19 +14,14 @@ export const comingSoon = {
     doneText: "We’ll email you the moment we launch.",
   },
   film: {
-    src: "/coming-soon/loved-beauty-film.mp4",
-    poster: "/coming-soon/poster.jpg",
+    src: "/coming-soon/loved-beauty-film-short.mp4",
+    poster: "/coming-soon/poster-short.jpg",
+    /** The picture used when the page is shared in a text or on social media. */
+    share: "/coming-soon/share.jpg",
     label: "Loved Beauty launch film",
   },
   logo: "/coming-soon/logo.png",
   credit: "Designed by Smart Scale, LLC",
   /** How long the ending holds the screen before the film starts again (ms). */
   revealMs: 4800,
-  /**
-   * The film's end card: the picture fades to black by 30.5s and the wordmark appears at 30.8s.
-   * On a wide screen the film is cropped to a band, so from `at` the film pinches in and lifts
-   * until the whole wordmark sits in the clear space under the signup. The wordmark's place in
-   * the frame (fractions of its height and width) was measured from the file.
-   */
-  endCard: { at: 30.55, wordmark: { top: 0.441, bottom: 0.562, left: 0.078, right: 0.921 } },
 } as const;

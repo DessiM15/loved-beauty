@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Coming Soon",
   description: `${site.name} is launching soon. Clean, vegan lip gloss, lip care and shimmer sprays. Sign up to be the first to know.`,
   alternates: { canonical: "/" },
-  openGraph: { title: `${site.name} | Coming Soon`, images: [{ url: "/coming-soon/poster.jpg", width: 720, height: 1280, alt: `${site.name} launch film` }] },
+  openGraph: { title: `${site.name} | Coming Soon`, images: [{ url: "/coming-soon/share.jpg", width: 720, height: 1280, alt: `${site.name} launch film` }] },
 };
 
 export const viewport: Viewport = {
