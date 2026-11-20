@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { newsletter, firstOrderCode } from "@/content/site";
+import { newsletter } from "@/content/site";
 import { NewsletterForm } from "./newsletter-form";
 import { CloseIcon } from "@/components/ui/icons";
 import { useModal } from "@/lib/a11y/use-modal";
@@ -70,7 +70,7 @@ export function WelcomePopup() {
           ref={closeRef}
           type="button"
           onClick={dismiss}
-          aria-label="Close offer"
+          aria-label="Close"
           className="absolute top-3 right-3 inline-flex h-9 w-9 items-center justify-center rounded-sm hover:bg-blush"
         >
           <CloseIcon width={18} height={18} />
@@ -80,7 +80,7 @@ export function WelcomePopup() {
           {newsletter.headline}
         </h2>
         <p className="mt-2 text-sm text-plum">
-          Join the list and use code <strong className="text-ink">{firstOrderCode}</strong> at checkout.
+          Join the list for new shades and restocks.
         </p>
         <div className="mt-5">
           <NewsletterForm source="popup" />

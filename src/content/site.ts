@@ -40,7 +40,6 @@ export const site = {
 
 export const announcements = [
   { text: "Free U.S. shipping on orders $200+", href: "/shop" },
-  { text: "10% off your first order with code LOVED10", href: "/shop" },
   { text: "Vegan · Cruelty-free · Paraben-free", href: "/about" },
 ];
 
@@ -55,7 +54,6 @@ export const accessibility = {
 };
 
 export const freeShippingThreshold = 200; // USD. Keep in sync with Shopify shipping profile.
-export const firstOrderCode = "LOVED10";
 
 /** Four links, nothing to guess at. Categories live on the shop page as tabs. */
 export const nav = {
@@ -145,13 +143,13 @@ export const values = [
 
 export const newsletter = {
   eyebrow: "Join the list",
-  headline: "Get 10% off your first order.",
-  headlineLead: "Get 10% off your",
-  headlineItalic: "first order.",
+  headline: "Be the first to know.",
+  headlineLead: "Be the first",
+  headlineItalic: "to know.",
   text: "New shades, restocks and members-only offers. No noise, just the good stuff.",
   placeholder: "Your email address",
   cta: "Sign me up",
-  success: "You're in. Check your inbox for your welcome code.",
+  success: "You're in. Watch your inbox.",
   legal: "By subscribing you agree to receive marketing emails from Loved Beauty. Unsubscribe anytime.",
 };
 
