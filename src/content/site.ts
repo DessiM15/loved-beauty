@@ -13,7 +13,7 @@ function resolveSiteUrl(): string {
   if (explicit) return explicit.replace(/\/$/, "");
   const vercel = (process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL || "").trim();
   if (vercel) return `https://${vercel.replace(/^https?:\/\//, "")}`;
-  return "https://lovedbeautyshop.net";
+  return "https://lovedbeautyshop.com";
 }
 
 export const site = {

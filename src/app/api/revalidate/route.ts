@@ -5,7 +5,7 @@ import { CACHE_TAGS } from "@/lib/shopify/client";
 /**
  * Shopify webhook receiver. Subscribe these topics in Shopify Admin →
  * Settings → Notifications → Webhooks (or via the Admin API) and point them
- * at https://lovedbeautyshop.net/api/revalidate :
+ * at https://lovedbeautyshop.com/api/revalidate :
  *
  *   products/create, products/update, products/delete
  *   collections/create, collections/update, collections/delete

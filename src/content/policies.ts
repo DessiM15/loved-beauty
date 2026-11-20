@@ -26,7 +26,7 @@ export const policies: ShopPolicy[] = [
     handle: "privacy",
     title: "Privacy Policy",
     body: `
-<p>Loved Beauty LLC ("we", "us") respects your privacy. This policy explains what information we collect when you visit lovedbeautyshop.net, how we use it, and the choices you have.</p>
+<p>Loved Beauty LLC ("we", "us") respects your privacy. This policy explains what information we collect when you visit lovedbeautyshop.com, how we use it, and the choices you have.</p>
 <h2>Information we collect</h2>
 <p>When you place an order we collect the information needed to fulfil it: your name, shipping address, email address, phone number and payment details. Payments are processed securely by Shopify Payments; we never see or store your full card number.</p>
 <p>When you browse our site we automatically collect standard device and usage information (such as IP address, browser type and the pages you view) through cookies and similar technologies, including Google Analytics and, if enabled, Meta Pixel.</p>
@@ -50,7 +50,7 @@ export const policies: ShopPolicy[] = [
     handle: "terms",
     title: "Terms of Service",
     body: `
-<p>By using lovedbeautyshop.net and purchasing from Loved Beauty LLC you agree to the following terms.</p>
+<p>By using lovedbeautyshop.com and purchasing from Loved Beauty LLC you agree to the following terms.</p>
 <h2>Products</h2>
 <p>We do our best to display product colors and details accurately. Because screens vary, actual shades may differ slightly from what you see. All products are for external cosmetic use only. Discontinue use if irritation occurs. Please review ingredient lists carefully if you have known allergies.</p>
 <h2>Pricing &amp; payment</h2>

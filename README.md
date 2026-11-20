@@ -1,6 +1,6 @@
 # Loved Beauty — storefront
 
-Headless Shopify storefront for [lovedbeautyshop.net](https://lovedbeautyshop.net), built with Next.js 16, React 19 and Tailwind 4. Designed and maintained by Smart Scale, LLC.
+Headless Shopify storefront for [lovedbeautyshop.com](https://lovedbeautyshop.com), built with Next.js 16, React 19 and Tailwind 4. Designed and maintained by Smart Scale, LLC.
 
 ## Run locally
 
@@ -23,7 +23,7 @@ Without Shopify credentials the site serves the mock catalog in `src/lib/mock/ca
    - `COMMERCE_SOURCE` = `mock` keeps the placeholder catalog on the live site while the Shopify store is still empty. Delete the var (and redeploy) once real products exist.
 4. **Collections**: create collections with these exact handles so the nav and home page light up: `lips`, `lip-care`, `face-and-body-glow`, `sets`, `bestsellers`. Category chips and the sitemap pick up any additional collections automatically.
 5. **Product content**: description = short paragraph. Optional metafields (namespace `custom`) render as accordions: `benefits` (list or one per line), `how_to_use` (text), `ingredients` (text). Tag products `bestseller` or `new` to show badges. Set **Compare-at price** on sets to show "Set & save".
-6. **Webhooks** → `https://lovedbeautyshop.net/api/revalidate` for topics `products/create|update|delete` and `collections/create|update|delete`. This is what makes edits in Shopify appear on the site within seconds. Even without webhooks, pages refresh every 60 s.
+6. **Webhooks** → `https://lovedbeautyshop.com/api/revalidate` for topics `products/create|update|delete` and `collections/create|update|delete`. This is what makes edits in Shopify appear on the site within seconds. Even without webhooks, pages refresh every 60 s.
 7. **Policies**: write Shipping, Refund, Privacy and Terms in Shopify → Settings → Policies. The site reads them from there; the drafts in `src/content/policies.ts` are only the fallback.
 8. **Checkout**: the cart's Checkout button goes to Shopify's hosted checkout automatically (Shop Pay, Apple Pay, Google Pay). Turn on **abandoned checkout recovery** in Shopify → Settings → Checkout.
 9. **Email**: newsletter signups create Shopify customers with marketing consent; use Shopify Email (free tier) or connect Klaviyo.
@@ -90,4 +90,4 @@ Product and collection pages are read from the sitemap, so new products are scan
 
 ## Deploy
 
-Vercel, framework preset Next.js. Add the env vars above. Point `lovedbeautyshop.net` (A/ALIAS) and `www` (CNAME) at Vercel when DNS access is granted.
+Vercel, framework preset Next.js. Add the env vars above. Point `lovedbeautyshop.com` (A/ALIAS) and `www` (CNAME) at Vercel when DNS access is granted.
