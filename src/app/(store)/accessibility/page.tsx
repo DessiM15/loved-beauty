@@ -46,10 +46,6 @@ export default function AccessibilityPage() {
           <h2>Known limitations</h2>
           <ul>
             <li>
-              <strong className="text-ink">Home page headline.</strong> The second line of the headline, &ldquo;Loves You Back&rdquo;, is set in our light brand pink
-              over a photograph and does not meet the contrast level we aim for. The same words are in the page title, and the rest of the page does meet it.
-            </li>
-            <li>
               <strong className="text-ink">Checkout.</strong> Payment is completed on Shopify&rsquo;s secure checkout, which Shopify builds and maintains. We cannot
               change it, but we will pass on any problem you report.
             </li>

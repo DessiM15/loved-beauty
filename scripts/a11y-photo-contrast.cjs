@@ -12,7 +12,6 @@ const ACCEPTED = (process.env.A11Y_ACCEPT || "").split(",").map((s) => s.trim())
 const CHROME = process.env.CHROME_PATH || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 // scope: the section whose words are hidden for the sample. selectors: the text to judge.
 const TARGETS = [
-  { route: "/", scope: '[aria-labelledby="hero-heading"]', selectors: ["#hero-heading .h-lead", "#hero-heading .h-italic", "#hero-heading + p", "#hero-heading ~ div a:not(.btn)"] },
   { route: "/shade-finder", scope: "main section", selectors: ["main section .eyebrow", "main section h1", "main section h1 em", "main section h1 + p"] },
 ];
 const VIEWPORTS = [

@@ -88,14 +88,18 @@ export const nav = {
 };
 
 /**
- * Home page hero (option 1G, the client's pick, 14 Sept 2026): her counter photo full-bleed,
- * the slogan floating on the wall beside the spray. "Beauty That" in letter-spaced capitals,
- * "Loves You Back" in the brand pink italic. Copy approved by the client (Sept 2026).
- * The eyebrow is no longer shown on the hero; it is kept here for the launch popup and any future use.
+ * Home page hero (the client's pick for launch, Nov 2026): her three shoot photos side by side,
+ * edge to edge (lip liner, the TVs, Shimmer Glow Oil), with the slogan, the description and the
+ * Shop button on a cream band right below them. On a phone it is the TV photo alone.
+ * The eyebrow is not shown on the hero; it is kept here for the launch popup and any future use.
  */
 export const hero = {
   eyebrow: "Launching October 2026",
-  photo: { src: "/hero/scene.jpg", alt: "Loved Beauty glosses, lip oil and shimmer spray on a marble counter" },
+  photos: {
+    liner: { src: "/hero/launch-liner.jpg", alt: "Close-up of the model holding three Loved Beauty lip liners beside her eye" },
+    tv: { src: "/hero/launch-tv.jpg", alt: "The model in a pink dress leaning on a stack of vintage TVs showing the LB monogram" },
+    oil: { src: "/hero/launch-oil.jpg", alt: "The model with her eyes closed holding Shimmer Glow Oil Spray against her cheek" },
+  },
   headlineLead: "Beauty That",
   headlineAccent: "Loves You Back",
   subhead: "Luxury makeup crafted for every skin tone. From bold lips to flawless skin, discover your perfect look with Loved Beauty.",
