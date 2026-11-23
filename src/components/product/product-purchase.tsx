@@ -7,7 +7,7 @@ import { Price } from "./price";
 import { ProductGallery } from "./product-gallery";
 import { hasRealOptions, cn, imageAlt } from "@/lib/utils";
 import { BagIcon, CheckIcon, MinusIcon, PlusIcon } from "@/components/ui/icons";
-import { freeShippingThreshold, shadeColors } from "@/content/site";
+import { shadeColors } from "@/content/site";
 
 /**
  * Product page top: gallery bleeding to the left edge, purchase panel right.
@@ -175,7 +175,7 @@ export function ProductPurchase({ product, children }: { product: Product; child
         )}
 
         <ul className="mt-8 grid w-full gap-2 border-y border-line py-4 text-[0.62rem] tracking-wide2 uppercase text-plum sm:grid-cols-3">
-          <li>Free U.S. shipping ${freeShippingThreshold}+</li>
+          <li>Ships in 1 to 3 days</li>
           <li>Vegan &amp; cruelty-free</li>
           <li>Secure checkout</li>
         </ul>

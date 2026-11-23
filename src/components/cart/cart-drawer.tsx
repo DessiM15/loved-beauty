@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { useCart } from "./cart-context";
-import { freeShippingThreshold } from "@/content/site";
 import { useModal } from "@/lib/a11y/use-modal";
 import { cn, formatMoney, placeholderTint } from "@/lib/utils";
 import { CloseIcon, LockIcon, MinusIcon, PlusIcon, TrashIcon } from "@/components/ui/icons";
@@ -18,9 +17,6 @@ export function CartDrawer() {
   // Focus lands on Close, stays inside while open, and returns to the control that opened the bag.
   useModal(panelRef, isOpen, closeCart, { initialFocus: closeRef, fallback: "[data-cart-trigger]" });
 
-  const subtotal = Number(cart?.cost.subtotalAmount.amount ?? 0);
-  const remaining = Math.max(0, freeShippingThreshold - subtotal);
-  const progress = Math.min(100, (subtotal / freeShippingThreshold) * 100);
   const lines = cart?.lines ?? [];
   const isEmpty = lines.length === 0;
 
@@ -68,23 +64,6 @@ export function CartDrawer() {
           >
             <CloseIcon />
           </button>
-        </div>
-
-        {/* Free shipping progress */}
-        <div className="border-b border-line bg-blush/60 px-5 py-3">
-          <p className="text-xs text-plum">
-            {remaining > 0 ? (
-              <>
-                You&rsquo;re <strong className="text-ink">{formatMoney({ amount: remaining.toFixed(2), currencyCode: "USD" })}</strong> away
-                from free U.S. shipping.
-              </>
-            ) : (
-              <strong className="text-ink">You&rsquo;ve unlocked free U.S. shipping.</strong>
-            )}
-          </p>
-          <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-line" aria-hidden="true">
-            <div className="h-full rounded-full bg-gold transition-[width] duration-500" style={{ width: `${progress}%` }} />
-          </div>
         </div>
 
         <div className="flex-1 overflow-y-auto px-5 py-4">

@@ -39,7 +39,6 @@ export const site = {
 };
 
 export const announcements = [
-  { text: "Free U.S. shipping on orders $200+", href: "/shop" },
   { text: "Vegan · Cruelty-free · Paraben-free", href: "/about" },
 ];
 
@@ -52,8 +51,6 @@ export const accessibility = {
   responseDays: 5,
   reviewed: "September 29, 2026",
 };
-
-export const freeShippingThreshold = 200; // USD. Keep in sync with Shopify shipping profile.
 
 /** Four links, nothing to guess at. Categories live on the shop page as tabs. */
 export const nav = {
@@ -167,8 +164,8 @@ export const faqs = [
     a: "Orders ship from Texas within 1 to 3 business days. Standard U.S. shipping typically arrives in 3 to 6 business days. You'll receive a tracking number by email as soon as your order ships.",
   },
   {
-    q: "Do you offer free shipping?",
-    a: "Yes. U.S. orders over $200 ship free. Shipping on smaller orders is calculated at checkout.",
+    q: "How much is shipping?",
+    a: "Shipping is calculated at checkout based on weight and destination. We currently ship within the United States only.",
   },
   {
     q: "What is your return policy?",
