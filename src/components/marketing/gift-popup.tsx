@@ -22,6 +22,7 @@ export function GiftPopup() {
   const gift = useGift();
   const on = gift.status === "on";
   const [open, setOpen] = useState(false);
+  const [eyebrow, setEyebrow] = useState(launchGift.eyebrow);
   const rootRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -40,6 +41,7 @@ export function GiftPopup() {
         timer = setTimeout(show, 4000);
         return;
       }
+      if (Date.now() >= Date.parse(launchGift.eyebrowAfter.from)) setEyebrow(launchGift.eyebrowAfter.text);
       setOpen(true);
     };
     timer = setTimeout(show, 2500);
@@ -83,7 +85,7 @@ export function GiftPopup() {
           </span>
         </div>
         <div className="grid justify-items-center gap-3 md:justify-items-start md:gap-4">
-          <p className="eyebrow text-rose-ink">{launchGift.eyebrow}</p>
+          <p className="eyebrow text-rose-ink">{eyebrow}</p>
           <h2 id="gift-heading" className={`${script.className} text-[3.5rem] leading-[0.9] font-normal whitespace-nowrap text-ink md:text-[5.6rem]`}>
             {launchGift.headline}
           </h2>

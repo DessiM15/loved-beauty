@@ -18,7 +18,7 @@ import { SHOPIFY_API_VERSION } from "./client";
 export const LAUNCH_GIFT = {
   total: 80,
   minSubtotal: 30,
-  start: process.env.LAUNCH_GIFT_START ?? "2026-11-27T00:00:00-06:00",
+  start: process.env.LAUNCH_GIFT_START ?? "2026-11-27T11:59:00-06:00",
 } as const;
 
 export type GiftCount = { ok: true; total: number; claimed: number; left: number } | { ok: false; reason: "not-configured" | "auth" | "query" };

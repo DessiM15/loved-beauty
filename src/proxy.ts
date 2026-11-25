@@ -9,12 +9,18 @@ import { NextResponse, type NextRequest } from "next/server";
  * Open to everyone while the gate is up: /coming-soon itself, the API
  * (signups and Shopify webhooks) and every file with an extension (the film,
  * images, sitemap, robots, the options page).
+ *
+ * COMING_SOON_OPENS (an ISO time, e.g. 2026-11-27T11:59:00-06:00) lifts the
+ * gate by itself at that moment, with no deploy. Remove it to keep the gate
+ * up until COMING_SOON is removed by hand.
  */
 const COOKIE = "lb-preview";
 const OPEN_PREFIXES = ["/coming-soon", "/api/"];
 
 export function proxy(req: NextRequest) {
   if (process.env.COMING_SOON !== "on") return NextResponse.next();
+  const opens = Date.parse(process.env.COMING_SOON_OPENS ?? "");
+  if (!Number.isNaN(opens) && Date.now() >= opens) return NextResponse.next();
   const key = process.env.COMING_SOON_KEY ?? "";
   const { pathname, searchParams } = req.nextUrl;
 

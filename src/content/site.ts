@@ -229,6 +229,8 @@ export const launchGift = {
   total: 80,
   min: 30,
   eyebrow: "Black Friday · Opening Day",
+  /** The offer runs until every gift is claimed, so after this moment the label drops the day. */
+  eyebrowAfter: { from: "2026-11-28T00:00:00-06:00", text: "Our Opening Gift" },
   headline: "A gift, on us",
   offer: "The first 80 orders over $30 get a free Hyaluronic Acid Lip Gloss.",
   fine: "Orders over $30. One per customer, while gifts last. No code needed.",
