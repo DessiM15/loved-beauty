@@ -4,7 +4,7 @@ import { bestsellers } from "@/content/site";
 import { ProductCard } from "@/components/product/product-card";
 import { ArrowRightIcon } from "@/components/ui/icons";
 
-/** "Shop Our Bestsellers": four cards on the ivory ground (option 1G). */
+/** "Shop Our Bestsellers": the three featured cards on the ivory ground (option 1G). */
 export function Bestsellers({ products }: { products: Product[] }) {
   if (products.length === 0) return null;
   return (
@@ -16,7 +16,7 @@ export function Bestsellers({ products }: { products: Product[] }) {
         <h2 id="bestsellers-heading" className="h-display mt-4 text-[2.6rem] md:text-[4rem]" data-reveal style={{ "--d": "100ms" } as React.CSSProperties}>
           {bestsellers.headline}
         </h2>
-        <div className="mt-9 grid w-full grid-cols-2 gap-x-3.5 gap-y-8 text-left md:mt-14 md:grid-cols-4 md:gap-7">
+        <div className="mt-9 grid w-full max-w-5xl grid-cols-2 gap-x-3.5 gap-y-8 text-left md:mt-14 md:grid-cols-3 md:gap-7">
           {products.map((p, i) => (
             <ProductCard key={p.id} product={p} index={i} priority={i < 2} />
           ))}

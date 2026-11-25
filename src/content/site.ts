@@ -111,11 +111,15 @@ export const trust = [
   { key: "results", label: "Real results" },
 ];
 
-/** Home page bestsellers grid (1G). Products come from the Shopify "bestsellers" collection. */
+/**
+ * Home page featured grid (1G). The client's three picks (25 Nov 2026), by Shopify product handle, in
+ * the order they show. If none of them resolve, the "bestsellers" collection is used instead.
+ */
 export const bestsellers = {
   eyebrow: "Featured",
   headline: "Shop Our Bestsellers",
-  count: 4,
+  handles: ["shimmer-glow-oil-spray", "shimmer-highlighter-powder-spray", "lip-liner"],
+  count: 3,
   link: { label: "Shop all", href: "/shop" },
 };
 
