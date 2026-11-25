@@ -6,6 +6,8 @@ import { AnnouncementBar } from "@/components/layout/announcement-bar";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { WelcomePopup } from "@/components/marketing/welcome-popup";
+import { GiftProvider } from "@/components/marketing/gift-context";
+import { GiftPopup } from "@/components/marketing/gift-popup";
 import { RevealObserver } from "@/components/motion/reveal-observer";
 import { ScrollManager } from "@/components/motion/scroll-manager";
 
@@ -23,6 +25,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
       >
         Skip to content
       </a>
+      <GiftProvider>
       <CartProvider>
         <AnnouncementBar />
         <Header />
@@ -32,8 +35,10 @@ export function StoreShell({ children }: { children: ReactNode }) {
         <Footer />
         <CartDrawer />
         <CartAnnouncer />
+        <GiftPopup />
         <WelcomePopup />
       </CartProvider>
+      </GiftProvider>
       <RevealObserver />
       <ScrollManager />
     </>

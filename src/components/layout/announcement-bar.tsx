@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useState, useSyncExternalStore } from "react";
-import { announcements } from "@/content/site";
+import { announcements as standing, launchGift } from "@/content/site";
+import { useGift } from "@/components/marketing/gift-context";
 import { PauseIcon, PlayIcon } from "@/components/ui/icons";
 
 const REDUCED = "(prefers-reduced-motion: reduce)";
@@ -19,7 +20,14 @@ const subscribe = (notify: () => void) => {
  * whose device asks for reduced motion. Only the message on show can be reached or read.
  */
 export function AnnouncementBar() {
-  const [index, setIndex] = useState(0);
+  // While opening-day gifts are left, the offer leads and the standing message follows.
+  const gift = useGift();
+  const announcements =
+    gift.status === "on"
+      ? [{ text: `Free lip gloss with the first ${launchGift.total} orders over $${launchGift.min}${gift.left === null ? "" : ` · ${gift.left} left`}`, href: launchGift.cta.href }, ...standing]
+      : standing;
+  const [turn, setIndex] = useState(0);
+  const index = turn % announcements.length;
   const [held, setHeld] = useState(false);
   const [choice, setChoice] = useState<boolean | null>(null); // null: follow the device setting
   const reduced = useSyncExternalStore(
@@ -32,7 +40,7 @@ export function AnnouncementBar() {
 
   useEffect(() => {
     if (!rotates || paused || held) return;
-    const id = setInterval(() => setIndex((i) => (i + 1) % announcements.length), 4500);
+    const id = setInterval(() => setIndex((i) => i + 1), 4500);
     return () => clearInterval(id);
   }, [rotates, paused, held]);
 
@@ -49,7 +57,7 @@ export function AnnouncementBar() {
       >
         {announcements.map((a, i) => (
           <Link
-            key={a.text}
+            key={a.href + i}
             href={a.href}
             className={`absolute inset-y-0 right-0 left-0 flex items-center justify-center text-center transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:text-plum focus-visible:-outline-offset-4 ${
               rotates ? "px-9" : ""

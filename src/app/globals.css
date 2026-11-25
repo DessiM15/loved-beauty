@@ -466,3 +466,25 @@ strong {
   background: var(--lb-petal);
   color: var(--lb-ink);
 }
+
+/* Our Story: the panels are painted from the TV photo's own edges, stretched, so the backdrop has no seam. */
+.about-story {
+  --about-rose: #8a3440;
+  background: var(--about-rose);
+}
+.about-head {
+  /* A little depth at the very top keeps the small label readable; it is gone by the time the photo starts. */
+  background:
+    linear-gradient(180deg, rgb(70 18 30 / 0.38) 0, rgb(70 18 30 / 0) 85%),
+    url("/about/edge-top.jpg") 0 0 / 100% 100% no-repeat var(--about-rose);
+}
+.about-words {
+  background:
+    linear-gradient(180deg, rgb(138 52 64 / 0) 0, var(--about-rose) 5.5rem),
+    url("/about/edge-bottom.jpg") 0 0 / 100% 100% no-repeat var(--about-rose);
+}
+@media (min-width: 1024px) {
+  .about-words {
+    background: url("/about/edge-right.jpg") 0 0 / 100% 100% no-repeat var(--about-rose);
+  }
+}

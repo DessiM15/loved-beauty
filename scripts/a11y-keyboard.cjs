@@ -97,7 +97,7 @@ async function pressUntil(page, key, test, max = 80) {
     close: () => launched.close(),
     newPage: async () => {
       const p = await launched.newPage();
-      p.quietOffer = await p.evaluateOnNewDocument(() => localStorage.setItem("lb_welcome_dismissed", String(Date.now() + 864e5)));
+      p.quietOffer = await p.evaluateOnNewDocument(() => (localStorage.setItem("lb_welcome_dismissed", String(Date.now() + 864e5)), localStorage.setItem("lb_gift_dismissed", String(Date.now() + 864e5))));
       return p;
     },
   };
@@ -287,7 +287,7 @@ async function pressUntil(page, key, test, max = 80) {
     await offerPage.setViewport({ width: 1366, height: 900 });
     await offerPage.removeScriptToEvaluateOnNewDocument(offerPage.quietOffer.identifier);
     await visit(offerPage, BASE + "/about");
-    await offerPage.evaluate(() => localStorage.removeItem("lb_welcome_dismissed"));
+    await offerPage.evaluate(() => (localStorage.removeItem("lb_welcome_dismissed"), localStorage.setItem("lb_gift_dismissed", String(Date.now() + 864e5))));
     await offerPage.reload({ waitUntil: "load" });
     await drawn(offerPage);
     await pressUntil(offerPage, "Tab", (f) => f.name === "Shop the Collection");

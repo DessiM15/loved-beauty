@@ -217,3 +217,21 @@ export const shadeColors: Record<string, string> = {
 };
 
 
+
+/**
+ * Opening-day gift (Black Friday 2026): the first `total` orders of `min` dollars or more get a
+ * free lip gloss, added by hand. The numbers must match LAUNCH_GIFT in src/lib/shopify/admin.ts,
+ * which does the counting. The popup, top-bar line and bag line all switch themselves off when
+ * every gift is claimed; set `enabled` to false to remove them sooner.
+ */
+export const launchGift = {
+  enabled: true,
+  total: 80,
+  min: 30,
+  eyebrow: "Black Friday · Opening Day",
+  headline: "A gift, on us",
+  offer: "The first 80 orders over $30 get a free Hyaluronic Acid Lip Gloss.",
+  fine: "Orders over $30. One per customer, while gifts last. No code needed.",
+  cta: { label: "Shop the Collection", href: "/shop" },
+  photo: { src: "/launch/gift.jpg", alt: "A woman with glossy lips holds a silver Loved Beauty Hyaluronic Acid Lip Gloss tube across her mouth" },
+};

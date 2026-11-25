@@ -14,30 +14,38 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <section className="container-lb grid items-center gap-12 py-12 md:py-20 lg:grid-cols-2 lg:gap-20">
-        <div className="relative aspect-[4/5] overflow-hidden bg-sand" data-reveal>
-          <Image src="/products/shimmer-glow-setting-spray-1.webp" alt="Loved Beauty Shimmer Glow Setting Spray" fill priority sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
-        </div>
-        <div className="flex flex-col items-start">
-          <p className="eyebrow" data-reveal>
-            {about.eyebrow}
+      {/* Her photo, and a panel painted from the photo's own edge so the studio backdrop carries on behind the words. */}
+      <section className="about-story text-ivory lg:grid lg:grid-cols-[50%_minmax(0,1fr)] xl:grid-cols-[42%_minmax(0,1fr)]" aria-labelledby="about-heading">
+        {/* Phones: the slogan sits above her, on the top edge of the backdrop. */}
+        <div className="about-head grid justify-items-center gap-3 px-6 pt-10 pb-4 text-center lg:hidden">
+          <p className="eyebrow text-pink">{about.eyebrow}</p>
+          <p aria-hidden="true" className="h-display text-[clamp(3rem,14vw,4.4rem)] leading-[0.95] text-ivory">
+            <span className="block text-[0.42em] leading-[1.2] tracking-[0.08em] uppercase">{hero.headlineLead}</span>
+            <span className="block whitespace-nowrap italic text-pink">{hero.headlineAccent}</span>
           </p>
-          {/* The slogan as on the hero (1G): caps lead, italic second line. Tan italic here because the brand pink vanishes on cream. */}
-          <h1 className="h-display mt-4 text-[3rem] sm:text-[3.6rem] md:text-[4.6rem]" data-reveal style={{ "--d": "80ms" } as React.CSSProperties}>
-            <span className="h-lead">{hero.headlineLead}</span>
-            <span className="h-italic-tan block">{hero.headlineAccent}</span>
+        </div>
+        <Image
+          src="/hero/launch-tv.jpg"
+          alt={hero.photos.tv.alt}
+          width={1334}
+          height={2000}
+          priority
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          className="block h-auto w-full lg:h-full lg:object-cover lg:object-right"
+        />
+        <div className="about-words flex flex-col items-start justify-center px-6 pt-20 pb-12 lg:px-[5vw] lg:py-8 xl:pr-[8vw] xl:pl-[6vw]">
+          <p className="eyebrow hidden text-pink lg:block">{about.eyebrow}</p>
+          <h1 id="about-heading" className="h-display sr-only text-ivory lg:not-sr-only lg:mt-3 lg:text-[clamp(2.9rem,5.2vw,5.4rem)] lg:leading-[0.95]">
+            <span className="block text-[0.42em] leading-[1.2] tracking-[0.08em] uppercase">{hero.headlineLead} </span>
+            <span className="block whitespace-nowrap italic text-pink">{hero.headlineAccent}</span>
           </h1>
-          <div className="p-serif mt-8 space-y-5 text-[1.25rem] text-plum">
-            {about.paragraphs.map((p, i) => (
-              <p key={p} data-reveal style={{ "--d": `${120 + i * 80}ms` } as React.CSSProperties}>
-                {p}
-              </p>
+          <div className="p-serif space-y-5 text-[1.2rem] leading-[1.45] text-ivory lg:mt-6 lg:max-w-[38rem] lg:space-y-4 lg:text-[clamp(1.05rem,1.36vw,1.4rem)]">
+            {about.paragraphs.map((p) => (
+              <p key={p}>{p}</p>
             ))}
           </div>
-          <p className="p-serif mt-8 text-[1.35rem] font-semibold text-ink" data-reveal style={{ "--d": "400ms" } as React.CSSProperties}>
-            {about.founderNote}
-          </p>
-          <Link href="/shop" className="btn btn-primary mt-10" data-reveal style={{ "--d": "460ms" } as React.CSSProperties}>
+          <p className="p-serif mt-7 text-[1.25rem] font-semibold text-ivory lg:mt-5 lg:max-w-[38rem] lg:text-[clamp(1.1rem,1.44vw,1.45rem)]">{about.founderNote}</p>
+          <Link href="/shop" className="btn mt-9 lg:mt-7 border-pink bg-pink text-ink hover:border-white hover:bg-white">
             Shop the Collection <ArrowRightIcon width={14} height={14} />
           </Link>
         </div>

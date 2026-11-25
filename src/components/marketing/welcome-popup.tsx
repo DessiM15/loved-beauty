@@ -5,6 +5,7 @@ import { newsletter } from "@/content/site";
 import { NewsletterForm } from "./newsletter-form";
 import { CloseIcon } from "@/components/ui/icons";
 import { useModal } from "@/lib/a11y/use-modal";
+import { useGift } from "./gift-context";
 
 const KEY = "lb_welcome_dismissed";
 
@@ -14,11 +15,14 @@ const KEY = "lb_welcome_dismissed";
  * Enable with NEXT_PUBLIC_SHOW_WELCOME_POPUP=true.
  */
 export function WelcomePopup() {
+  // The opening-day gift has its own popup; this one waits until that offer is over.
+  const giftOff = useGift().status === "off";
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
+    if (!giftOff) return;
     if (process.env.NEXT_PUBLIC_SHOW_WELCOME_POPUP !== "true") return;
     if (/^\/(products|checkout-preview)/.test(window.location.pathname)) return;
     try {
@@ -45,7 +49,7 @@ export function WelcomePopup() {
       clearTimeout(timer);
       window.removeEventListener("scroll", onScroll);
     };
-  }, []);
+  }, [giftOff]);
 
   function dismiss() {
     setOpen(false);

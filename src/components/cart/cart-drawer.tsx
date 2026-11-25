@@ -8,6 +8,8 @@ import { useModal } from "@/lib/a11y/use-modal";
 import { cn, formatMoney, placeholderTint } from "@/lib/utils";
 import { CloseIcon, LockIcon, MinusIcon, PlusIcon, TrashIcon } from "@/components/ui/icons";
 import { CartUpsell } from "./cart-upsell";
+import { launchGift } from "@/content/site";
+import { giftsLeftLabel, useGift } from "@/components/marketing/gift-context";
 
 export function CartDrawer() {
   const { cart, isOpen, closeCart, updateItem, removeItem, isPending, error } = useCart();
@@ -19,6 +21,9 @@ export function CartDrawer() {
 
   const lines = cart?.lines ?? [];
   const isEmpty = lines.length === 0;
+  const gift = useGift();
+  const subtotal = Number(cart?.cost.subtotalAmount?.amount ?? 0);
+  const toGift = Math.max(0, launchGift.min - subtotal);
 
   // Removing a product removes the button that had focus. Put focus back in the bag instead of losing it.
   useEffect(() => {
@@ -159,6 +164,16 @@ export function CartDrawer() {
 
         {!isEmpty && (
           <div className="border-t border-line bg-white px-5 py-4">
+            {gift.status === "on" && (
+              <p className="mb-4 bg-pink px-4 py-3 text-sm text-ink">
+                <span className="font-medium">
+                  {toGift > 0
+                    ? `Add ${formatMoney({ amount: toGift.toFixed(2), currencyCode: cart?.cost.subtotalAmount?.currencyCode ?? "USD" })} more for a free Hyaluronic Acid Lip Gloss.`
+                    : "Your order comes with a free Hyaluronic Acid Lip Gloss."}
+                </span>{" "}
+                {giftsLeftLabel(gift.left) ? `${giftsLeftLabel(gift.left)}. ` : ""}While gifts last, one per customer.
+              </p>
+            )}
             <div className="flex items-center justify-between text-sm">
               <span className="text-plum">Subtotal</span>
               <span className="font-medium">{formatMoney(cart?.cost.subtotalAmount)}</span>

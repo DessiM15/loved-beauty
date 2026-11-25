@@ -120,7 +120,7 @@ async function addFirstProductToBag(page) {
       const page = await context.newPage();
       await page.setViewport(viewport);
       // The welcome offer is scanned on its own at the end; keep it from opening over the other scans.
-      const quietOffer = await page.evaluateOnNewDocument(() => localStorage.setItem("lb_welcome_dismissed", String(Date.now() + 864e5)));
+      const quietOffer = await page.evaluateOnNewDocument(() => (localStorage.setItem("lb_welcome_dismissed", String(Date.now() + 864e5)), localStorage.setItem("lb_gift_dismissed", String(Date.now() + 864e5))));
       page.on("pageerror", (e) => console.error("PAGE ERROR:", e.message));
 
       for (const route of routes) {
@@ -154,15 +154,16 @@ async function addFirstProductToBag(page) {
       // Welcome offer (only when NEXT_PUBLIC_SHOW_WELCOME_POPUP=true). It appears after a scroll.
       await page.removeScriptToEvaluateOnNewDocument(quietOffer.identifier);
       await visit(page, `${BASE}/about`);
-      await page.evaluate(() => localStorage.removeItem("lb_welcome_dismissed"));
+      await page.evaluate(() => (localStorage.removeItem("lb_welcome_dismissed"), localStorage.removeItem("lb_gift_dismissed")));
       await page.reload({ waitUntil: "load" });
     await drawn(page);
       await settle(page);
       await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight * 0.6));
-      const offer = await page.waitForSelector('[role="dialog"][aria-labelledby="welcome-heading"]', { timeout: 2500 }).catch(() => null);
+      // While the opening-day gift is on, its popup shows instead of the welcome offer.
+      const offer = await page.waitForSelector('[role="dialog"][aria-labelledby="welcome-heading"], [role="dialog"][aria-labelledby="gift-heading"]', { timeout: 5000 }).catch(() => null);
       if (offer) {
         await sleep(1100);
-        record(name, "welcome offer open", await runAxe(page), await hiddenFocusables(page));
+        record(name, "offer popup open", await runAxe(page), await hiddenFocusables(page));
       } else {
         console.log(`skip  ${name.padEnd(8)} welcome offer (switched off on this server)`);
       }

@@ -12,6 +12,8 @@ const ACCEPTED = (process.env.A11Y_ACCEPT || "").split(",").map((s) => s.trim())
 const CHROME = process.env.CHROME_PATH || "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 // scope: the section whose words are hidden for the sample. selectors: the text to judge.
 const TARGETS = [
+  // Our Story: ivory and pale pink words on the photo's own backdrop, which lightens toward the floor.
+  { route: "/about", scope: ".about-story", selectors: [".about-head .eyebrow", ".about-head .h-display span", ".about-head .h-display span + span", ".about-words .eyebrow", ".about-words h1 span", ".about-words h1 span + span", ".about-words .p-serif p", ".about-words .p-serif p:last-child", ".about-words > p.p-serif"] },
   { route: "/shade-finder", scope: "main section", selectors: ["main section .eyebrow", "main section h1", "main section h1 em", "main section h1 + p"] },
 ];
 const VIEWPORTS = [
@@ -34,7 +36,7 @@ const ratio = (a, b) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
     for (const { name, ...viewport } of VIEWPORTS) {
       const page = await browser.newPage();
       await page.setViewport(viewport);
-      await page.evaluateOnNewDocument(() => localStorage.setItem("lb_welcome_dismissed", String(Date.now() + 864e5)));
+      await page.evaluateOnNewDocument(() => (localStorage.setItem("lb_welcome_dismissed", String(Date.now() + 864e5)), localStorage.setItem("lb_gift_dismissed", String(Date.now() + 864e5))));
       for (const t of TARGETS) {
         await visit(page, BASE + t.route);
         await new Promise((r) => setTimeout(r, 1500));
@@ -75,6 +77,7 @@ const ratio = (a, b) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
             }
           }
           seen.sort((a, b) => a - b);
+          if (!seen.length) continue; // not drawn at this size
           const lo = seen[Math.floor(seen.length * 0.02)];
           const hi = seen[Math.ceil(seen.length * 0.98) - 1];
           const worst = Math.min(ratio(fg, lo), ratio(fg, hi));
