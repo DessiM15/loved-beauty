@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, useTransition, type ReactNode } from "react";
 import type { Cart } from "@/lib/shopify/types";
+import { trackAddToCart } from "@/lib/analytics";
 import { addItemAction, fetchCartAction, removeItemAction, updateItemAction } from "@/lib/cart/actions";
 
 type CartContextValue = {
@@ -75,6 +76,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         const res = await addItemAction(merchandiseId, quantity);
         if (res.ok) {
           setCart(res.cart);
+          trackAddToCart(res.cart, merchandiseId, quantity);
           setLastAdded(merchandiseId);
           setAnnouncement(`${lineTitle(res.cart, (l) => l.merchandise.id === merchandiseId)} added to bag, ${bagCount(res.cart)}`);
           setOpen(true);

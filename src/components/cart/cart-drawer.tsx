@@ -1,5 +1,6 @@
 "use client";
 
+import { trackBeginCheckout } from "@/lib/analytics";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
@@ -183,7 +184,10 @@ export function CartDrawer() {
               href={cart?.checkoutUrl ?? "#"}
               className="btn btn-rose mt-4 w-full"
               aria-disabled={isPending}
-              onClick={(e) => isPending && e.preventDefault()}
+              onClick={(e) => {
+                if (isPending) e.preventDefault();
+                else if (cart) trackBeginCheckout(cart);
+              }}
             >
               <LockIcon width={16} height={16} /> Checkout
             </a>

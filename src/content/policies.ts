@@ -13,8 +13,8 @@ export const policies: ShopPolicy[] = [
     title: "Shipping & Returns",
     body: `
 <h2>Shipping</h2>
-<p>All orders ship from Houston, Texas within 1 to 3 business days. Standard U.S. shipping usually arrives in 3 to 6 business days after dispatch. You will receive a confirmation email with tracking as soon as your order ships.</p>
-<p>Your shipping cost is shown at checkout before you pay. We currently ship within the United States only.</p>
+<p>All orders ship from Houston, Texas within 1 to 3 business days. Once shipped, Standard arrives in 3 to 5 business days and Express in 1 to 2 business days. You will receive a confirmation email with tracking as soon as your order ships.</p>
+<p>Standard shipping is $5, and free on orders of $70 or more. Express shipping is $15. We currently ship within the United States only.</p>
 <h2>Returns &amp; exchanges</h2>
 <p>Because our products are cosmetics, we are unable to accept returns or exchanges on opened or used items for hygiene and safety reasons. All sales of opened cosmetics are final.</p>
 <h2>Damaged or incorrect orders</h2>

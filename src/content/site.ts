@@ -39,6 +39,7 @@ export const site = {
 };
 
 export const announcements = [
+  { text: "Free shipping on orders $70+", href: "/shop" },
   { text: "Vegan · Cruelty-free · Paraben-free", href: "/about" },
 ];
 
@@ -165,11 +166,11 @@ export const faqs = [
   },
   {
     q: "How long does shipping take?",
-    a: "Orders ship from Texas within 1 to 3 business days. Standard U.S. shipping typically arrives in 3 to 6 business days. You'll receive a tracking number by email as soon as your order ships.",
+    a: "Orders ship from Texas within 1 to 3 business days. Once shipped, Standard arrives in 3 to 5 business days and Express in 1 to 2 business days. You'll receive a tracking number by email as soon as your order ships.",
   },
   {
     q: "How much is shipping?",
-    a: "Your shipping cost is shown at checkout before you pay. We currently ship within the United States only.",
+    a: "Standard shipping is $5, and free on orders of $70 or more. Express shipping is $15. We currently ship within the United States only.",
   },
   {
     q: "What is your return policy?",
