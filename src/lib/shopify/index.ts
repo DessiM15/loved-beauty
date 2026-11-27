@@ -192,58 +192,63 @@ export async function getShopPolicies(): Promise<ShopPolicy[]> {
 
 /* ------------------------------- cart -------------------------------- */
 
-export async function getCart(cartId: string): Promise<Cart | null> {
+export async function getCart(cartId: string, buyerIp?: string): Promise<Cart | null> {
   if (!isShopifyConfigured()) return mock.getCart(cartId);
   const data = await shopifyFetch<{ cart: RawCart | null }>({
     query: q.getCartQuery,
     variables: { cartId },
     cache: "no-store",
+    buyerIp,
   });
   return reshapeCart(data.cart);
 }
 
-export async function createCart(lines: { merchandiseId: string; quantity: number }[] = []): Promise<Cart> {
+export async function createCart(lines: { merchandiseId: string; quantity: number }[] = [], buyerIp?: string): Promise<Cart> {
   if (!isShopifyConfigured()) return mock.createCart(lines);
   const data = await shopifyFetch<{ cartCreate: { cart: RawCart; userErrors: { message: string }[] } }>({
     query: q.createCartMutation,
     variables: { lines },
     cache: "no-store",
+    buyerIp,
   });
   const cart = reshapeCart(data.cartCreate.cart);
   if (!cart) throw new Error(data.cartCreate.userErrors.map((e) => e.message).join(", ") || "Could not create cart");
   return cart;
 }
 
-export async function addToCart(cartId: string, lines: { merchandiseId: string; quantity: number }[]): Promise<Cart> {
+export async function addToCart(cartId: string, lines: { merchandiseId: string; quantity: number }[], buyerIp?: string): Promise<Cart> {
   if (!isShopifyConfigured()) return mock.addToCart(cartId, lines);
   const data = await shopifyFetch<{ cartLinesAdd: { cart: RawCart; userErrors: { message: string }[] } }>({
     query: q.addToCartMutation,
     variables: { cartId, lines },
     cache: "no-store",
+    buyerIp,
   });
   const cart = reshapeCart(data.cartLinesAdd.cart);
   if (!cart) throw new Error(data.cartLinesAdd.userErrors.map((e) => e.message).join(", ") || "Could not add to cart");
   return cart;
 }
 
-export async function updateCart(cartId: string, lines: { id: string; merchandiseId: string; quantity: number }[]): Promise<Cart> {
+export async function updateCart(cartId: string, lines: { id: string; merchandiseId: string; quantity: number }[], buyerIp?: string): Promise<Cart> {
   if (!isShopifyConfigured()) return mock.updateCart(cartId, lines);
   const data = await shopifyFetch<{ cartLinesUpdate: { cart: RawCart; userErrors: { message: string }[] } }>({
     query: q.updateCartMutation,
     variables: { cartId, lines },
     cache: "no-store",
+    buyerIp,
   });
   const cart = reshapeCart(data.cartLinesUpdate.cart);
   if (!cart) throw new Error(data.cartLinesUpdate.userErrors.map((e) => e.message).join(", ") || "Could not update cart");
   return cart;
 }
 
-export async function removeFromCart(cartId: string, lineIds: string[]): Promise<Cart> {
+export async function removeFromCart(cartId: string, lineIds: string[], buyerIp?: string): Promise<Cart> {
   if (!isShopifyConfigured()) return mock.removeFromCart(cartId, lineIds);
   const data = await shopifyFetch<{ cartLinesRemove: { cart: RawCart; userErrors: { message: string }[] } }>({
     query: q.removeFromCartMutation,
     variables: { cartId, lineIds },
     cache: "no-store",
+    buyerIp,
   });
   const cart = reshapeCart(data.cartLinesRemove.cart);
   if (!cart) throw new Error(data.cartLinesRemove.userErrors.map((e) => e.message).join(", ") || "Could not update cart");

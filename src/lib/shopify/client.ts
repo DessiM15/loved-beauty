@@ -59,7 +59,24 @@ type FetchOptions = {
   /** Seconds. Omit for uncached (cart mutations). */
   revalidate?: number | false;
   cache?: RequestCache;
+  /** The shopper's IP, for bag requests. Only sent with the private token (see shopifyFetch). */
+  buyerIp?: string;
 };
+
+/**
+ * With SHOPIFY_STOREFRONT_PRIVATE_TOKEN set, requests use the server-side token and bag
+ * requests carry the shopper's IP, so Shopify's bot protection sees many shoppers instead
+ * of one busy server. Without it, the public token is used as before.
+ */
+function storefrontHeaders(publicToken: string, buyerIp?: string): Record<string, string> {
+  const privateToken = process.env.SHOPIFY_STOREFRONT_PRIVATE_TOKEN;
+  if (!privateToken) return { "Content-Type": "application/json", "X-Shopify-Storefront-Access-Token": publicToken };
+  return {
+    "Content-Type": "application/json",
+    "Shopify-Storefront-Private-Token": privateToken,
+    ...(buyerIp ? { "Shopify-Storefront-Buyer-IP": buyerIp } : {}),
+  };
+}
 
 export async function shopifyFetch<T>({
   query,
@@ -67,16 +84,14 @@ export async function shopifyFetch<T>({
   tags,
   revalidate,
   cache,
+  buyerIp,
 }: FetchOptions & { query: string; variables?: Record<string, unknown> }): Promise<T> {
   const token = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
   if (!token) throw new ShopifyError("Shopify is not configured");
 
   const res = await fetch(endpoint(), {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Shopify-Storefront-Access-Token": token,
-    },
+    headers: storefrontHeaders(token, buyerIp),
     body: JSON.stringify({ query, variables }),
     cache,
     next: {

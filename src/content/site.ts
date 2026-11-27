@@ -169,15 +169,11 @@ export const faqs = [
   },
   {
     q: "How much is shipping?",
-    a: "Shipping is calculated at checkout based on weight and destination. We currently ship within the United States only.",
+    a: "Your shipping cost is shown at checkout before you pay. We currently ship within the United States only.",
   },
   {
     q: "What is your return policy?",
     a: "For hygiene reasons we can't accept returns on opened cosmetics. If your order arrives damaged or incorrect, email lovedbeautyshop@gmail.com within 7 days of delivery with a photo and we'll make it right.",
-  },
-  {
-    q: "Is the Lustre Lip Gloss really transfer-proof?",
-    a: "Once set, the Lustre Lip Gloss wears for up to 6 hours without transferring. Layer it over your Lip Liner for the longest wear.",
   },
   {
     q: "Can I use the shimmer sprays on my face?",

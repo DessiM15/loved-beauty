@@ -4,10 +4,14 @@ import { nav, site } from "@/content/site";
 import { InstagramIcon, TikTokIcon } from "@/components/ui/icons";
 import { NewsletterForm } from "@/components/marketing/newsletter-form";
 import { NEW_TAB_SUFFIX, NewTabHint } from "@/components/ui/new-tab";
+import { getCollections } from "@/lib/shopify";
 
 /** Footer (option 1G): light tan ground, the logo (larger, per the client), email sign-up, links, socials, credits. */
-export function Footer() {
+export async function Footer() {
   const year = new Date().getFullYear();
+  // Only link to categories that exist in Shopify, so no footer link leads to a missing page.
+  const handles = new Set((await getCollections().catch(() => [])).map((c) => c.handle));
+  const shopLinks = nav.footer.shop.filter((l) => !l.href.startsWith("/collections/") || handles.has(l.href.replace("/collections/", "")));
   const social = "inline-flex h-10 w-10 items-center justify-center border border-tan-line text-ink transition-colors hover:border-ink";
   return (
     <footer className="border-t border-tan-line bg-tan text-ink">
@@ -25,7 +29,7 @@ export function Footer() {
             </a>
           </div>
         </div>
-        <FooterColumn title="Shop" links={nav.footer.shop} />
+        <FooterColumn title="Shop" links={shopLinks} />
         <FooterColumn title="Help" links={nav.footer.help} />
         <div>
           <FooterColumn title="About" links={nav.footer.about} />

@@ -16,7 +16,7 @@ import { CheckIcon } from "@/components/ui/icons";
  * right. Single-variant products add straight to the bag; shade products go
  * to the page to choose.
  */
-export function ProductCard({ product, priority = false, index = 0 }: { product: Product; priority?: boolean; index?: number }) {
+export function ProductCard({ product, priority = false }: { product: Product; priority?: boolean; index?: number }) {
   const { addItem, isPending } = useCart();
   const [state, setState] = useState<"idle" | "adding" | "added">("idle");
   const href = `/products/${product.handle}`;
@@ -40,7 +40,7 @@ export function ProductCard({ product, priority = false, index = 0 }: { product:
   const pill = "inline-flex items-center gap-1.5 whitespace-nowrap rounded-[2px] px-2.5 py-2 text-[0.58rem] font-medium tracking-[0.2em] uppercase transition-colors md:px-3.5 md:py-2.5 md:text-[0.62rem]";
 
   return (
-    <article className="group relative flex h-full flex-col" data-reveal style={{ "--d": `${(index % 4) * 60}ms` } as React.CSSProperties}>
+    <article className="group relative flex h-full flex-col">
       {/* One link per card: the name. Its ::after covers the whole card, so the photo is still clickable and keeps its alt text. */}
       <div className="relative block overflow-hidden border border-line bg-cream">
         <div className="relative aspect-[4/5]">

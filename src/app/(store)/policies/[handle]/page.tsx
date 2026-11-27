@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getShopPolicies } from "@/lib/shopify";
 import type { ShopPolicy } from "@/lib/shopify/types";
+import { policies as builtIn } from "@/content/policies";
 
 export const revalidate = 3600;
 
@@ -16,7 +17,10 @@ async function resolve(handle: string): Promise<ShopPolicy[] | null> {
   const policies = await getShopPolicies();
   const wanted = ALIASES[handle] ?? [handle];
   const hits = wanted.map((h) => policies.find((p) => p.handle === h)).filter((p): p is ShopPolicy => Boolean(p));
-  return hits.length ? hits : null;
+  if (hits.length) return hits;
+  // Not written in Shopify yet (Settings → Policies): show the built-in text rather than a missing page.
+  const fallback = builtIn.find((p) => p.handle === handle);
+  return fallback ? [fallback] : null;
 }
 
 /** Policy text is written in Shopify. Any link there that opens a new tab gets the screen reader hint added. */

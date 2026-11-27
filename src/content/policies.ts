@@ -14,10 +14,9 @@ export const policies: ShopPolicy[] = [
     body: `
 <h2>Shipping</h2>
 <p>All orders ship from Houston, Texas within 1 to 3 business days. Standard U.S. shipping usually arrives in 3 to 6 business days after dispatch. You will receive a confirmation email with tracking as soon as your order ships.</p>
-<p>Shipping is calculated at checkout based on weight and destination. We currently ship within the United States only.</p>
+<p>Your shipping cost is shown at checkout before you pay. We currently ship within the United States only.</p>
 <h2>Returns &amp; exchanges</h2>
 <p>Because our products are cosmetics, we are unable to accept returns or exchanges on opened or used items for hygiene and safety reasons. All sales of opened cosmetics are final.</p>
-<p>Unopened, unused products in their original sealed packaging may be returned within 14 days of delivery for store credit. Return shipping is the customer's responsibility.</p>
 <h2>Damaged or incorrect orders</h2>
 <p>If your order arrives damaged, defective or incorrect, please email <a href="mailto:lovedbeautyshop@gmail.com">lovedbeautyshop@gmail.com</a> within 7 days of delivery with your order number and a photo. We will investigate and help provide a solution right away.</p>
 `,
