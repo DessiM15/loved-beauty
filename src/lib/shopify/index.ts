@@ -17,7 +17,14 @@ const PRODUCT_REVALIDATE = 60; // seconds; webhook revalidation makes this a saf
 /* ----------------------------- reshaping ----------------------------- */
 
 type RawMetafield = { value: string } | null;
-type RawProduct = Omit<Product, "images" | "variants" | "details"> & {
+type RawOption = {
+  id: string;
+  name: string;
+  values: string[];
+  optionValues?: { name: string; swatch: { color: string | null; image: { previewImage: { url: string } | null } | null } | null }[];
+};
+type RawProduct = Omit<Product, "images" | "variants" | "details" | "options"> & {
+  options: RawOption[];
   images: { edges: { node: Product["images"][number] }[] };
   variants: { edges: { node: Product["variants"][number] }[] };
   benefits?: RawMetafield;
@@ -41,9 +48,19 @@ function parseList(value?: string | null): string[] | undefined {
 
 function reshapeProduct(raw: RawProduct | null): Product | null {
   if (!raw) return null;
-  const { images, variants, benefits, howToUse, ingredients, ...rest } = raw;
+  const { images, variants, options, benefits, howToUse, ingredients, ...rest } = raw;
   return {
     ...rest,
+    options: options.map(({ optionValues, ...option }) => {
+      // The colours the client picks for each shade in Shopify admin.
+      const swatches: NonNullable<Product["options"][number]["swatches"]> = {};
+      for (const v of optionValues ?? []) {
+        const color = v.swatch?.color ?? undefined;
+        const image = v.swatch?.image?.previewImage?.url ?? undefined;
+        if (color || image) swatches[v.name] = { color, image };
+      }
+      return Object.keys(swatches).length ? { ...option, swatches } : option;
+    }),
     images: unwrap(images),
     variants: unwrap(variants),
     details: {

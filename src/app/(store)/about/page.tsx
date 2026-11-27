@@ -27,8 +27,8 @@ export default function AboutPage() {
         <Image
           src="/hero/launch-tv.jpg"
           alt={hero.photos.tv.alt}
-          width={1334}
-          height={2000}
+          width={1600}
+          height={2400}
           priority
           sizes="(min-width: 1024px) 50vw, 100vw"
           className="block h-auto w-full lg:h-full lg:object-cover lg:object-right"

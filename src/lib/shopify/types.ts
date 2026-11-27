@@ -25,6 +25,8 @@ export type ProductOption = {
   id: string;
   name: string;
   values: string[];
+  /** Colour chosen for each value in Shopify (a CSS colour or a swatch image URL), keyed by value name. */
+  swatches?: Record<string, { color?: string; image?: string }>;
 };
 
 export type ProductVariant = {

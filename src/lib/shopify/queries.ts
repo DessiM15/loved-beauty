@@ -28,6 +28,13 @@ export const productFragment = /* GraphQL */ `
       id
       name
       values
+      optionValues {
+        name
+        swatch {
+          color
+          image { previewImage { url } }
+        }
+      }
     }
     priceRange {
       minVariantPrice { amount currencyCode }

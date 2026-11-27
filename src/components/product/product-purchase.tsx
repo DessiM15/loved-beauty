@@ -73,7 +73,18 @@ export function ProductPurchase({ product, children }: { product: Product; child
         <p className="mt-6 max-w-prose text-[0.97rem] leading-relaxed text-plum">{product.description}</p>
 
         {showOptions &&
-          product.options.map((option) => (
+          product.options.map((option) => {
+            // Colours come from Shopify. The built-in table is only used when it knows every
+            // value of the option, so a product never shows one colour dot among name buttons.
+            const fromTable = option.values.every((v) => shadeColors[v]);
+            const swatchFor = (value: string): string | undefined => {
+              const s = option.swatches?.[value];
+              if (s?.image) return `center / cover no-repeat url("${s.image}")`;
+              if (s?.color) return s.color;
+              return !option.swatches && fromTable ? shadeColors[value] : undefined;
+            };
+            const allSwatches = option.values.every((v) => swatchFor(v));
+            return (
             <fieldset key={option.id} className="mt-8 flex flex-col items-center">
               <legend className="mb-3 flex items-baseline gap-3 text-[0.62rem] tracking-luxe uppercase">
                 {option.name}
@@ -90,7 +101,7 @@ export function ProductPurchase({ product, children }: { product: Product; child
                     v.selectedOptions.every((o) => (o.name === option.name ? o.value === value : selected[o.name] === o.value)),
                   );
                   const available = candidate?.availableForSale ?? false;
-                  const swatch = shadeColors[value];
+                  const swatch = allSwatches ? swatchFor(value) : undefined;
                   return (
                     <button
                       key={value}
@@ -115,7 +126,7 @@ export function ProductPurchase({ product, children }: { product: Product; child
                       )}
                     >
                       {/* The colour is faded when sold out; the strike-through line and the name carry the meaning. */}
-                      {swatch && <span className={cn("absolute inset-0 rounded-full", !available && "opacity-40")} style={{ background: swatch }} aria-hidden="true" />}
+                      {swatch && <span className={cn("absolute inset-0 rounded-full shadow-[inset_0_0_0_1px_rgb(0_0_0/0.16)]", !available && "opacity-40")} style={{ background: swatch }} aria-hidden="true" />}
                       {!swatch && value}
                       {!available && swatch && <span className="absolute inset-0 m-auto h-px w-full rotate-45 bg-ink" aria-hidden="true" />}
                     </button>
@@ -123,7 +134,8 @@ export function ProductPurchase({ product, children }: { product: Product; child
                 })}
               </div>
             </fieldset>
-          ))}
+            );
+          })}
 
         <div className="mt-9 flex w-full max-w-md flex-col gap-3 sm:flex-row">
           <div className="inline-flex h-[3.1rem] items-center self-center border border-line bg-white" role="group" aria-label={`Quantity of ${product.title}`}>
