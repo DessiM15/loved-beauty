@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { faqs, site } from "@/content/site";
+import { faqs as faqText, site, withShipping } from "@/content/site";
 import { Accordion } from "@/components/ui/accordion";
 import { JsonLd } from "@/components/ui/json-ld";
 
@@ -11,7 +11,11 @@ export const metadata: Metadata = {
   alternates: { canonical: "/faq" },
 };
 
+// Rebuilt every few minutes so a dated price change shows up on its own.
+export const revalidate = 300;
+
 export default function FaqPage() {
+  const faqs = faqText.map((f) => ({ ...f, a: withShipping(f.a) }));
   const ld = {
     "@context": "https://schema.org",
     "@type": "FAQPage",

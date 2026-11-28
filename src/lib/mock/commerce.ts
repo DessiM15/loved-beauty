@@ -5,6 +5,7 @@ import type { Cart, CartLine, Collection, Product, ShopPolicy } from "@/lib/shop
 import type { ProductSort } from "@/lib/shopify";
 import { mockCollectionMembership, mockCollections, mockProducts, mockRecommendations } from "./catalog";
 import { policies } from "@/content/policies";
+import { withShipping } from "@/content/site";
 
 /**
  * Mock commerce adapter. Mirrors the Shopify facade one-to-one.
@@ -75,7 +76,7 @@ export async function getCollectionProducts(handle: string, sort: ProductSort = 
 }
 
 export async function getShopPolicies(): Promise<ShopPolicy[]> {
-  return policies;
+  return policies.map((p) => ({ ...p, body: withShipping(p.body) }));
 }
 
 /* ------------------------------- cart -------------------------------- */

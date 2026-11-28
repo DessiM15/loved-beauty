@@ -3,8 +3,9 @@ import { notFound } from "next/navigation";
 import { getShopPolicies } from "@/lib/shopify";
 import type { ShopPolicy } from "@/lib/shopify/types";
 import { policies as builtIn } from "@/content/policies";
+import { withShipping } from "@/content/site";
 
-export const revalidate = 3600;
+export const revalidate = 300;
 
 /** Map our friendly URLs to Shopify's policy handles. */
 const ALIASES: Record<string, string[]> = {
@@ -20,7 +21,7 @@ async function resolve(handle: string): Promise<ShopPolicy[] | null> {
   if (hits.length) return hits;
   // Not written in Shopify yet (Settings → Policies): show the built-in text rather than a missing page.
   const fallback = builtIn.find((p) => p.handle === handle);
-  return fallback ? [fallback] : null;
+  return fallback ? [{ ...fallback, body: withShipping(fallback.body) }] : null;
 }
 
 /** Policy text is written in Shopify. Any link there that opens a new tab gets the screen reader hint added. */

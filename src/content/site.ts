@@ -159,6 +159,20 @@ export const newsletter = {
   legal: "By subscribing you agree to receive marketing emails from Loved Beauty. Unsubscribe anytime.",
 };
 
+/**
+ * Standard shipping is $5 through Black Friday and $7 from midnight Central on 2026-11-28.
+ * The same change is made by hand in Shopify (Settings → Shipping and delivery); this only
+ * keeps the site's wording in step. After the switch, the old price can be deleted.
+ */
+const SHIPPING_CHANGE = Date.parse("2026-11-28T00:00:00-06:00");
+export function standardShipping(now: number = Date.now()): string {
+  return now >= SHIPPING_CHANGE ? "$7" : "$5";
+}
+/** Fills the current Standard shipping price into FAQ and policy text. Call at render time. */
+export function withShipping(text: string, now?: number): string {
+  return text.replaceAll("{{standardShipping}}", standardShipping(now));
+}
+
 export const faqs = [
   {
     q: "Are Loved Beauty products vegan and cruelty-free?",
@@ -170,7 +184,7 @@ export const faqs = [
   },
   {
     q: "How much is shipping?",
-    a: "Standard shipping is $5, and free on orders of $70 or more. Express shipping is $15. We currently ship within the United States only.",
+    a: "Standard shipping is {{standardShipping}}, and free on orders of $70 or more. Express shipping is $15. We currently ship within the United States only.",
   },
   {
     q: "What is your return policy?",
